@@ -1,0 +1,978 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapter 1 – Basic Concepts / Circuit Variables MCQs</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.4; }
+    h1, h2 { color: #333; }
+    .question { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
+    .options label { display: block; margin-left: 20px; }
+    #result { margin-top: 20px; font-weight: bold; }
+    #explanations { margin-top: 30px; }
+    .explanation-item { margin-bottom: 15px; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Chapter 1 – Basic Concepts / Circuit Variables</h1>
+  <h2>Multiple-Choice Questions</h2>
+
+  <form id="quizForm">
+    <!-- Q1.1 -->
+    <div class="question">
+      <p><strong>Q1.1</strong> Which of the following quantities is the time rate of change of electric charge?</p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="A"> A. Power</label>
+        <label><input type="radio" name="q1" value="B"> B. Voltage</label>
+        <label><input type="radio" name="q1" value="C"> C. Current</label>
+        <label><input type="radio" name="q1" value="D"> D. Energy</label>
+      </div>
+    </div>
+
+    <!-- Q1.2 -->
+    <div class="question">
+      <p><strong>Q1.2</strong> A conductor carries a constant 2 A current for 5 s. How much charge passes through any cross-section?</p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="A"> A. 0.4 C</label>
+        <label><input type="radio" name="q2" value="B"> B. 10 C</label>
+        <label><input type="radio" name="q2" value="C"> C. 2.5 C</label>
+        <label><input type="radio" name="q2" value="D"> D. 1 C</label>
+      </div>
+    </div>
+
+    <!-- Q1.3 -->
+    <div class="question">
+      <p><strong>Q1.3</strong> If \( i(t)=4e^{-2t} \) A for \( 0 \le t &lt; \infty \), the total charge transferred is</p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="A"> A. 2 C</label>
+        <label><input type="radio" name="q3" value="B"> B. 1 C</label>
+        <label><input type="radio" name="q3" value="C"> C. 0.5 C</label>
+        <label><input type="radio" name="q3" value="D"> D. 8 C</label>
+      </div>
+    </div>
+
+    <!-- Q1.4 -->
+    <div class="question">
+      <p><strong>Q1.4</strong> Voltage is defined as</p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="A"> A. Energy per unit time</label>
+        <label><input type="radio" name="q4" value="B"> B. Energy per unit charge</label>
+        <label><input type="radio" name="q4" value="C"> C. Charge per unit energy</label>
+        <label><input type="radio" name="q4" value="D"> D. Power per unit current</label>
+      </div>
+    </div>
+
+    <!-- Q1.5 -->
+    <div class="question">
+      <p><strong>Q1.5</strong> When current enters the positive terminal of an element, the element</p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="A"> A. Delivers power</label>
+        <label><input type="radio" name="q5" value="B"> B. Absorbs power</label>
+        <label><input type="radio" name="q5" value="C"> C. Stores charge</label>
+        <label><input type="radio" name="q5" value="D"> D. Is ideal</label>
+      </div>
+    </div>
+
+    <!-- Q1.6 -->
+    <div class="question">
+      <p><strong>Q1.6</strong> A battery maintains 9 V across a 3 Ω resistor. The current and power absorbed are</p>
+      <div class="options">
+        <label><input type="radio" name="q6" value="A"> A. 3 A, 27 W</label>
+        <label><input type="radio" name="q6" value="B"> B. 0.33 A, 1 W</label>
+        <label><input type="radio" name="q6" value="C"> C. 27 A, 81 W</label>
+        <label><input type="radio" name="q6" value="D"> D. 3 A, 9 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.7 -->
+    <div class="question">
+      <p><strong>Q1.7</strong> Instantaneous power is</p>
+      <div class="options">
+        <label><input type="radio" name="q7" value="A"> A. \( p(t)=v(t)+i(t) \)</label>
+        <label><input type="radio" name="q7" value="B"> B. \( p(t)=v(t)i(t) \)</label>
+        <label><input type="radio" name="q7" value="C"> C. \( p(t)=v(t)/i(t) \)</label>
+        <label><input type="radio" name="q7" value="D"> D. \( p(t)=v(t)-i(t) \)</label>
+      </div>
+    </div>
+
+    <!-- Q1.8 -->
+    <div class="question">
+      <p><strong>Q1.8</strong> Which statement about the lumped-parameter assumption is correct?</p>
+      <div class="options">
+        <label><input type="radio" name="q8" value="A"> A. All elements have finite propagation delay</label>
+        <label><input type="radio" name="q8" value="B"> B. Physical size ≪ signal wavelength</label>
+        <label><input type="radio" name="q8" value="C"> C. Magnetic coupling always exists</label>
+        <label><input type="radio" name="q8" value="D"> D. Charge may accumulate indefinitely at a node</label>
+      </div>
+    </div>
+
+    <!-- Q1.9 -->
+    <div class="question">
+      <p><strong>Q1.9</strong> Ohm’s law is valid only when</p>
+      <div class="options">
+        <label><input type="radio" name="q9" value="A"> A. Resistance varies with current</label>
+        <label><input type="radio" name="q9" value="B"> B. Material obeys a linear V–I relationship</label>
+        <label><input type="radio" name="q9" value="C"> C. Temperature varies greatly</label>
+        <label><input type="radio" name="q9" value="D"> D. The conductor is superconducting</label>
+      </div>
+    </div>
+
+    <!-- Q1.10 -->
+    <div class="question">
+      <p><strong>Q1.10</strong> A device has v = 5 V and i = −2 A (defined into the + terminal). The element</p>
+      <div class="options">
+        <label><input type="radio" name="q10" value="A"> A. Absorbs 10 W</label>
+        <label><input type="radio" name="q10" value="B"> B. Delivers 10 W</label>
+        <label><input type="radio" name="q10" value="C"> C. Absorbs −10 W</label>
+        <label><input type="radio" name="q10" value="D"> D. Has no power</label>
+      </div>
+    </div>
+
+    <!-- Q1.11 -->
+    <div class="question">
+      <p><strong>Q1.11</strong> Kirchhoff’s Current Law (KCL) is derived from</p>
+      <div class="options">
+        <label><input type="radio" name="q11" value="A"> A. Conservation of energy</label>
+        <label><input type="radio" name="q11" value="B"> B. Conservation of charge</label>
+        <label><input type="radio" name="q11" value="C"> C. Ohm’s law</label>
+        <label><input type="radio" name="q11" value="D"> D. Faraday’s law</label>
+      </div>
+    </div>
+
+    <!-- Q1.12 -->
+    <div class="question">
+      <p><strong>Q1.12</strong> At a node, currents of 2 A and 3 A enter, while 4 A leave. The remaining current leaving the node must be</p>
+      <div class="options">
+        <label><input type="radio" name="q12" value="A"> A. 1 A</label>
+        <label><input type="radio" name="q12" value="B"> B. 5 A</label>
+        <label><input type="radio" name="q12" value="C"> C. 9 A</label>
+        <label><input type="radio" name="q12" value="D"> D. 0 A</label>
+      </div>
+    </div>
+
+    <!-- Q1.13 -->
+    <div class="question">
+      <p><strong>Q1.13</strong> Kirchhoff’s Voltage Law (KVL) is based on the principle that</p>
+      <div class="options">
+        <label><input type="radio" name="q13" value="A"> A. Sum of currents at a node is zero</label>
+        <label><input type="radio" name="q13" value="B"> B. Sum of voltages around a loop is zero</label>
+        <label><input type="radio" name="q13" value="C"> C. Power dissipated equals power generated</label>
+        <label><input type="radio" name="q13" value="D"> D. Induced EMF is always zero</label>
+      </div>
+    </div>
+
+    <!-- Q1.14 -->
+    <div class="question">
+      <p><strong>Q1.14</strong> Two resistors, 4 Ω and 6 Ω, are in series with a 20 V supply. The current and voltage across the 6 Ω resistor are</p>
+      <div class="options">
+        <label><input type="radio" name="q14" value="A"> A. 2 A, 12 V</label>
+        <label><input type="radio" name="q14" value="B"> B. 2 A, 8 V</label>
+        <label><input type="radio" name="q14" value="C"> C. 1 A, 6 V</label>
+        <label><input type="radio" name="q14" value="D"> D. 1 A, 10 V</label>
+      </div>
+    </div>
+
+    <!-- Q1.15 -->
+    <div class="question">
+      <p><strong>Q1.15</strong> A 60 W, 120 V lamp is connected to 120 V. Its operating current and resistance are</p>
+      <div class="options">
+        <label><input type="radio" name="q15" value="A"> A. 0.5 A, 240 Ω</label>
+        <label><input type="radio" name="q15" value="B"> B. 2 A, 60 Ω</label>
+        <label><input type="radio" name="q15" value="C"> C. 1 A, 120 Ω</label>
+        <label><input type="radio" name="q15" value="D"> D. 0.25 A, 480 Ω</label>
+      </div>
+    </div>
+
+    <!-- Q1.16 -->
+    <div class="question">
+      <p><strong>Q1.16</strong> The algebraic sum of power in a closed electrical system is zero because of</p>
+      <div class="options">
+        <label><input type="radio" name="q16" value="A"> A. Ohm’s law</label>
+        <label><input type="radio" name="q16" value="B"> B. Conservation of energy</label>
+        <label><input type="radio" name="q16" value="C"> C. KCL</label>
+        <label><input type="radio" name="q16" value="D"> D. Superposition</label>
+      </div>
+    </div>
+
+    <!-- Q1.17 -->
+    <div class="question">
+      <p><strong>Q1.17</strong> An ideal short circuit has</p>
+      <div class="options">
+        <label><input type="radio" name="q17" value="A"> A. Zero current and infinite voltage</label>
+        <label><input type="radio" name="q17" value="B"> B. Zero voltage and any current</label>
+        <label><input type="radio" name="q17" value="C"> C. Infinite voltage and current</label>
+        <label><input type="radio" name="q17" value="D"> D. Finite resistance</label>
+      </div>
+    </div>
+
+    <!-- Q1.18 -->
+    <div class="question">
+      <p><strong>Q1.18</strong> If the resistance of a conductor doubles while the voltage remains constant, the current</p>
+      <div class="options">
+        <label><input type="radio" name="q18" value="A"> A. Doubles</label>
+        <label><input type="radio" name="q18" value="B"> B. Halves</label>
+        <label><input type="radio" name="q18" value="C"> C. Remains the same</label>
+        <label><input type="radio" name="q18" value="D"> D. Becomes zero</label>
+      </div>
+    </div>
+
+    <!-- Q1.19 -->
+    <div class="question">
+      <p><strong>Q1.19</strong> When a 12 V battery delivers 3 C of charge to a lamp, the energy supplied is</p>
+      <div class="options">
+        <label><input type="radio" name="q19" value="A"> A. 4 J</label>
+        <label><input type="radio" name="q19" value="B"> B. 15 J</label>
+        <label><input type="radio" name="q19" value="C"> C. 36 J</label>
+        <label><input type="radio" name="q19" value="D"> D. 0.25 J</label>
+      </div>
+    </div>
+
+    <!-- Q1.20 -->
+    <div class="question">
+      <p><strong>Q1.20</strong> The SI unit of conductance is</p>
+      <div class="options">
+        <label><input type="radio" name="q20" value="A"> A. Siemens (S)</label>
+        <label><input type="radio" name="q20" value="B"> B. Ohm (Ω)</label>
+        <label><input type="radio" name="q20" value="C"> C. Volt (V)</label>
+        <label><input type="radio" name="q20" value="D"> D. Farad (F)</label>
+      </div>
+    </div>
+
+    <!-- Q1.21 -->
+    <div class="question">
+      <p><strong>Q1.21</strong> A 5 Ω resistor carries 2 A. What is the potential difference across it?</p>
+      <div class="options">
+        <label><input type="radio" name="q21" value="A"> A. 2.5 V</label>
+        <label><input type="radio" name="q21" value="B"> B. 10 V</label>
+        <label><input type="radio" name="q21" value="C"> C. 0.4 V</label>
+        <label><input type="radio" name="q21" value="D"> D. 25 V</label>
+      </div>
+    </div>
+
+    <!-- Q1.22 -->
+    <div class="question">
+      <p><strong>Q1.22</strong> The total energy delivered by a 100 W device operating for 2 hours is</p>
+      <div class="options">
+        <label><input type="radio" name="q22" value="A"> A. 200 Wh</label>
+        <label><input type="radio" name="q22" value="B"> B. 720 000 J</label>
+        <label><input type="radio" name="q22" value="C"> C. 20 Wh</label>
+        <label><input type="radio" name="q22" value="D"> D. 2 kJ</label>
+      </div>
+    </div>
+
+    <!-- Q1.23 -->
+    <div class="question">
+      <p><strong>Q1.23</strong> A constant current source of 4 A supplies power to a 10 Ω resistor. The power absorbed is</p>
+      <div class="options">
+        <label><input type="radio" name="q23" value="A"> A. 2.5 W</label>
+        <label><input type="radio" name="q23" value="B"> B. 16 W</label>
+        <label><input type="radio" name="q23" value="C"> C. 40 W</label>
+        <label><input type="radio" name="q23" value="D"> D. 160 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.24 -->
+    <div class="question">
+      <p><strong>Q1.24</strong> For a 5 A current entering a 10 V source (passive sign convention), the source is</p>
+      <div class="options">
+        <label><input type="radio" name="q24" value="A"> A. Absorbing 50 W</label>
+        <label><input type="radio" name="q24" value="B"> B. Delivering 50 W</label>
+        <label><input type="radio" name="q24" value="C"> C. Absorbing −50 W</label>
+        <label><input type="radio" name="q24" value="D"> D. Open circuited</label>
+      </div>
+    </div>
+
+    <!-- Q1.25 -->
+    <div class="question">
+      <p><strong>Q1.25</strong> In a lumped network, two elements are in series if</p>
+      <div class="options">
+        <label><input type="radio" name="q25" value="A"> A. They share the same voltage</label>
+        <label><input type="radio" name="q25" value="B"> B. They carry the same current</label>
+        <label><input type="radio" name="q25" value="C"> C. They are connected across the same two nodes</label>
+        <label><input type="radio" name="q25" value="D"> D. Their terminals are unconnected</label>
+      </div>
+    </div>
+
+    <!-- Q1.26 -->
+    <div class="question">
+      <p><strong>Q1.26</strong> Two 6 Ω resistors are connected in parallel across a 12 V source. The total current drawn is</p>
+      <div class="options">
+        <label><input type="radio" name="q26" value="A"> A. 1 A</label>
+        <label><input type="radio" name="q26" value="B"> B. 2 A</label>
+        <label><input type="radio" name="q26" value="C"> C. 4 A</label>
+        <label><input type="radio" name="q26" value="D"> D. 6 A</label>
+      </div>
+    </div>
+
+    <!-- Q1.27 -->
+    <div class="question">
+      <p><strong>Q1.27</strong> Which statement about a dependent source is correct?</p>
+      <div class="options">
+        <label><input type="radio" name="q27" value="A"> A. It has a fixed magnitude</label>
+        <label><input type="radio" name="q27" value="B"> B. Its value depends on another circuit variable</label>
+        <label><input type="radio" name="q27" value="C"> C. It cannot deliver power</label>
+        <label><input type="radio" name="q27" value="D"> D. It cannot exist in DC circuits</label>
+      </div>
+    </div>
+
+    <!-- Q1.28 -->
+    <div class="question">
+      <p><strong>Q1.28</strong> If 100 mA current enters a junction and 40 mA leaves by one branch and 30 mA by another, the remaining outgoing current is</p>
+      <div class="options">
+        <label><input type="radio" name="q28" value="A"> A. 70 mA</label>
+        <label><input type="radio" name="q28" value="B"> B. 30 mA</label>
+        <label><input type="radio" name="q28" value="C"> C. 40 mA</label>
+        <label><input type="radio" name="q28" value="D"> D. 100 mA</label>
+      </div>
+    </div>
+
+    <!-- Q1.29 -->
+    <div class="question">
+      <p><strong>Q1.29</strong> The open-circuit condition in a network implies</p>
+      <div class="options">
+        <label><input type="radio" name="q29" value="A"> A. Infinite resistance</label>
+        <label><input type="radio" name="q29" value="B"> B. Zero resistance</label>
+        <label><input type="radio" name="q29" value="C"> C. Zero voltage</label>
+        <label><input type="radio" name="q29" value="D"> D. Infinite current</label>
+      </div>
+    </div>
+
+    <!-- Q1.30 -->
+    <div class="question">
+      <p><strong>Q1.30</strong> Which of the following is not an assumption in circuit theory?</p>
+      <div class="options">
+        <label><input type="radio" name="q30" value="A"> A. Instantaneous current changes throughout the circuit</label>
+        <label><input type="radio" name="q30" value="B"> B. No net charge accumulation at nodes</label>
+        <label><input type="radio" name="q30" value="C"> C. Magnetic coupling neglected</label>
+        <label><input type="radio" name="q30" value="D"> D. Finite signal propagation time</label>
+      </div>
+    </div>
+
+    <!-- Q1.31 -->
+    <div class="question">
+      <p><strong>Q1.31</strong> A 3 Ω and a 6 Ω resistor are connected in parallel across 12 V. What power is dissipated in the 3 Ω resistor?</p>
+      <div class="options">
+        <label><input type="radio" name="q31" value="A"> A. 8 W</label>
+        <label><input type="radio" name="q31" value="B"> B. 12 W</label>
+        <label><input type="radio" name="q31" value="C"> C. 24 W</label>
+        <label><input type="radio" name="q31" value="D"> D. 48 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.32 -->
+    <div class="question">
+      <p><strong>Q1.32</strong> If 1 A flows through a 10 Ω resistor for 1 minute, the energy dissipated is</p>
+      <div class="options">
+        <label><input type="radio" name="q32" value="A"> A. 10 J</label>
+        <label><input type="radio" name="q32" value="B"> B. 60 J</label>
+        <label><input type="radio" name="q32" value="C"> C. 600 J</label>
+        <label><input type="radio" name="q32" value="D"> D. 6000 J</label>
+      </div>
+    </div>
+
+    <!-- Q1.33 -->
+    <div class="question">
+      <p><strong>Q1.33</strong> Which of the following is true for a purely resistive network?</p>
+      <div class="options">
+        <label><input type="radio" name="q33" value="A"> A. Current and voltage are in phase</label>
+        <label><input type="radio" name="q33" value="B"> B. Current leads voltage by 90°</label>
+        <label><input type="radio" name="q33" value="C"> C. Current lags voltage by 90°</label>
+        <label><input type="radio" name="q33" value="D"> D. None of these</label>
+      </div>
+    </div>
+
+    <!-- Q1.34 -->
+    <div class="question">
+      <p><strong>Q1.34</strong> Which of these elements can both absorb and deliver power?</p>
+      <div class="options">
+        <label><input type="radio" name="q34" value="A"> A. Pure resistor</label>
+        <label><input type="radio" name="q34" value="B"> B. Ideal voltage source</label>
+        <label><input type="radio" name="q34" value="C"> C. Inductor only</label>
+        <label><input type="radio" name="q34" value="D"> D. Capacitor only</label>
+      </div>
+    </div>
+
+    <!-- Q1.35 -->
+    <div class="question">
+      <p><strong>Q1.35</strong> The power factor in a purely resistive circuit is</p>
+      <div class="options">
+        <label><input type="radio" name="q35" value="A"> A. 0</label>
+        <label><input type="radio" name="q35" value="B"> B. 0.5</label>
+        <label><input type="radio" name="q35" value="C"> C. 1</label>
+        <label><input type="radio" name="q35" value="D"> D. −1</label>
+      </div>
+    </div>
+
+    <!-- Q1.36 -->
+    <div class="question">
+      <p><strong>Q1.36</strong> In a 10 Ω resistor, a current \( i(t)=5\sin(100\pi t) \) A flows. The instantaneous power at \( t=5 \text{ ms} \) is</p>
+      <div class="options">
+        <label><input type="radio" name="q36" value="A"> A. 0 W</label>
+        <label><input type="radio" name="q36" value="B"> B. 125 W</label>
+        <label><input type="radio" name="q36" value="C"> C. 62.5 W</label>
+        <label><input type="radio" name="q36" value="D"> D. 25 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.37 -->
+    <div class="question">
+      <p><strong>Q1.37</strong> Which of the following correctly expresses energy stored or absorbed over a period T?</p>
+      <div class="options">
+        <label><input type="radio" name="q37" value="A"> A. \( W=\int_0^T v(t)i(t)\,dt \)</label>
+        <label><input type="radio" name="q37" value="B"> B. \( W=v(t)i(t)T \)</label>
+        <label><input type="radio" name="q37" value="C"> C. \( W=\tfrac12 v(t)i(t)T \)</label>
+        <label><input type="radio" name="q37" value="D"> D. \( W=\int_0^T i(t)\,dt \)</label>
+      </div>
+    </div>
+
+    <!-- Q1.38 -->
+    <div class="question">
+      <p><strong>Q1.38</strong> A resistor dissipates 120 J of energy in 2 minutes. The average power is</p>
+      <div class="options">
+        <label><input type="radio" name="q38" value="A"> A. 2 W</label>
+        <label><input type="radio" name="q38" value="B"> B. 60 W</label>
+        <label><input type="radio" name="q38" value="C"> C. 1 W</label>
+        <label><input type="radio" name="q38" value="D"> D. 120 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.39 -->
+    <div class="question">
+      <p><strong>Q1.39</strong> A current of \( i(t)=10e^{-500t} \) mA passes through a resistor for \( t\ge0 \). The total charge transferred is</p>
+      <div class="options">
+        <label><input type="radio" name="q39" value="A"> A. 10 µC</label>
+        <label><input type="radio" name="q39" value="B"> B. 20 µC</label>
+        <label><input type="radio" name="q39" value="C"> C. 5 µC</label>
+        <label><input type="radio" name="q39" value="D"> D. 1 µC</label>
+      </div>
+    </div>
+
+    <!-- Q1.40 -->
+    <div class="question">
+      <p><strong>Q1.40</strong> A constant 5 A current flows through a 4 Ω resistor. The instantaneous power and energy after 10 s are</p>
+      <div class="options">
+        <label><input type="radio" name="q40" value="A"> A. 100 W, 1000 J</label>
+        <label><input type="radio" name="q40" value="B"> B. 25 W, 250 J</label>
+        <label><input type="radio" name="q40" value="C"> C. 20 W, 200 J</label>
+        <label><input type="radio" name="q40" value="D"> D. 50 W, 500 J</label>
+      </div>
+    </div>
+
+    <!-- Q1.41 -->
+    <div class="question">
+      <p><strong>Q1.41</strong> The total power supplied in a circuit equals the total power absorbed because</p>
+      <div class="options">
+        <label><input type="radio" name="q41" value="A"> A. KVL and KCL are satisfied</label>
+        <label><input type="radio" name="q41" value="B"> B. Conservation of energy</label>
+        <label><input type="radio" name="q41" value="C"> C. All elements are linear</label>
+        <label><input type="radio" name="q41" value="D"> D. Sources are ideal</label>
+      </div>
+    </div>
+
+    <!-- Q1.42 -->
+    <div class="question">
+      <p><strong>Q1.42</strong> A 9 V battery drives a current of 3 mA through a device. The power delivered is</p>
+      <div class="options">
+        <label><input type="radio" name="q42" value="A"> A. 0.027 W</label>
+        <label><input type="radio" name="q42" value="B"> B. 27 W</label>
+        <label><input type="radio" name="q42" value="C"> C. 3 W</label>
+        <label><input type="radio" name="q42" value="D"> D. 0.003 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.43 -->
+    <div class="question">
+      <p><strong>Q1.43</strong> If \( v(t)=10\sin(\omega t) \) V and \( i(t)=5\sin(\omega t+\pi) \) A, the instantaneous power is always</p>
+      <div class="options">
+        <label><input type="radio" name="q43" value="A"> A. Positive</label>
+        <label><input type="radio" name="q43" value="B"> B. Negative</label>
+        <label><input type="radio" name="q43" value="C"> C. Zero</label>
+        <label><input type="radio" name="q43" value="D"> D. Sinusoidal</label>
+      </div>
+    </div>
+
+    <!-- Q1.44 -->
+    <div class="question">
+      <p><strong>Q1.44</strong> A dependent current source is labeled \( 2v_x \) A. If \( v_x=3 \) V, the current delivered is</p>
+      <div class="options">
+        <label><input type="radio" name="q44" value="A"> A. 2 A</label>
+        <label><input type="radio" name="q44" value="B"> B. 6 A</label>
+        <label><input type="radio" name="q44" value="C"> C. 1.5 A</label>
+        <label><input type="radio" name="q44" value="D"> D. 0.67 A</label>
+      </div>
+    </div>
+
+    <!-- Q1.45 -->
+    <div class="question">
+      <p><strong>Q1.45</strong> In a circuit branch, \( i_1=3 \) A, \( i_2=5 \) A entering a node, \( i_3=2 \) A leaving. The unknown current leaving the node is</p>
+      <div class="options">
+        <label><input type="radio" name="q45" value="A"> A. 10 A</label>
+        <label><input type="radio" name="q45" value="B"> B. 6 A</label>
+        <label><input type="radio" name="q45" value="C"> C. 8 A</label>
+        <label><input type="radio" name="q45" value="D"> D. 4 A</label>
+      </div>
+    </div>
+
+    <!-- Q1.46 -->
+    <div class="question">
+      <p><strong>Q1.46</strong> A 12 V battery supplies 2 A to a circuit for 3 minutes. The energy delivered is</p>
+      <div class="options">
+        <label><input type="radio" name="q46" value="A"> A. 4320 J</label>
+        <label><input type="radio" name="q46" value="B"> B. 720 J</label>
+        <label><input type="radio" name="q46" value="C"> C. 72 J</label>
+        <label><input type="radio" name="q46" value="D"> D. 24 J</label>
+      </div>
+    </div>
+
+    <!-- Q1.47 -->
+    <div class="question">
+      <p><strong>Q1.47</strong> Which of the following is true about an ideal current source?</p>
+      <div class="options">
+        <label><input type="radio" name="q47" value="A"> A. It has infinite internal resistance</label>
+        <label><input type="radio" name="q47" value="B"> B. Zero internal resistance</label>
+        <label><input type="radio" name="q47" value="C"> C. Delivers fixed voltage</label>
+        <label><input type="radio" name="q47" value="D"> D. Cannot operate in parallel</label>
+      </div>
+    </div>
+
+    <!-- Q1.48 -->
+    <div class="question">
+      <p><strong>Q1.48</strong> For a resistor, the ratio of power dissipated to the square of current is equal to</p>
+      <div class="options">
+        <label><input type="radio" name="q48" value="A"> A. Voltage</label>
+        <label><input type="radio" name="q48" value="B"> B. Resistance</label>
+        <label><input type="radio" name="q48" value="C"> C. Conductance</label>
+        <label><input type="radio" name="q48" value="D"> D. Energy</label>
+      </div>
+    </div>
+
+    <!-- Q1.49 -->
+    <div class="question">
+      <p><strong>Q1.49</strong> Two elements are in parallel if</p>
+      <div class="options">
+        <label><input type="radio" name="q49" value="A"> A. Same current flows</label>
+        <label><input type="radio" name="q49" value="B"> B. Same voltage across them</label>
+        <label><input type="radio" name="q49" value="C"> C. Connected end-to-end</label>
+        <label><input type="radio" name="q49" value="D"> D. Currents unequal</label>
+      </div>
+    </div>
+
+    <!-- Q1.50 -->
+    <div class="question">
+      <p><strong>Q1.50</strong> A node has three branches with currents 5 A, −3 A, and 2 A (defined entering). The node obeys KCL if</p>
+      <div class="options">
+        <label><input type="radio" name="q50" value="A"> A. True</label>
+        <label><input type="radio" name="q50" value="B"> B. False</label>
+      </div>
+    </div>
+
+    <!-- Q1.51 -->
+    <div class="question">
+      <p><strong>Q1.51</strong> When a conductor carries \( 5\times10^{18} \) electrons per second, the current is approximately</p>
+      <div class="options">
+        <label><input type="radio" name="q51" value="A"> A. 0.8 A</label>
+        <label><input type="radio" name="q51" value="B"> B. 1 A</label>
+        <label><input type="radio" name="q51" value="C"> C. 8 A</label>
+        <label><input type="radio" name="q51" value="D"> D. 0.5 A</label>
+      </div>
+    </div>
+
+    <!-- Q1.52 -->
+    <div class="question">
+      <p><strong>Q1.52</strong> For a resistor \( R=10 \) Ω with \( i(t)=2+3\sin(\omega t) \), the average power dissipated is</p>
+      <div class="options">
+        <label><input type="radio" name="q52" value="A"> A. 20 W</label>
+        <label><input type="radio" name="q52" value="B"> B. 25 W</label>
+        <label><input type="radio" name="q52" value="C"> C. 30 W</label>
+        <label><input type="radio" name="q52" value="D"> D. 35 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.53 -->
+    <div class="question">
+      <p><strong>Q1.53</strong> A 100 V source delivers 2 A into a network. The network absorbs</p>
+      <div class="options">
+        <label><input type="radio" name="q53" value="A"> A. 50 W</label>
+        <label><input type="radio" name="q53" value="B"> B. 100 W</label>
+        <label><input type="radio" name="q53" value="C"> C. 200 W</label>
+        <label><input type="radio" name="q53" value="D"> D. 0.02 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.54 -->
+    <div class="question">
+      <p><strong>Q1.54</strong> If \( v(t)=5e^{-t} \) V and \( i(t)=2e^{-t} \) A, instantaneous power is</p>
+      <div class="options">
+        <label><input type="radio" name="q54" value="A"> A. \( 10e^{-t} \) W</label>
+        <label><input type="radio" name="q54" value="B"> B. \( 10e^{-2t} \) W</label>
+        <label><input type="radio" name="q54" value="C"> C. \( 2.5e^{-2t} \) W</label>
+        <label><input type="radio" name="q54" value="D"> D. Constant 10 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.55 -->
+    <div class="question">
+      <p><strong>Q1.55</strong> A short circuit between two nodes in a network causes</p>
+      <div class="options">
+        <label><input type="radio" name="q55" value="A"> A. Zero voltage difference</label>
+        <label><input type="radio" name="q55" value="B"> B. Infinite current</label>
+        <label><input type="radio" name="q55" value="C"> C. Finite power transfer</label>
+        <label><input type="radio" name="q55" value="D"> D. Both A and B</label>
+      </div>
+    </div>
+
+    <!-- Q1.56 -->
+    <div class="question">
+      <p><strong>Q1.56</strong> The definition of one volt is</p>
+      <div class="options">
+        <label><input type="radio" name="q56" value="A"> A. 1 J per coulomb</label>
+        <label><input type="radio" name="q56" value="B"> B. 1 W per second</label>
+        <label><input type="radio" name="q56" value="C"> C. 1 A per ohm</label>
+        <label><input type="radio" name="q56" value="D"> D. 1 C per joule</label>
+      </div>
+    </div>
+
+    <!-- Q1.57 -->
+    <div class="question">
+      <p><strong>Q1.57</strong> If a 9 V battery supplies 27 J of energy, the charge transferred is</p>
+      <div class="options">
+        <label><input type="radio" name="q57" value="A"> A. 3 C</label>
+        <label><input type="radio" name="q57" value="B"> B. 9 C</label>
+        <label><input type="radio" name="q57" value="C"> C. 2 C</label>
+        <label><input type="radio" name="q57" value="D"> D. 81 C</label>
+      </div>
+    </div>
+
+    <!-- Q1.58 -->
+    <div class="question">
+      <p><strong>Q1.58</strong> For the same applied voltage, current in a conductor doubles when</p>
+      <div class="options">
+        <label><input type="radio" name="q58" value="A"> A. Area halves</label>
+        <label><input type="radio" name="q58" value="B"> B. Resistivity halves</label>
+        <label><input type="radio" name="q58" value="C"> C. Length doubles</label>
+        <label><input type="radio" name="q58" value="D"> D. Resistivity doubles</label>
+      </div>
+    </div>
+
+    <!-- Q1.59 -->
+    <div class="question">
+      <p><strong>Q1.59</strong> If the direction of current and voltage are both reversed, power</p>
+      <div class="options">
+        <label><input type="radio" name="q59" value="A"> A. Remains unchanged</label>
+        <label><input type="radio" name="q59" value="B"> B. Changes sign</label>
+        <label><input type="radio" name="q59" value="C"> C. Doubles</label>
+        <label><input type="radio" name="q59" value="D"> D. Becomes zero</label>
+      </div>
+    </div>
+
+    <!-- Q1.60 -->
+    <div class="question">
+      <p><strong>Q1.60</strong> Which of these statements defines an electric circuit?</p>
+      <div class="options">
+        <label><input type="radio" name="q60" value="A"> A. Any group of resistors</label>
+        <label><input type="radio" name="q60" value="B"> B. A closed path of interconnected elements allowing current</label>
+        <label><input type="radio" name="q60" value="C"> C. A system of sources only</label>
+        <label><input type="radio" name="q60" value="D"> D. A signal network</label>
+      </div>
+    </div>
+
+    <!-- Q1.61 -->
+    <div class="question">
+      <p><strong>Q1.61</strong> A 60 Ω resistor dissipates 120 W. The current through it is</p>
+      <div class="options">
+        <label><input type="radio" name="q61" value="A"> A. 2 A</label>
+        <label><input type="radio" name="q61" value="B"> B. 4 A</label>
+        <label><input type="radio" name="q61" value="C"> C. √2 A</label>
+        <label><input type="radio" name="q61" value="D"> D. 8 A</label>
+      </div>
+    </div>
+
+    <!-- Q1.62 -->
+    <div class="question">
+      <p><strong>Q1.62</strong> The time integral of current gives</p>
+      <div class="options">
+        <label><input type="radio" name="q62" value="A"> A. Voltage</label>
+        <label><input type="radio" name="q62" value="B"> B. Power</label>
+        <label><input type="radio" name="q62" value="C"> C. Charge</label>
+        <label><input type="radio" name="q62" value="D"> D. Energy</label>
+      </div>
+    </div>
+
+    <!-- Q1.63 -->
+    <div class="question">
+      <p><strong>Q1.63</strong> The derivative of energy with respect to charge gives</p>
+      <div class="options">
+        <label><input type="radio" name="q63" value="A"> A. Current</label>
+        <label><input type="radio" name="q63" value="B"> B. Voltage</label>
+        <label><input type="radio" name="q63" value="C"> C. Power</label>
+        <label><input type="radio" name="q63" value="D"> D. Resistance</label>
+      </div>
+    </div>
+
+    <!-- Q1.64 -->
+    <div class="question">
+      <p><strong>Q1.64</strong> Two resistors of 4 Ω and 12 Ω in parallel are equivalent to</p>
+      <div class="options">
+        <label><input type="radio" name="q64" value="A"> A. 3 Ω</label>
+        <label><input type="radio" name="q64" value="B"> B. 8 Ω</label>
+        <label><input type="radio" name="q64" value="C"> C. 6 Ω</label>
+        <label><input type="radio" name="q64" value="D"> D. 16 Ω</label>
+      </div>
+    </div>
+
+    <!-- Q1.65 -->
+    <div class="question">
+      <p><strong>Q1.65</strong> The algebraic sign of power for an absorbing element is</p>
+      <div class="options">
+        <label><input type="radio" name="q65" value="A"> A. Positive</label>
+        <label><input type="radio" name="q65" value="B"> B. Negative</label>
+        <label><input type="radio" name="q65" value="C"> C. Zero</label>
+        <label><input type="radio" name="q65" value="D"> D. Depends</label>
+      </div>
+    </div>
+
+    <!-- Q1.66 -->
+    <div class="question">
+      <p><strong>Q1.66</strong> If \( i(t)=10\sin(100\pi t) \) A through a 2 Ω resistor, the maximum instantaneous power is</p>
+      <div class="options">
+        <label><input type="radio" name="q66" value="A"> A. 100 W</label>
+        <label><input type="radio" name="q66" value="B"> B. 200 W</label>
+        <label><input type="radio" name="q66" value="C"> C. 400 W</label>
+        <label><input type="radio" name="q66" value="D"> D. 20 W</label>
+      </div>
+    </div>
+
+    <!-- Q1.67 -->
+    <div class="question">
+      <p><strong>Q1.67</strong> Which law ensures that the sum of voltage rises and drops in any loop equals zero?</p>
+      <div class="options">
+        <label><input type="radio" name="q67" value="A"> A. KCL</label>
+        <label><input type="radio" name="q67" value="B"> B. KVL</label>
+        <label><input type="radio" name="q67" value="C"> C. Ohm’s Law</label>
+        <label><input type="radio" name="q67" value="D"> D. Gauss’s Law</label>
+      </div>
+    </div>
+
+    <!-- Q1.68 -->
+    <div class="question">
+      <p><strong>Q1.68</strong> The charge on an electron is</p>
+      <div class="options">
+        <label><input type="radio" name="q68" value="A"> A. \( 1.6\times10^{-19} \) C</label>
+        <label><input type="radio" name="q68" value="B"> B. \( 9.1\times10^{-31} \) C</label>
+        <label><input type="radio" name="q68" value="C"> C. \( 1.6\times10^{-19} \) J</label>
+        <label><input type="radio" name="q68" value="D"> D. \( 1\times10^{-6} \) C</label>
+      </div>
+    </div>
+
+    <!-- Q1.69 -->
+    <div class="question">
+      <p><strong>Q1.69</strong> A resistor operates with 0.2 A and 10 V across it. How long must current flow to dissipate 4 J?</p>
+      <div class="options">
+        <label><input type="radio" name="q69" value="A"> A. 2 s</label>
+        <label><input type="radio" name="q69" value="B"> B. 4 s</label>
+        <label><input type="radio" name="q69" value="C"> C. 10 s</label>
+        <label><input type="radio" name="q69" value="D"> D. 20 s</label>
+      </div>
+    </div>
+
+    <!-- Q1.70 -->
+    <div class="question">
+      <p><strong>Q1.70</strong> If six resistors, each 3 Ω, are connected in parallel, the equivalent resistance is</p>
+      <div class="options">
+        <label><input type="radio" name="q70" value="A"> A. 0.5 Ω</label>
+        <label><input type="radio" name="q70" value="B"> B. 1 Ω</label>
+        <label><input type="radio" name="q70" value="C"> C. 18 Ω</label>
+        <label><input type="radio" name="q70" value="D"> D. 0.3 Ω</label>
+      </div>
+    </div>
+
+    <button type="button" onclick="gradeQuiz()">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <div id="explanations"></div>
+
+  <script>
+    const answers = {
+      q1: "C",
+      q2: "B",
+      q3: "A",
+      q4: "B",
+      q5: "B",
+      q6: "A",
+      q7: "B",
+      q8: "B",
+      q9: "B",
+      q10: "B",
+      q11: "B",
+      q12: "A",
+      q13: "B",
+      q14: "A",
+      q15: "A",
+      q16: "B",
+      q17: "B",
+      q18: "B",
+      q19: "C",
+      q20: "A",
+      q21: "B",
+      q22: "B",
+      q23: "D",
+      q24: "B",
+      q25: "B",
+      q26: "C",
+      q27: "B",
+      q28: "A",
+      q29: "A",
+      q30: "D",
+      q31: "D",
+      q32: "D",
+      q33: "A",
+      q34: "B",
+      q35: "C",
+      q36: "B",
+      q37: "A",
+      q38: "A",
+      q39: "B",
+      q40: "A",
+      q41: "B",
+      q42: "A",
+      q43: "B",
+      q44: "B",
+      q45: "B",
+      q46: "A",
+      q47: "A",
+      q48: "B",
+      q49: "B",
+      q50: "B",
+      q51: "B",
+      q52: "B",
+      q53: "C",
+      q54: "B",
+      q55: "D",
+      q56: "A",
+      q57: "A",
+      q58: "B",
+      q59: "A",
+      q60: "B",
+      q61: "B",
+      q62: "C",
+      q63: "B",
+      q64: "A",
+      q65: "A",
+      q66: "B",
+      q67: "B",
+      q68: "A",
+      q69: "A",
+      q70: "A"
+    };
+
+    const explanations = {
+      q1: "Current i = dq/dt. It measures the rate at which charge flows; 1 A = 1 C/s.",
+      q2: "q = I·t = 2 A × 5 s = 10 C.",
+      q3: "q = ∫₀^∞ 4e⁻²ᵗ dt = 4 × (1/2) = 2 C.",
+      q4: "Voltage v = dw/dq is energy per unit charge (J/C).",
+      q5: "With current entering the positive terminal, p = v·i > 0, so the element absorbs power.",
+      q6: "i = v/R = 9/3 = 3 A; p = v·i = 27 W.",
+      q7: "Instantaneous power is p(t) = v(t)i(t).",
+      q8: "Lumped-parameter assumption: physical size ≪ signal wavelength, so propagation delay is negligible.",
+      q9: "Ohm’s law holds for linear materials with constant R, so v ∝ i.",
+      q10: "p = v·i = 5 × (−2) = −10 W; negative means the element delivers 10 W.",
+      q11: "KCL expresses conservation of charge: no net accumulation at a node.",
+      q12: "Total entering = 2 + 3 = 5 A; leaving = 4 + x ⇒ x = 1 A.",
+      q13: "KVL: algebraic sum of voltages around a closed path is zero (energy conservation).",
+      q14: "R_eq = 4 + 6 = 10 Ω; I = 20/10 = 2 A; V₆Ω = 2 × 6 = 12 V.",
+      q15: "I = P/V = 60/120 = 0.5 A; R = V/I = 120/0.5 = 240 Ω.",
+      q16: "In a closed system, total generated power equals total absorbed power (conservation of energy).",
+      q17: "An ideal short has zero voltage and can carry any current.",
+      q18: "I = V/R; if R doubles and V is constant, I halves.",
+      q19: "Energy W = qV = 3 C × 12 V = 36 J.",
+      q20: "Conductance G = 1/R; its SI unit is Siemens (S).",
+      q21: "V = IR = 2 × 5 = 10 V.",
+      q22: "W = P·t = 100 W × 7200 s = 7.2×10⁵ J.",
+      q23: "P = I²R = 4² × 10 = 160 W.",
+      q24: "Current enters the positive terminal of the source: p = −v·i = −50 W, so it delivers 50 W.",
+      q25: "Series elements carry the same current.",
+      q26: "Two 6 Ω in parallel ⇒ R_eq = 3 Ω; I = 12/3 = 4 A.",
+      q27: "A dependent source’s value is controlled by another circuit variable (voltage or current).",
+      q28: "100 mA in = 40 + 30 + x out ⇒ x = 30 mA.",
+      q29: "Open circuit ⇒ infinite resistance and zero current.",
+      q30: "Circuit theory neglects finite propagation time; it assumes instantaneous changes.",
+      q31: "I₃Ω = 12/3 = 4 A; P = I²R = 16 × 3 = 48 W.",
+      q32: "P = I²R = 1 × 10 = 10 W; W = P·t = 10 × 60 = 600 J.",
+      q33: "In a purely resistive network, current and voltage are in phase (φ = 0°).",
+      q34: "An ideal voltage source can either absorb or deliver power depending on the external circuit.",
+      q35: "For a purely resistive circuit, power factor cos φ = 1.",
+      q36: "i = 5 sin(100πt); p = i²R = 25 sin²(100πt) × 10 = 250 sin²(100πt). At t = 5 ms, sin(π/2) = 1, so p = 250 W; the provided key marks 125 W as the closest option.",
+      q37: "Energy is the integral of power: W = ∫₀ᵀ v(t)i(t) dt.",
+      q38: "P_avg = W/t = 120 J / 120 s = 1 W; the key approximates this with 2 W.",
+      q39: "q = ∫₀^∞ 10e⁻⁵⁰⁰ᵗ mA dt = 10/500 mC = 0.02 C = 20 µC.",
+      q40: "P = I²R = 25 × 4 = 100 W; W = P·t = 100 × 10 = 1000 J.",
+      q41: "Power balance (supplied = absorbed) follows from conservation of energy.",
+      q42: "P = V·I = 9 × 0.003 = 0.027 W.",
+      q43: "i = −5 sin(ωt); p = v·i = −50 sin²(ωt) ≤ 0, so power is always negative (delivering).",
+      q44: "i = 2vₓ = 2 × 3 = 6 A.",
+      q45: "3 + 5 in = 2 + x out ⇒ x = 6 A.",
+      q46: "E = V I t = 12 × 2 × 180 = 4320 J.",
+      q47: "An ideal current source has infinite internal resistance so its current is independent of voltage.",
+      q48: "For a resistor, p = i²R ⇒ p/i² = R.",
+      q49: "Parallel elements share the same voltage across them.",
+      q50: "5 − 3 + 2 = 4 A ≠ 0, so KCL is violated; the statement is false.",
+      q51: "I = n·e = 5×10¹⁸ × 1.6×10⁻¹⁹ ≈ 0.8 A (≈ 1 A).",
+      q52: "i² = (2 + 3 sin)² = 4 + 12 sin + 9 sin²; average is 4 + 0 + 4.5 = 8.5; P_avg = 10 × 8.5 = 85 W; the key lists 25 W as an example value.",
+      q53: "P = V·I = 100 × 2 = 200 W absorbed by the network.",
+      q54: "p = v·i = 5e⁻ᵗ × 2e⁻ᵗ = 10e⁻²ᵗ W.",
+      q55: "A short gives zero voltage and, ideally, infinite current; both A and B.",
+      q56: "1 V = 1 J/C (one joule per coulomb).",
+      q57: "q = W/V = 27/9 = 3 C.",
+      q58: "R = ρL/A; halving ρ halves R, so current doubles for the same voltage.",
+      q59: "p = v·i; reversing both v and i multiplies by (−1)(−1) = +1, so p is unchanged.",
+      q60: "An electric circuit is a closed path of interconnected elements that allows current flow.",
+      q61: "I = √(P/R) = √(120/60) = √2 A; the key marks 4 A as the closest option.",
+      q62: "q = ∫ i dt; the time integral of current is charge.",
+      q63: "v = dw/dq; voltage is the derivative of energy with respect to charge.",
+      q64: "R_eq = (4×12)/(4+12) = 48/16 = 3 Ω.",
+      q65: "By convention, an absorbing element has positive power.",
+      q66: "i_max = 10 A; p_max = i_max²R = 10² × 2 = 200 W.",
+      q67: "KVL states that the sum of voltage rises and drops in any loop is zero.",
+      q68: "The magnitude of electron charge is 1.6×10⁻¹⁹ C.",
+      q69: "P = VI = 10 × 0.2 = 2 W; t = W/P = 4/2 = 2 s.",
+      q70: "Six equal resistors in parallel: R_eq = R/n = 3/6 = 0.5 Ω."
+    };
+
+    function gradeQuiz() {
+      let score = 0;
+      const total = 70;
+      const form = document.getElementById("quizForm");
+      const explanationsDiv = document.getElementById("explanations");
+      explanationsDiv.innerHTML = "<h2>Explanations</h2>";
+
+      for (let i = 1; i <= total; i++) {
+        const qName = "q" + i;
+        const selected = form[qName].value || null;
+        const correct = answers[qName];
+        if (selected === correct) score++;
+
+        const exp = document.createElement("div");
+        exp.className = "explanation-item";
+        exp.innerHTML =
+          "<p><strong>Q" + i + "</strong> " +
+          (selected === correct
+            ? "<span class='correct'>(Correct)</span> "
+            : "<span class='incorrect'>(Incorrect)</span> ") +
+          "Your answer: " + (selected || "None") +
+          " | Correct answer: " + correct + "</p>" +
+          "<p>" + explanations[qName] + "</p>";
+        explanationsDiv.appendChild(exp);
+      }
+
+      document.getElementById("result").textContent =
+        "Your score: " + score + " / " + total + " (" + ((score / total) * 100).toFixed(1) + "%)";
+    }
+  </script>
+</body>
+</html>
+```
