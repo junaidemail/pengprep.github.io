@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7 – Response of First-Order RL and RC Circuits Quiz</title>
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: #fafafa;
+            color: #222;
+            line-height: 1.5;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+        #progress {
+            text-align: center;
+            margin: 5px 0;
+            font-size: .9rem;
+            color: #555;
+        }
+        .page {
+            display: none;
+            animation: fade .25s ease-in;
+        }
+        .page.active {
+            display: block;
+        }
+        .question {
+            background: #fff;
+            margin: 12px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08);
+            font-size: .95rem;
+        }
+        .qtext {
+            margin-bottom: 12px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .options {
+            margin-left: 5px;
+        }
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 6px 0;
+            cursor: pointer;
+        }
+        .option-label {
+            font-weight: bold;
+            margin-right: 8px;
+            min-width: 20px;
+        }
+        .option-text {
+            flex: 1;
+        }
+        .options input[type=radio] {
+            transform: scale(1.2);
+            margin-right: 8px;
+            margin-top: 3px;
+        }
+        .navbar {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .navbar button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #0078ff;
+            color: #fff;
+            font-size: .95rem;
+            cursor: pointer;
+        }
+        .navbar button[disabled] {
+            background: #ccc;
+            cursor: default;
+        }
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.06);
+        }
+        #explanations {
+            margin-top: 15px;
+        }
+        .exp-item {
+            background: #fff;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.06);
+            font-size: .9rem;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: #c00;
+            font-weight: bold;
+        }
+        .inline-exp {
+            margin-top: 8px;
+            font-size: .85rem;
+            color: #333;
+            display: block;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border-left: 3px solid #0078ff;
+        }
+        .inline-exp.collapsed {
+            display: none;
+        }
+        .inline-exp-toggle {
+            margin-top: 8px;
+            font-size: .8rem;
+            color: #0078ff;
+            text-decoration: underline;
+            cursor: pointer;
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f0f8ff;
+            border-radius: 4px;
+        }
+        @keyframes fade {
+            from { opacity: 0; transform: translateX(8px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @media (max-width: 600px) {
+            body { padding: 8px; }
+            .question { padding: 12px; }
+            .navbar button { padding: 9px; font-size: .9rem; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Chapter 7 – Response of First-Order RL and RC Circuits</h1>
+    <div id="progress"></div>
+    <form id="quizForm">
+        <div id="pagesContainer"></div>
+        <div class="navbar">
+            <button type="button" id="prevBtn">Back</button>
+            <button type="button" id="nextBtn">Next</button>
+        </div>
+    </form>
+    <div id="result"></div>
+    <div id="explanations"></div>
+
+    <!-- KaTeX JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <script>
+        const data = [
+            { 
+                id: 1, 
+                q: "The natural response of an RL circuit is the behavior when", 
+                opts: [
+                    "A step input is applied", 
+                    "Initial energy in the inductor is released to resistors", 
+                    "Steady-state DC is reached", 
+                    "Capacitor is present"
+                ], 
+                ans: "B", 
+                exp: "The natural response describes voltages/currents arising solely from initial energy stored in the inductor, released through resistors after source disconnection (switch open, t ≥ 0); no external excitation." 
+            },
+            { 
+                id: 2, 
+                q: "The natural response of an RC circuit is the behavior when", 
+                opts: [
+                    "A step input is applied", 
+                    "Initial energy in the capacitor is released to resistors", 
+                    "Steady-state DC is reached", 
+                    "Inductor is present"
+                ], 
+                ans: "B", 
+                exp: "The natural response for RC arises from initial capacitor energy $w_{0} = \\frac{1}{2}CV_{0}^{2}$ dissipated in resistors; circuit reduces to series RC with no source." 
+            },
+            { 
+                id: 3, 
+                q: "For the RL circuit in Fig. 7.3 (switch open at t=0), the differential equation is", 
+                opts: [
+                    "$L\\frac{di}{dt} + Ri = 0$", 
+                    "$R\\frac{di}{dt} + Li = 0$", 
+                    "$C\\frac{dv}{dt} + \\frac{v}{R} = 0$", 
+                    "$RC\\frac{dv}{dt} + v = 0$"
+                ], 
+                ans: "A", 
+                exp: "KVL around the loop for t ≥ 0: inductor voltage $v_{L} = L\\frac{di}{dt}$ + resistor voltage $v_{R} = Ri = 0$, yielding $L\\frac{di}{dt} + Ri = 0$." 
+            },
+            { 
+                id: 4, 
+                q: "The solution for inductor current in natural response (I₀ initial) is", 
+                opts: [
+                    "$i(t) = I_{0}e^{Rt/L}$", 
+                    "$i(t) = I_{0}e^{- Rt/L}$", 
+                    "$i(t) = I_{0}e^{t/\\tau}$", 
+                    "$i(t) = I_{0}(1 - e^{- t/\\tau})$"
+                ], 
+                ans: "B", 
+                exp: "Solving $L\\frac{di}{dt} + Ri = 0$ by separation of variables and integration gives $i(t) = I_{0}e^{- (R/L)t} = I_{0}e^{- t/\\tau}$." 
+            },
+            { 
+                id: 5, 
+                q: "The time constant τ for an RL circuit is", 
+                opts: [
+                    "$RC$", 
+                    "$L/R$", 
+                    "$R/L$", 
+                    "$RL$"
+                ], 
+                ans: "B", 
+                exp: "The time constant $\\tau = \\frac{L}{R}$ (seconds); from solution, exponent is $- \\frac{R}{L}t$, so $\\tau = \\frac{L}{R}$." 
+            },
+            { 
+                id: 6, 
+                q: "After one time constant τ in an RL natural response, current is", 
+                opts: [
+                    "100% of I₀", 
+                    "63.2% of I₀", 
+                    "36.8% of I₀", 
+                    "0% of I₀"
+                ], 
+                ans: "C", 
+                exp: "At t = τ, $e^{- 1} \\approx 0.3679$ or 36.8% of initial current I₀ remains." 
+            },
+            { 
+                id: 7, 
+                q: "After 5τ in natural response, current is approximately", 
+                opts: [
+                    "100%", 
+                    "36.8%", 
+                    "1% or less", 
+                    "63.2%"
+                ], 
+                ans: "C", 
+                exp: "At t = 5τ, $e^{- 5} \\approx 0.00674$ or 0.674%, less than 1% of initial value; considered steady-state." 
+            },
+            { 
+                id: 8, 
+                q: "For RC natural response (V₀ initial), voltage is", 
+                opts: [
+                    "$v(t) = V_{0}e^{t/RC}$", 
+                    "$v(t) = V_{0}e^{- t/RC}$", 
+                    "$i(t) = I_{0}e^{- t/LR}$", 
+                    "$v(t) = V_{0}(1 - e^{- t/RC})$"
+                ], 
+                ans: "B", 
+                exp: "KCL: capacitor current $i_{C} = C\\frac{dv}{dt}$ = resistor current $\\frac{v}{R}$, so $RC\\frac{dv}{dt} + v = 0$, solution $v(t) = V_{0}e^{- t/(RC)}$." 
+            },
+            { 
+                id: 9, 
+                q: "Time constant τ for RC circuit is", 
+                opts: [
+                    "$L/R$", 
+                    "$RC$", 
+                    "$R/L$", 
+                    "$1/RC$"
+                ], 
+                ans: "B", 
+                exp: "$\\tau = RC$ for RC circuit, from exponent $- \\frac{t}{RC}$." 
+            },
+            { 
+                id: 10, 
+                q: "In steady-state DC before switching (long time closed), inductor acts as", 
+                opts: [
+                    "Open circuit", 
+                    "Short circuit", 
+                    "Capacitor", 
+                    "Current source"
+                ], 
+                ans: "B", 
+                exp: "Long-time closed switch: steady DC, $\\frac{di}{dt} = 0$ so $v_{L} = 0$, inductor shorts." 
+            },
+            { 
+                id: 11, 
+                q: "In steady-state DC before switching, capacitor acts as", 
+                opts: [
+                    "Short circuit", 
+                    "Open circuit", 
+                    "Inductor", 
+                    "Voltage source"
+                ], 
+                ans: "B", 
+                exp: "Steady DC: $\\frac{dv}{dt} = 0$ so $i_{C} = 0$, capacitor opens." 
+            },
+            { 
+                id: 12, 
+                q: "Inductor current cannot change", 
+                opts: [
+                    "Gradually", 
+                    "Instantaneously", 
+                    "Linearly", 
+                    "Exponentially"
+                ], 
+                ans: "B", 
+                exp: "Abrupt current change requires infinite voltage ($v = L\\frac{di}{dt}$); impossible, so i_L continuous at t=0⁺." 
+            },
+            { 
+                id: 13, 
+                q: "Capacitor voltage cannot change", 
+                opts: [
+                    "Gradually", 
+                    "Instantaneously", 
+                    "Linearly", 
+                    "Exponentially"
+                ], 
+                ans: "B", 
+                exp: "Abrupt voltage change requires infinite current ($i = C\\frac{dv}{dt}$); v_C continuous at t=0⁺." 
+            },
+            { 
+                id: 14, 
+                q: "Energy stored in inductor: $w_{L} =$", 
+                opts: [
+                    "$\\frac{1}{2}LI^{2}$", 
+                    "$\\frac{1}{2}CV^{2}$", 
+                    "$LI$", 
+                    "$CV$"
+                ], 
+                ans: "A", 
+                exp: "Magnetic energy $w_{L}(t) = \\frac{1}{2}Li^{2}(t)$." 
+            },
+            { 
+                id: 15, 
+                q: "Energy stored in capacitor: $w_{C} =$", 
+                opts: [
+                    "$\\frac{1}{2}LI^{2}$", 
+                    "$\\frac{1}{2}CV^{2}$", 
+                    "$LI$", 
+                    "$CV$"
+                ], 
+                ans: "B", 
+                exp: "Electric energy $w_{C}(t) = \\frac{1}{2}Cv^{2}(t)$." 
+            },
+            { 
+                id: 16, 
+                q: "In RL natural response, energy initially in L eventually dissipates in", 
+                opts: [
+                    "Capacitor", 
+                    "Voltage source", 
+                    "Resistor(s)", 
+                    "Inductor"
+                ], 
+                ans: "C", 
+                exp: "All initial inductor energy $w_{0} = \\frac{1}{2}LI_{0}^{2}$ dissipates as heat in resistor(s); ∫p_R dt from 0 to ∞ = w_0." 
+            },
+            { 
+                id: 17, 
+                q: "In RC natural response, energy initially in C dissipates in", 
+                opts: [
+                    "Inductor", 
+                    "Current source", 
+                    "Resistor(s)", 
+                    "Capacitor"
+                ], 
+                ans: "C", 
+                exp: "Initial capacitor energy $w_{0} = \\frac{1}{2}CV_{0}^{2}$ fully dissipates in resistor(s)." 
+            },
+            { 
+                id: 18, 
+                q: "For step response, complete solution is", 
+                opts: [
+                    "Natural only", 
+                    "Forced only", 
+                    "Natural + forced", 
+                    "Steady-state only"
+                ], 
+                ans: "C", 
+                exp: "Complete step response = homogeneous (natural/transient) + particular (forced/steady-state)." 
+            },
+            { 
+                id: 19, 
+                q: "Transient response is", 
+                opts: [
+                    "Permanent part", 
+                    "Temporary decaying part", 
+                    "Steady-state", 
+                    "Final value"
+                ], 
+                ans: "B", 
+                exp: "Transient = natural response terms, decays exponentially with time constant τ." 
+            },
+            { 
+                id: 20, 
+                q: "Steady-state response is", 
+                opts: [
+                    "Temporary", 
+                    "Permanent after transients die", 
+                    "Initial value", 
+                    "Time constant"
+                ], 
+                ans: "B", 
+                exp: "Steady-state = forced response, remains after transients (t ≥ 5τ)." 
+            },
+            { 
+                id: 21, 
+                q: "For RC step response (zero initial), $v(t) =$", 
+                opts: [
+                    "$V_{s}e^{- t/\\tau}$", 
+                    "$V_{s}(1 - e^{- t/\\tau})$", 
+                    "$I_{s}Re^{- t/\\tau}$", 
+                    "$I_{s}R(1 - e^{- t/\\tau})$"
+                ], 
+                ans: "B", 
+                exp: "Zero initial v(0)=0, final v_∞ = V_s (DC), so v(t) = V_s (1 - e^{-t/τ}), τ=RC." 
+            },
+            { 
+                id: 22, 
+                q: "For RL step response (zero initial), $i(t) =$", 
+                opts: [
+                    "$\\frac{V_{s}}{R}e^{- t/\\tau}$", 
+                    "$\\frac{V_{s}}{R}(1 - e^{- t/\\tau})$", 
+                    "$I_{s}e^{- t/\\tau}$", 
+                    "$I_{s}(1 - e^{- t/\\tau})$"
+                ], 
+                ans: "B", 
+                exp: "Zero initial i(0)=0, final i_∞ = V_s / R, i(t) = (V_s / R) (1 - e^{-t/τ}), τ=L/R." 
+            },
+            { 
+                id: 23, 
+                q: "General step response formula: $x(t) =$", 
+                opts: [
+                    "$x_{\\infty} + (x_{0} - x_{\\infty})e^{- t/\\tau}$", 
+                    "$x_{0}e^{- t/\\tau}$", 
+                    "$x_{\\infty}(1 - e^{- t/\\tau})$", 
+                    "$x_{0} + x_{\\infty}e^{- t/\\tau}$"
+                ], 
+                ans: "A", 
+                exp: "General form: x(t) = x_∞ + (x_0 - x_∞) e^{-t/τ}; satisfies x(0⁺)=x_0, x(∞)=x_∞." 
+            },
+            { 
+                id: 24, 
+                q: "$x_{0}$ is", 
+                opts: [
+                    "Final value", 
+                    "Initial value at t=0⁺", 
+                    "Steady-state", 
+                    "Time constant"
+                ], 
+                ans: "B", 
+                exp: "x_0 = value at t=0⁺ (immediately after switching)." 
+            },
+            { 
+                id: 25, 
+                q: "$x_{\\infty}$ is", 
+                opts: [
+                    "Initial value", 
+                    "Final steady-state value", 
+                    "Transient", 
+                    "Time-varying"
+                ], 
+                ans: "B", 
+                exp: "x_∞ = lim_{t→∞} x(t), steady-state DC value." 
+            },
+            { 
+                id: 26, 
+                q: "For general solution, τ is found using", 
+                opts: [
+                    "Original circuit", 
+                    "Thévenin equivalent at storage element terminals", 
+                    "Norton equivalent", 
+                    "Superposition"
+                ], 
+                ans: "B", 
+                exp: "Replace storage element with open/short, find R_Th (sources off, dependent active); τ = R_Th C or L / R_Th." 
+            },
+            { 
+                id: 27, 
+                q: "Sequential switching means", 
+                opts: [
+                    "Single switch once", 
+                    "Multiple switches or switching at different times", 
+                    "DC steady-state", 
+                    "AC sinusoidal"
+                ], 
+                ans: "B", 
+                exp: "Multiple switches or switching instants require piecewise solutions, matching continuity at boundaries." 
+            },
+            { 
+                id: 28, 
+                q: "In sequential switching, solve by", 
+                opts: [
+                    "One expression for all t", 
+                    "Separate expressions per time interval, matching initials", 
+                    "Ignoring switches", 
+                    "Superposition only"
+                ], 
+                ans: "B", 
+                exp: "Solve interval-by-interval (e.g., 0 < t < t1, t > t1), use continuity of i_L or v_C as initial for next interval." 
+            },
+            { 
+                id: 29, 
+                q: "Unbounded response occurs if", 
+                opts: [
+                    "τ > 0 always bounded", 
+                    "Negative resistance → negative τ → growth", 
+                    "Overdamped", 
+                    "Critically damped"
+                ], 
+                ans: "B", 
+                exp: "If R_Th < 0 (e.g., dependent source), τ < 0, response grows exponentially unbounded." 
+            },
+            { 
+                id: 30, 
+                q: "Integrating amplifier output is", 
+                opts: [
+                    "$v_{o} = - \\frac{1}{RC}\\int v_{s}dt$", 
+                    "$v_{o} = - RC\\frac{dv_{s}}{dt}$", 
+                    "$v_{o} = \\frac{R_{f}}{R_{i}}v_{s}$", 
+                    "$v_{o} = v_{s}$"
+                ], 
+                ans: "A", 
+                exp: "Virtual ground: i = v_s / R, v_o = - (1/C) ∫ i dt = - (1/RC) ∫ v_s dt." 
+            },
+            { 
+                id: 31, 
+                q: "For RL natural, voltage across R is", 
+                opts: [
+                    "$v_{R} = I_{0}Re^{- Rt/L}$", 
+                    "$v_{R} = L\\frac{di}{dt}$", 
+                    "Both A and B", 
+                    "$v_{R} = I_{0}Le^{- t/\\tau}$"
+                ], 
+                ans: "C", 
+                exp: "From i(t), v_R(t) = i(t) R = I_0 R e^{-t/τ}; also v_L = L di/dt = - I_0 R e^{-t/τ} (opposing)." 
+            },
+            { 
+                id: 32, 
+                q: "Power in RL natural response: $p =$", 
+                opts: [
+                    "$I_{0}^{2}Re^{- 2Rt/L}$", 
+                    "$I_{0}^{2}Le^{- Rt/L}$", 
+                    "$\\frac{V_{0}^{2}}{R}e^{- 2t/\\tau}$", 
+                    "A for resistor"
+                ], 
+                ans: "A", 
+                exp: "p_R(t) = i² R = I_0² R e^{-2t/τ}." 
+            },
+            { 
+                id: 33, 
+                q: "Total energy dissipated in R equals initial", 
+                opts: [
+                    "Power in L", 
+                    "Energy in L", 
+                    "Voltage in C", 
+                    "Current in C"
+                ], 
+                ans: "B", 
+                exp: "∫_0^∞ p_R dt = ∫_0^∞ I_0² R e^{-2Rt/L} dt = (1/2) L I_0² = initial w_L." 
+            },
+            { 
+                id: 34, 
+                q: "For RC, current $i_{C} =$", 
+                opts: [
+                    "$C\\frac{dv}{dt} = - \\frac{V_{0}}{R}e^{- t/RC}$", 
+                    "$\\frac{V_{0}}{R}e^{- t/RC}$", 
+                    "Both signs possible", 
+                    "$V_{0}Ce^{- t/\\tau}$"
+                ], 
+                ans: "A", 
+                exp: "i_C = C dv/dt = C (-V_0 / (RC)) e^{-t/τ} = - (V_0 / R) e^{-t/τ}." 
+            },
+            { 
+                id: 35, 
+                q: "In Example 7.1, i(t) =", 
+                opts: [
+                    "20e^{-5t} A", 
+                    "20(1 - e^{-5t}) A", 
+                    "16e^{-5t} A", 
+                    "Depends on resistor"
+                ], 
+                ans: "D", 
+                exp: "Depends on specific resistor values; in Ex. 7.1, uses R_eq for τ, but i scales with path." 
+            },
+            { 
+                id: 36, 
+                q: "Graphical time constant: draw tangent at", 
+                opts: [
+                    "t=∞", 
+                    "t=0 to time axis intercept", 
+                    "Midway", 
+                    "5τ"
+                ], 
+                ans: "B", 
+                exp: "Tangent at t=0 to horizontal time axis; intercept = τ (initial slope interpretation)." 
+            },
+            { 
+                id: 37, 
+                q: "For Thévenin eq. in general solution, R_Th is", 
+                opts: [
+                    "Resistance seen by storage element (sources off)", 
+                    "Open-circuit voltage", 
+                    "Short-circuit current", 
+                    "Load resistance"
+                ], 
+                ans: "A", 
+                exp: "R_Th = equivalent resistance 'seen by' L or C (deactivate independent sources)." 
+            },
+            { 
+                id: 38, 
+                q: "In Ex. 7.3, roots from characteristic eq. confirm", 
+                opts: [
+                    "Time constant", 
+                    "Initial conditions", 
+                    "Flux linkage", 
+                    "All"
+                ], 
+                ans: "D", 
+                exp: "Method 2 solves characteristic equation, confirms τ = L/R_eq, initials, and dynamics match Method 1." 
+            },
+            { 
+                id: 39, 
+                q: "Unit step u(t):", 
+                opts: [
+                    "0 for t<0, 1 for t≥0", 
+                    "Impulse at t=0", 
+                    "Ramp t≥0", 
+                    "Exponential"
+                ], 
+                ans: "A", 
+                exp: "Unit step u(t): 0 (t<0), 1 (t≥0)." 
+            },
+            { 
+                id: 40, 
+                q: "Unit impulse δ(t): derivative of", 
+                opts: [
+                    "Ramp", 
+                    "Step u(t)", 
+                    "Sine", 
+                    "Cosine"
+                ], 
+                ans: "B", 
+                exp: "δ(t) = du/dt, area 1 at t=0." 
+            },
+            { 
+                id: 41, 
+                q: "For delayed step u(t - t₀):", 
+                opts: [
+                    "Shifted by t₀", 
+                    "Advanced", 
+                    "Impulse", 
+                    "No change"
+                ], 
+                ans: "A", 
+                exp: "u(t - t_0): shifts right by t_0." 
+            },
+            { 
+                id: 42, 
+                q: "Gate function (pulse):", 
+                opts: [
+                    "u(t) - u(t - T)", 
+                    "δ(t) * rect(t)", 
+                    "Ramp - ramp", 
+                    "A"
+                ], 
+                ans: "D", 
+                exp: "Gate/pulse width T: u(t) - u(t - T)." 
+            },
+            { 
+                id: 43, 
+                q: "∫ f(t) δ(t - t₀) dt =", 
+                opts: [
+                    "f(t₀) (sifting property)", 
+                    "0", 
+                    "∞", 
+                    "f(0)"
+                ], 
+                ans: "A", 
+                exp: "Sifting: ∫ f(t) δ(t - t_0) dt = f(t_0)." 
+            },
+            { 
+                id: 44, 
+                q: "Unit ramp r(t) =", 
+                opts: [
+                    "t u(t)", 
+                    "∫ u(τ) dτ", 
+                    "Derivative of step", 
+                    "A and B"
+                ], 
+                ans: "D", 
+                exp: "r(t) = t u(t) = ∫_{-∞}^t u(σ) dσ." 
+            },
+            { 
+                id: 45, 
+                q: "In Ex. 7.6, derivative of gate gives", 
+                opts: [
+                    "Two impulses", 
+                    "Single step", 
+                    "Ramp", 
+                    "Sine"
+                ], 
+                ans: "A", 
+                exp: "d/dt [u(t) - u(t - T)] = δ(t) - δ(t - T)." 
+            },
+            { 
+                id: 46, 
+                q: "For step input at t=t₀, replace t with", 
+                opts: [
+                    "t + t₀", 
+                    "t - t₀", 
+                    "e^{-t₀/τ} t", 
+                    "B"
+                ], 
+                ans: "D", 
+                exp: "Replace t → (t - t_0) in exponential." 
+            },
+            { 
+                id: 47, 
+                q: "Op amp integrator: capacitor in", 
+                opts: [
+                    "Input", 
+                    "Feedback", 
+                    "Output", 
+                    "Ground"
+                ], 
+                ans: "B", 
+                exp: "Capacitor in feedback path for integration." 
+            },
+            { 
+                id: 48, 
+                q: "Ideal op amp constraints:", 
+                opts: [
+                    "v₊ = v₋, i₊ = i₋ = 0", 
+                    "Infinite gain", 
+                    "vₒ = A (v₊ - v₋)", 
+                    "A"
+                ], 
+                ans: "D", 
+                exp: "Ideal op amp: infinite input Z (i₊=i₋=0), v₊=v₋ (virtual short)." 
+            },
+            { 
+                id: 49, 
+                q: "In Ex. 7.14, output ramps", 
+                opts: [
+                    "Linearly with step input", 
+                    "Exponentially", 
+                    "Impulsively", 
+                    "Constant"
+                ], 
+                ans: "A", 
+                exp: "Constant v_s → linear ramp v_o (∫ constant = ramp)." 
+            },
+            { 
+                id: 50, 
+                q: "Saturation in integrator occurs when", 
+                opts: [
+                    "Linear range exceeded", 
+                    "τ too small", 
+                    "Step too large", 
+                    "A and C"
+                ], 
+                ans: "D", 
+                exp: "Op amp saturates (±V_sat) if ∫ exceeds linear range; large step or long time accelerates." 
+            },
+            { 
+                id: 51, 
+                q: "In sequential Ex. 7.11, key is", 
+                opts: [
+                    "Continuity of i_L or v_C at switches", 
+                    "Reset to zero", 
+                    "Ignore previous", 
+                    "Superposition"
+                ], 
+                ans: "A", 
+                exp: "Match i_L(0⁺ from prior) = i_L(0⁻ new) or v_C continuous across switch times." 
+            },
+            { 
+                id: 52, 
+                q: "Unbounded: R_Th", 
+                opts: [
+                    "Positive → decay", 
+                    "Negative → growth", 
+                    "Zero → constant", 
+                    "Infinite → impulse"
+                ], 
+                ans: "B", 
+                exp: "Negative R_Th (active/dependent) → τ < 0 → e^{+|t/τ|} grows." 
+            },
+            { 
+                id: 53, 
+                q: "In Ex. 7.13, τ negative because", 
+                opts: [
+                    "Dependent source → negative R_Th", 
+                    "Short circuit", 
+                    "Open", 
+                    "Overdamped"
+                ], 
+                ans: "A", 
+                exp: "Dependent voltage source creates negative effective resistance → R_Th < 0." 
+            },
+            { 
+                id: 54, 
+                q: "For RC with dependent gain, if R_Th negative, response", 
+                opts: [
+                    "Bounded", 
+                    "Oscillates", 
+                    "Unbounded grows", 
+                    "Zero"
+                ], 
+                ans: "C", 
+                exp: "Growth indicates instability/unbounded (real circuits saturate)." 
+            },
+            { 
+                id: 55, 
+                q: "RMS of periodic: after 5τ,", 
+                opts: [
+                    "100% initial", 
+                    "<1% initial", 
+                    "36.8%", 
+                    "63.2%"
+                ], 
+                ans: "B", 
+                exp: "After 5τ, transient <1%, response ≈ steady-state." 
+            },
+            { 
+                id: 56, 
+                q: "In PSpice, transient analysis uses", 
+                opts: [
+                    "s-domain", 
+                    "Time-step simulation", 
+                    "Laplace only", 
+                    "Fourier"
+                ], 
+                ans: "B", 
+                exp: "PSpice/MultiSim transient simulation steps time-domain directly." 
+            },
+            { 
+                id: 57, 
+                q: "For RL step zero initial, v_L(t) =", 
+                opts: [
+                    "$\\frac{V_{s}}{L}Rte^{- Rt/L}$", 
+                    "$V_{s}e^{- Rt/L}$", 
+                    "$\\frac{V_{s}L}{R}(1 - e^{- t/\\tau})$", 
+                    "A"
+                ], 
+                ans: "B", 
+                exp: "v_L = L di/dt = L (V_s / R) (-1/τ) e^{-t/τ} = - V_s e^{-t/τ}." 
+            },
+            { 
+                id: 58, 
+                q: "In Ex. 7.15, v matches because", 
+                opts: [
+                    "KVL satisfied", 
+                    "Initial/final correct", 
+                    "Flux conserved", 
+                    "All"
+                ], 
+                ans: "D", 
+                exp: "KVL, initials, finals, τ all verified by both methods." 
+            },
+            { 
+                id: 59, 
+                q: "Singularity functions useful for", 
+                opts: [
+                    "Smooth signals only", 
+                    "Switching/discontinuities", 
+                    "Steady-state", 
+                    "Laplace"
+                ], 
+                ans: "B", 
+                exp: "Singularity functions (u, δ, r) handle discontinuities/switches compactly." 
+            },
+            { 
+                id: 60, 
+                q: "u(t - 2) + 2u(t - 5):", 
+                opts: [
+                    "Step at 2 height 1, step at 5 height 2", 
+                    "Pulse width 3 height 1", 
+                    "Ramp", 
+                    "Impulse"
+                ], 
+                ans: "A", 
+                exp: "Step height 1 at t=2, additional height 2 at t=5 (total 3 after)." 
+            },
+            { 
+                id: 61, 
+                q: "Derivative of pulse u(t) - u(t - T):", 
+                opts: [
+                    "δ(t) - δ(t - T)", 
+                    "Two steps", 
+                    "Ramp edges", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Derivative of pulse edges gives impulses." 
+            },
+            { 
+                id: 62, 
+                q: "In sawtooth Ex. 7.7, decomposition:", 
+                opts: [
+                    "Ramps + step", 
+                    "Pulses only", 
+                    "Impulses", 
+                    "A"
+                ], 
+                ans: "D", 
+                exp: "Sawtooth = ramp + delayed negative ramp (or steps)." 
+            },
+            { 
+                id: 63, 
+                q: "Op amp RC: capacitor location determines", 
+                opts: [
+                    "Gain only", 
+                    "Time constant position", 
+                    "Saturation", 
+                    "All"
+                ], 
+                ans: "B", 
+                exp: "Feedback C → integrator (∫), input C → differentiator." 
+            },
+            { 
+                id: 64, 
+                q: "In feedback capacitor integrator, v_o ∝", 
+                opts: [
+                    "dv_s/dt", 
+                    "∫ v_s dt", 
+                    "v_s", 
+                    "1/v_s"
+                ], 
+                ans: "B", 
+                exp: "Feedback capacitor integrates input current." 
+            },
+            { 
+                id: 65, 
+                q: "Cascaded integrators:", 
+                opts: [
+                    "First-order each", 
+                    "Second-order overall", 
+                    "DC only", 
+                    "Unstable"
+                ], 
+                ans: "B", 
+                exp: "Two integrators → second-order (double ∫)." 
+            },
+            { 
+                id: 66, 
+                q: "Photoflash: capacitor discharges through", 
+                opts: [
+                    "Lamp (resistor) when threshold reached", 
+                    "Constant current", 
+                    "Inductor", 
+                    "Op amp"
+                ], 
+                ans: "A", 
+                exp: "C charges via R until V_threshold, then discharges flash through lamp R." 
+            },
+            { 
+                id: 67, 
+                q: "Frog kick: current through body modeled as", 
+                opts: [
+                    "Resistor in RL discharge", 
+                    "Capacitor charge", 
+                    "Step", 
+                    "Impulse"
+                ], 
+                ans: "A", 
+                exp: "Body resistance R with inductor discharge models kick current." 
+            },
+            { 
+                id: 68, 
+                q: "In Ex. 7.1, energy % in 10Ω resistor:", 
+                opts: [
+                    "100%", 
+                    "64%", 
+                    "36%", 
+                    "B"
+                ], 
+                ans: "A", 
+                exp: "All energy dissipates in resistors proportionally to R shares." 
+            },
+            { 
+                id: 69, 
+                q: "Parallel inductors: equivalent L_eq initial i_eq", 
+                opts: [
+                    "Sum L, sum i", 
+                    "1/sum(1/L), sum i", 
+                    "Product, average", 
+                    "Min L, max i"
+                ], 
+                ans: "B", 
+                exp: "Parallel L_eq = 1/∑(1/L_k), i_eq(0) = ∑ i_k(0) (KCL)." 
+            },
+            { 
+                id: 70, 
+                q: "For sequential, plot shows", 
+                opts: [
+                    "Continuous i_L/v_C, discontinuous others", 
+                    "All continuous", 
+                    "All discontinuous", 
+                    "A"
+                ], 
+                ans: "D", 
+                exp: "i_L, v_C continuous; voltages/currents elsewhere may jump." 
+            }
+        ];
+
+        const perPage = 10;
+        const totalQ = data.length;
+        const totalPages = Math.ceil(totalQ / perPage);
+        let currentPage = 1;
+        const LS_KEY = "chapter7_quiz_answers";
+        const pagesContainer = document.getElementById("pagesContainer");
+        const progressEl = document.getElementById("progress");
+        const resultEl = document.getElementById("result");
+        const explanationsEl = document.getElementById("explanations");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        function loadSaved() {
+            try {
+                const raw = localStorage.getItem(LS_KEY);
+                if (!raw) return {};
+                const obj = JSON.parse(raw);
+                return obj && typeof obj === "object" ? obj : {};
+            } catch (e) { return {}; }
+        }
+        let answers = loadSaved();
+        function saveAnswers() {
+            try {
+                localStorage.setItem(LS_KEY, JSON.stringify(answers));
+            } catch (e) {}
+        }
+
+        function createPage(pageNum) {
+            const start = (pageNum - 1) * perPage;
+            const end = Math.min(start + perPage, totalQ);
+            const page = document.createElement("div");
+            page.className = "page";
+            page.dataset.page = pageNum;
+            
+            for (let i = start; i < end; i++) {
+                const q = data[i];
+                const qDiv = document.createElement("div");
+                qDiv.className = "question";
+                
+                // Question text
+                const qText = document.createElement("div");
+                qText.className = "qtext";
+                qText.innerHTML = `<strong>Q${q.id}.</strong> ${q.q}`;
+                qDiv.appendChild(qText);
+                
+                // Options container
+                const optsDiv = document.createElement("div");
+                optsDiv.className = "options";
+                
+                ["A", "B", "C", "D"].forEach((letter, idx) => {
+                    const optionDiv = document.createElement("div");
+                    optionDiv.className = "option-item";
+                    
+                    const inp = document.createElement("input");
+                    inp.type = "radio";
+                    inp.name = "q" + q.id;
+                    inp.value = letter;
+                    inp.id = `q${q.id}_${letter}`;
+                    if (answers[q.id] === letter) inp.checked = true;
+                    inp.addEventListener("change", () => {
+                        answers[q.id] = letter;
+                        saveAnswers();
+                    });
+                    
+                    const label = document.createElement("label");
+                    label.htmlFor = `q${q.id}_${letter}`;
+                    label.style.display = "flex";
+                    label.style.alignItems = "flex-start";
+                    label.style.cursor = "pointer";
+                    label.style.width = "100%";
+                    
+                    const letterSpan = document.createElement("span");
+                    letterSpan.className = "option-label";
+                    letterSpan.textContent = letter + ".";
+                    letterSpan.style.marginRight = "8px";
+                    letterSpan.style.fontWeight = "bold";
+                    
+                    const textSpan = document.createElement("span");
+                    textSpan.className = "option-text";
+                    textSpan.innerHTML = q.opts[idx];
+                    
+                    label.appendChild(inp);
+                    label.appendChild(letterSpan);
+                    label.appendChild(textSpan);
+                    optionDiv.appendChild(label);
+                    optsDiv.appendChild(optionDiv);
+                });
+                
+                qDiv.appendChild(optsDiv);
+                page.appendChild(qDiv);
+            }
+            return page;
+        }
+
+        function renderPages() {
+            pagesContainer.innerHTML = "";
+            for (let p = 1; p <= totalPages; p++) {
+                const pg = createPage(p);
+                if (p === currentPage) pg.classList.add("active");
+                pagesContainer.appendChild(pg);
+            }
+            updateProgress();
+            updateNavButtons();
+            // Render math after pages are created
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function showPage(p) {
+            currentPage = p;
+            document.querySelectorAll(".page").forEach(pg => {
+                pg.classList.toggle("active", Number(pg.dataset.page) === currentPage);
+            });
+            updateProgress();
+            updateNavButtons();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            // Re-render math for the new page
+            setTimeout(() => {
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(document.body, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }, 100);
+        }
+
+        function updateProgress() {
+            const start = (currentPage - 1) * perPage + 1;
+            const end = Math.min(currentPage * perPage, totalQ);
+            progressEl.textContent = "Page " + currentPage + " of " + totalPages + "  (Questions " + start + "–" + end + " of " + totalQ + ")";
+        }
+
+        function updateNavButtons() {
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.textContent = currentPage === totalPages ? "Submit" : "Next";
+        }
+
+        function gradeQuiz() {
+            let correct = 0;
+            const details = [];
+            data.forEach(q => {
+                const userAns = answers[q.id] || null;
+                const isCorrect = userAns === q.ans;
+                if (isCorrect) correct++;
+                details.push({ q, ans: userAns, isCorrect });
+            });
+            const scorePct = Math.round(100 * correct / totalQ);
+            resultEl.textContent = "You scored " + correct + " / " + totalQ + " (" + scorePct + "%).";
+            buildExplanations(details);
+        }
+
+        function buildExplanations(details) {
+            explanationsEl.innerHTML = "";
+            details.forEach(d => {
+                const wrap = document.createElement("div");
+                wrap.className = "exp-item";
+                const title = document.createElement("div");
+                title.innerHTML = "<strong>Q" + d.q.id + ":</strong> " + d.q.q;
+                wrap.appendChild(title);
+                const ansLine = document.createElement("div");
+                const ua = d.ans ? d.ans : "(no answer)";
+                ansLine.innerHTML = "<span class='" + (d.isCorrect ? "correct" : "incorrect") + "'>Your answer: " + ua + "</span> &nbsp; | &nbsp; Correct: <strong>" + d.q.ans + "</strong>";
+                wrap.appendChild(ansLine);
+                const toggle = document.createElement("span");
+                toggle.className = "inline-exp-toggle";
+                toggle.textContent = "Hide Explanation";
+                const expDiv = document.createElement("div");
+                expDiv.className = "inline-exp";
+                expDiv.innerHTML = d.q.exp;
+                toggle.addEventListener("click", () => {
+                    const collapsed = expDiv.classList.toggle("collapsed");
+                    toggle.textContent = collapsed ? "Show Explanation" : "Hide Explanation";
+                });
+                wrap.appendChild(toggle);
+                wrap.appendChild(expDiv);
+                explanationsEl.appendChild(wrap);
+            });
+            // Render math in explanations
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(explanationsEl, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        prevBtn.addEventListener("click", () => { if (currentPage > 1) showPage(currentPage - 1); });
+        nextBtn.addEventListener("click", () => {
+            if (currentPage < totalPages) {
+                showPage(currentPage + 1);
+            } else {
+                gradeQuiz();
+                window.scrollTo({ top: resultEl.offsetTop, behavior: "smooth" });
+            }
+        });
+
+        renderPages();
+    </script>
+</body>
+</html>
