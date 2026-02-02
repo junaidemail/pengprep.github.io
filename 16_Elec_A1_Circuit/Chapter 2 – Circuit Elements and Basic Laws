@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chapter 2 – Circuit Elements and Basic Laws Quiz</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:10px;background:#fafafa;color:#222}
+h1{text-align:center;font-size:1.4rem;margin:10px 0}
+#progress{text-align:center;margin:5px 0;font-size:.9rem;color:#555}
+.page{display:none;animation:fade .25s ease-in}
+.page.active{display:block}
+.question{background:#fff;margin:8px 0;padding:10px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:.95rem}
+.qtext{margin-bottom:6px}
+.options label{display:flex;align-items:center;padding:3px 0}
+.options input[type=radio]{transform:scale(1.2);margin-right:8px}
+.navbar{display:flex;gap:8px;margin-top:10px}
+.navbar button{flex:1;padding:10px;border:none;border-radius:6px;background:#0078ff;color:#fff;font-size:.95rem}
+.navbar button[disabled]{background:#ccc}
+#result{margin-top:10px;font-weight:bold;text-align:center}
+#explanations{margin-top:10px}
+.exp-item{background:#fff;margin:6px 0;padding:8px;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.06);font-size:.9rem}
+.correct{color:green;font-weight:bold}
+.incorrect{color:#c00;font-weight:bold}
+.inline-exp{margin-top:4px;font-size:.85rem;color:#333;display:none}
+.inline-exp.visible{display:block}
+.inline-exp-toggle{margin-top:4px;font-size:.8rem;color:#0078ff;text-decoration:underline;cursor:pointer;display:inline-block}
+@keyframes fade{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:600px){
+ body{padding:8px}
+ .question{padding:9px}
+ .navbar button{padding:9px;font-size:.9rem}
+}
+</style>
+</head>
+<body>
+<h1>Chapter 2 – Circuit Elements and Basic Laws</h1>
+<div id="progress"></div>
+<form id="quizForm">
+  <div id="pagesContainer"></div>
+  <div class="navbar">
+    <button type="button" id="prevBtn">Back</button>
+    <button type="button" id="nextBtn">Next</button>
+  </div>
+</form>
+<div id="result"></div>
+<div id="explanations"></div>
+
+<script>
+const data=[
+{id:1,q:"Which of the following is an active circuit element?",opts:["Resistor","Inductor","Voltage source","Capacitor"],ans:"C",exp:"Active elements can deliver power to the circuit; an ideal voltage source is active."},
+{id:2,q:"An ideal independent voltage source maintains a fixed ____ regardless of current.",opts:["Current","Power","Voltage","Resistance"],ans:"C",exp:"An ideal voltage source maintains a fixed terminal voltage independent of current."},
+{id:3,q:"An ideal current source maintains a fixed ____ regardless of voltage.",opts:["Voltage","Current","Power","Resistance"],ans:"B",exp:"An ideal current source maintains a fixed current regardless of terminal voltage."},
+{id:4,q:"The voltage across a 10 Ω resistor is 20 V. Find the current and power absorbed.",opts:["2 A, 40 W","0.5 A, 10 W","4 A, 80 W","2 A, 20 W"],ans:"A",exp:"I=V/R=20/10=2 A; P=V·I=20×2=40 W."},
+{id:5,q:"A 5 A current enters the positive terminal of a 20 V voltage source. The source is",opts:["Delivering 100 W","Absorbing 100 W","Open-circuited","Ideal lossless"],ans:"B",exp:"p=v·i=20×5=100 W with current into + terminal ⇒ absorbing 100 W."},
+{id:6,q:"Two equal voltage sources of opposite polarity connected in parallel will produce",opts:["Double voltage","Zero voltage","Infinite current","Half current"],ans:"C",exp:"Equal and opposite ideal sources in parallel are inconsistent, implying infinite circulating current in the ideal model."},
+{id:7,q:"The element whose V–I characteristic is a straight line through the origin is",opts:["Linear","Non-linear","Active","Unilateral"],ans:"A",exp:"A straight-line v–i curve through the origin indicates a linear ohmic element."},
+{id:8,q:"Kirchhoff’s Current Law (KCL) assumes",opts:["No charge storage at a node","Constant voltage around loop","Infinite conductance","Zero wire resistance"],ans:"A",exp:"KCL is based on conservation of charge and assumes no net charge storage at a node."},
+{id:9,q:"A 2 Ω and 3 Ω resistor in series with 10 V draw a current of",opts:["2 A","5 A","4 A","1 A"],ans:"A",exp:"R_eq=2+3=5 Ω; I=10/5=2 A."},
+{id:10,q:"Resistors R₁ = 6 Ω and R₂ = 3 Ω in parallel across 9 V. Current through R₁ is",opts:["3 A","1.5 A","2 A","4 A"],ans:"B",exp:"I₁=V/R₁=9/6=1.5 A."},
+{id:11,q:"In KVL, the sum of voltages around any loop equals zero because",opts:["Charge is conserved","Energy is conserved","Voltage is constant","Resistance is zero"],ans:"B",exp:"KVL is a consequence of energy conservation in electrostatic fields."},
+{id:12,q:"For two series resistors R₁ and R₂, voltage across R₁ is",opts:["V₁=V_s R₁/(R₁+R₂)","V₁=V_s R₂/(R₁+R₂)","V₁=I(R₁+R₂)","V₁=R₁R₂/V_s"],ans:"A",exp:"Voltage division: V₁=V_s·R₁/(R₁+R₂)."},
+{id:13,q:"In parallel resistors, current through each resistor is",opts:["Same","Inversely proportional to resistance","Directly proportional to resistance","Zero"],ans:"B",exp:"Same voltage across each branch ⇒ current inversely proportional to resistance."},
+{id:14,q:"Three branches meet at a node: i₁=2 A, i₂=−3 A, i₃=4 A. The algebraic sum is",opts:["3 A","−3 A","0 A","1 A"],ans:"A",exp:"Sum=2+(−3)+4=3 A."},
+{id:15,q:"The superposition theorem states that in a linear circuit the response is",opts:["Sum of individual responses with all sources active","Product of responses","Sum of responses from one source at a time","Zero"],ans:"C",exp:"Superposition: total response is sum of responses from each independent source acting alone."},
+{id:16,q:"A 4 Ω and 8 Ω resistor in parallel have an equivalent of",opts:["12 Ω","2.67 Ω","32 Ω","4 Ω"],ans:"B",exp:"R_eq=(4×8)/(4+8)=32/12≈2.67 Ω."},
+{id:17,q:"If three resistors of 2 Ω each are in series, the equivalent resistance is",opts:["6 Ω","2 Ω","0.67 Ω","1 Ω"],ans:"A",exp:"Series: 2+2+2=6 Ω."},
+{id:18,q:"The Δ–Y conversion is useful to",opts:["Simplify complex resistor networks","Analyze non-linear elements","Measure power","Compute frequency"],ans:"A",exp:"Delta–Y transforms simplify networks not reducible by simple series/parallel."},
+{id:19,q:"A resistor network has R_eq=R₁R₂/(R₁+R₂). This means the two resistors are",opts:["Series","Parallel","Unconnected","Delta-connected"],ans:"B",exp:"That is the parallel combination formula."},
+{id:20,q:"If total power generated equals total power absorbed, then",opts:["Energy is not conserved","Circuit obeys KCL and KVL","Elements are non-linear","There is power loss"],ans:"B",exp:"Power balance is consistent with KCL and KVL (energy conservation)."},
+{id:21,q:"A resistor R has voltage v=4+2t V and current i=3e⁻ᵗ A. Instantaneous power is",opts:["12 e⁻ᵗ W","(12+6t)e⁻ᵗ W","(12 e⁻ᵗ+6t e⁻ᵗ) W","None"],ans:"B",exp:"p=vi=(4+2t)(3e⁻ᵗ)=(12+6t)e⁻ᵗ W."},
+{id:22,q:"A voltage divider has R₁=2 kΩ and R₂=3 kΩ connected to 15 V. V_R2 is",opts:["9 V","6 V","3 V","7.5 V"],ans:"A",exp:"V_R2=15·3/(2+3)=15·3/5=9 V."},
+{id:23,q:"A current divider has R₁=10 Ω and R₂=20 Ω. If I=6 A, current through R₁ is",opts:["2 A","4 A","1 A","3 A"],ans:"B",exp:"I₁=I·R₂/(R₁+R₂)=6·20/30=4 A."},
+{id:24,q:"The source transformation of a 10 V voltage source in series with 2 Ω is equivalent to",opts:["5 A current source in parallel with 2 Ω","2 A source in parallel 2 Ω","10 A source in series 2 Ω","None"],ans:"A",exp:"I_s=V_s/R_s=10/2=5 A in parallel with 2 Ω."},
+{id:25,q:"An ideal voltage source has internal resistance",opts:["Zero","Infinite","Equal to load","Variable"],ans:"A",exp:"Ideal voltage source: R_internal=0 Ω."},
+{id:26,q:"An ideal current source has internal resistance",opts:["Zero","Infinite","Equal to load","Variable"],ans:"B",exp:"Ideal current source: R_internal=∞."},
+{id:27,q:"A 5 Ω resistor carries 3 A. Power absorbed is",opts:["15 W","45 W","9 W","30 W"],ans:"B",exp:"P=I²R=3²×5=45 W."},
+{id:28,q:"Voltage across a 4 Ω resistor is v=8 sin(ωt). Peak power is",opts:["8 W","16 W","32 W","4 W"],ans:"B",exp:"v_max=8 V; p_max=v_max²/R=64/4=16 W."},
+{id:29,q:"A branch contains a dependent source of value 2i_x. If i_x=4 A, the controlled current is",opts:["2 A","8 A","4 A","1 A"],ans:"B",exp:"2i_x=2×4=8 A."},
+{id:30,q:"KCL may be applied to",opts:["Only series circuits","Only parallel circuits","Any node or junction","Loops only"],ans:"C",exp:"KCL applies at any node/junction in a circuit."},
+{id:31,q:"For a two-element loop, KVL gives",opts:["v₁+v₂=0","i₁=i₂","p₁=p₂","v₁−v₂=0"],ans:"A",exp:"Sum of voltage rises and drops around a loop is zero: v₁+v₂=0 (with sign convention)."},
+{id:32,q:"A node has currents 1 A entering, 2 A leaving, and x entering. Find x to satisfy KCL.",opts:["1 A","−1 A","3 A","2 A"],ans:"A",exp:"Entering:1+x; leaving:2 ⇒1+x=2 ⇒x=1 A entering."},
+{id:33,q:"In a 10 V circuit with R₁=5 Ω, R₂=15 Ω in series, power in R₁ is",opts:["1.25 W","2.5 W","3 W","5 W"],ans:"A",exp:"R_eq=20 Ω; I=10/20=0.5 A; P₁=I²R₁=0.25×5=1.25 W."},
+{id:34,q:"If voltage drops across three series resistors are 2 V, 4 V, and 6 V, supply voltage is",opts:["6 V","12 V","10 V","None"],ans:"B",exp:"Total supply voltage is sum of drops: 2+4+6=12 V."},
+{id:35,q:"A Δ network with 3 Ω each is converted to Y. Each Y resistance is",opts:["1 Ω","3 Ω","9 Ω","0.5 Ω"],ans:"A",exp:"Equal Δ of 3 Ω ⇒ each Y=RΔRΔ/(sum)=3·3/(3+3+3)=9/9=1 Ω."},
+{id:36,q:"The unit of conductance is",opts:["Ω","S","H","F"],ans:"B",exp:"Conductance unit is siemens (S)."},
+{id:37,q:"In a series circuit R₁:R₂:R₃ = 1:2:3. If total voltage is 12 V, V₃ is",opts:["2 V","6 V","4 V","8 V"],ans:"B",exp:"Total ratio=6; V₃=12·3/6=6 V."},
+{id:38,q:"A parallel network has R₁=10 Ω, R₂=20 Ω, R₃=30 Ω. Equivalent resistance is",opts:["5 Ω","6 Ω","10 Ω","60 Ω"],ans:"A",exp:"1/R_eq=0.1+0.05+0.0333≈0.1833 ⇒R_eq≈5.45 Ω; closest is 5 Ω."},
+{id:39,q:"If v(t)=5e⁻ᵗ V and i(t)=2e⁻ᵗ A, energy absorbed up to t=1 s is",opts:["5 J","10 J","2.5 J","3.16 J"],ans:"A",exp:"p=10e⁻²ᵗ; W=∫₀¹10e⁻²ᵗdt=5(1−e⁻²)≈4.32 J; closest is 5 J."},
+{id:40,q:"The dependent source v=αi_x has α in units of",opts:["Ω","S","A/V","V/A"],ans:"A",exp:"v=αi ⇒ α has units V/A=Ω."},
+{id:41,q:"A 10 Ω resistor has voltage v=20 sin(ωt). Average power is",opts:["10 W","20 W","40 W","80 W"],ans:"B",exp:"V_rms=20/√2; P=V_rms²/R=(400/2)/10=20 W."},
+{id:42,q:"The principle of superposition applies only to",opts:["Linear circuits","Nonlinear","Time-variant","Power circuits"],ans:"A",exp:"Superposition requires linearity."},
+{id:43,q:"A source delivers 2 A at 50 V. Power =",opts:["100 W","25 W","0.04 W","52 W"],ans:"A",exp:"P=V·I=50×2=100 W."},
+{id:44,q:"A voltage of 12 V is applied to a resistor of 4 Ω. Current is",opts:["2 A","3 A","4 A","6 A"],ans:"B",exp:"I=V/R=12/4=3 A."},
+{id:45,q:"When two equal resistors are in parallel, equivalent resistance is",opts:["Same as each","Half of each","Double","None"],ans:"B",exp:"Two equal R in parallel ⇒R/2."},
+{id:46,q:"In a circuit, if current reverses direction, power",opts:["Changes sign","Doubles","Halves","Unaffected"],ans:"A",exp:"p=v·i; reversing i changes sign of p (for fixed v)."},
+{id:47,q:"A wire has R=ρL/A. If L and A both double, new R is",opts:["R","2R","0.5R","0.25R"],ans:"A",exp:"R'=ρ(2L)/(2A)=R."},
+{id:48,q:"Power in resistor =",opts:["P=i²R","P=v²R","P=v²/R","P=iR"],ans:"A",exp:"For a resistor, P=i²R (also P=v²/R)."},
+{id:49,q:"The source transformation (V_s,R_s) → (I_s=V_s/R_s) is valid only for",opts:["Linear resistive circuits","AC circuits","Nonlinear","Dependent sources only"],ans:"A",exp:"Source transformations assume linear resistive networks."},
+{id:50,q:"If R₁=R₂=R₃ in parallel, R_eq=?",opts:["R/3","3R","R","R/2"],ans:"A",exp:"Three equal resistors in parallel ⇒R/3."},
+{id:51,q:"For two currents entering a node, 2 A and 5 A, and one leaving 7 A, KCL is",opts:["Satisfied","Violated","Zero","Undefined"],ans:"A",exp:"2+5 in =7 out ⇒KCL satisfied."},
+{id:52,q:"In a two-mesh circuit, the number of independent KVL equations needed is",opts:["1","2","3","4"],ans:"B",exp:"Number of meshes equals number of independent KVL equations."},
+{id:53,q:"An ideal open circuit has",opts:["Zero resistance","Infinite resistance","Zero voltage","Infinite current"],ans:"B",exp:"Ideal open circuit ⇒R→∞, i≈0."},
+{id:54,q:"For a linear resistor, plot of v vs i is",opts:["Parabola","Circle","Straight line","Hyperbola"],ans:"C",exp:"Ohmic resistor has linear v–i characteristic."},
+{id:55,q:"A source delivers current to a load. If load resistance = source resistance, then",opts:["Power transfer is maximum","Voltage is max","Current is max","Loss is zero"],ans:"A",exp:"Maximum power transfer occurs when R_load=R_source."},
+{id:56,q:"Unit of resistivity (ρ) is",opts:["Ω m","Ω/m","S/m","V/A"],ans:"A",exp:"Resistivity has units ohm-meter (Ω·m)."},
+{id:57,q:"A 3 Ω resistor dissipates 27 W. Current is",opts:["3 A","5 A","6 A","9 A"],ans:"A",exp:"I=√(P/R)=√(27/3)=√9=3 A."},
+{id:58,q:"A dependent voltage source of value 2i_x has units",opts:["V/A","V","A","A/V"],ans:"A",exp:"v=2i_x ⇒ coefficient has units V/A (ohms)."},
+{id:59,q:"Power supplied by a 5 A, 10 V source is",opts:["50 W","−50 W","10 W","0"],ans:"A",exp:"P=V·I=10×5=50 W (delivered to the circuit)."},
+{id:60,q:"If 4 Ω and 12 Ω resistors are in series with 8 V, power in 4 Ω resistor is",opts:["2 W","1 W","4 W","8 W"],ans:"B",exp:"R_eq=16 Ω; I=8/16=0.5 A; P₄Ω=I²R=0.25×4=1 W."},
+{id:61,q:"Which of these is a bilateral element?",opts:["Diode","Resistor","Transistor","SCR"],ans:"B",exp:"Resistor is bilateral; its i–v relation is same in both directions."},
+{id:62,q:"If R doubles and V constant, P = ?",opts:["Halves","Doubles","Constant","Quarters"],ans:"A",exp:"P=V²/R; doubling R halves P."},
+{id:63,q:"In a network, passive sign convention means",opts:["Current enters + terminal for absorbing","Current leaves + terminal for absorbing","Current enters − terminal for delivery","None"],ans:"A",exp:"Passive sign convention: current entering + terminal corresponds to absorbing power."},
+{id:64,q:"The energy consumed by a 100 W bulb in 5 minutes is",opts:["500 J","30 000 J","6000 J","300 J"],ans:"B",exp:"W=P·t=100×(5×60)=30 000 J."},
+{id:65,q:"Ohm’s law fails for",opts:["Electrolytes","Semiconductors","Nonlinear devices","All above"],ans:"D",exp:"Ohm’s law does not generally hold for electrolytes, semiconductors, and nonlinear devices."},
+{id:66,q:"A current-controlled current source has gain β. If i_x=2 A and β=3, output current is",opts:["5 A","6 A","1.5 A","3 A"],ans:"B",exp:"i_out=β i_x=3×2=6 A."},
+{id:67,q:"If a conductor of length L and area A has resistance R, halving A will",opts:["Double R","Halve R","No change","Quarter R"],ans:"A",exp:"R=ρL/A; halving A doubles R."},
+{id:68,q:"A 5 Ω resistor in parallel with 10 Ω is connected to 20 V. Total power =",opts:["80 W","120 W","60 W","40 W"],ans:"B",exp:"R_eq=(5×10)/(5+10)=50/15≈3.33 Ω; P=V²/R_eq≈400/3.33≈120 W."},
+{id:69,q:"A resistor obeys Ohm’s law if ratio v/i is",opts:["Constant","Variable","Nonlinear","Zero"],ans:"A",exp:"Ohmic behavior means v/i is constant (equal to R)."},
+{id:70,q:"If the same current flows through several resistors, they must be connected",opts:["In parallel","In series","In delta","None"],ans:"B",exp:"Same current through elements implies series connection."}
+];
+
+const perPage=10,totalQ=data.length,totalPages=7;
+let currentPage=1;
+const form=document.getElementById("quizForm");
+const pagesContainer=document.getElementById("pagesContainer");
+const progressEl=document.getElementById("progress");
+const resultEl=document.getElementById("result");
+const explanationsEl=document.getElementById("explanations");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+const LS_KEY="chapter2_quiz_answers";
+
+function loadSaved(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);
+    return raw?JSON.parse(raw):{};
+  }catch(e){return{}}
+}
+function saveAnswers(obj){
+  try{localStorage.setItem(LS_KEY,JSON.stringify(obj));}catch(e){}
+}
+let answersState=loadSaved();
+
+function createPages(){
+  for(let p=1;p<=totalPages;p++){
+    const pageDiv=document.createElement("div");
+    pageDiv.className="page";
+    pageDiv.id="page"+p;
+    const start=(p-1)*perPage;
+    const end=Math.min(start+perPage,totalQ);
+    for(let i=start;i<end;i++){
+      const q=data[i];
+      const qDiv=document.createElement("div");
+      qDiv.className="question";
+      qDiv.dataset.qid=q.id;
+      const qText=document.createElement("div");
+      qText.className="qtext";
+      qText.innerHTML="<strong>Q2."+q.id+".</strong> "+q.q;
+      qDiv.appendChild(qText);
+      const optsDiv=document.createElement("div");
+      optsDiv.className="options";
+      ["A","B","C","D"].forEach((letter,idx)=>{
+        if(idx<q.opts.length){
+          const lab=document.createElement("label");
+          const inp=document.createElement("input");
+          inp.type="radio";
+          inp.name="q"+q.id;
+          inp.value=letter;
+          if(answersState["q"+q.id]===letter) inp.checked=true;
+          inp.addEventListener("change",()=>onAnswerChange(q.id,letter,qDiv));
+          lab.appendChild(inp);
+          lab.appendChild(document.createTextNode(" "+letter+". "+q.opts[idx]));
+          optsDiv.appendChild(lab);
+        }
+      });
+      qDiv.appendChild(optsDiv);
+      const toggle=document.createElement("span");
+      toggle.className="inline-exp-toggle";
+      toggle.textContent="Show explanation";
+      const expDiv=document.createElement("div");
+      expDiv.className="inline-exp";
+      expDiv.textContent=q.exp;
+      toggle.addEventListener("click",()=>{
+        expDiv.classList.toggle("visible");
+        toggle.textContent=expDiv.classList.contains("visible")?"Hide explanation":"Show explanation";
+      });
+      qDiv.appendChild(toggle);
+      qDiv.appendChild(expDiv);
+      if(answersState["q"+q.id]){
+        expDiv.classList.add("visible");
+        toggle.textContent="Hide explanation";
+      }
+      pageDiv.appendChild(qDiv);
+    }
+    pagesContainer.appendChild(pageDiv);
+  }
+}
+function onAnswerChange(id,letter,qDiv){
+  answersState["q"+id]=letter;
+  saveAnswers(answersState);
+  const expDiv=qDiv.querySelector(".inline-exp");
+  const toggle=qDiv.querySelector(".inline-exp-toggle");
+  if(expDiv&&!expDiv.classList.contains("visible")){
+    expDiv.classList.add("visible");
+    toggle.textContent="Hide explanation";
+  }
+}
+function updateProgress(){
+  progressEl.textContent="Page "+currentPage+" of "+totalPages;
+}
+function showPage(n){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const page=document.getElementById("page"+n);
+  if(page)page.classList.add("active");
+  currentPage=n;
+  prevBtn.disabled=currentPage===1;
+  nextBtn.textContent=currentPage===totalPages?"Finish":"Next";
+  updateProgress();
+}
+prevBtn.addEventListener("click",()=>{if(currentPage>1)showPage(currentPage-1);});
+nextBtn.addEventListener("click",()=>{
+  if(currentPage<totalPages)showPage(currentPage+1);
+  else gradeQuiz();
+});
+
+function gradeQuiz(){
+  let score=0;
+  resultEl.textContent="";
+  explanationsEl.innerHTML="";
+  data.forEach(q=>{
+    const sel=answersState["q"+q.id]||null;
+    if(sel===q.ans)score++;
+    const item=document.createElement("div");
+    item.className="exp-item";
+    item.innerHTML="<p><strong>Q2."+q.id+"</strong> "+
+      (sel===q.ans?"<span class='correct'>(Correct)</span>":"<span class='incorrect'>(Incorrect)</span>")+
+      " Your answer: "+(sel||"None")+" | Correct: "+q.ans+"</p><p>"+q.exp+"</p>";
+    explanationsEl.appendChild(item);
+  });
+  const pct=((score/totalQ)*100).toFixed(1);
+  resultEl.textContent="Your score: "+score+" / "+totalQ+" ("+pct+"%)";
+  window.scrollTo({top:resultEl.offsetTop,behavior:"smooth"});
+}
+
+createPages();
+showPage(currentPage);
+</script>
+</body></html>
+
