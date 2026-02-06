@@ -197,10 +197,10 @@
                 id: 3, 
                 q: "For the RL circuit in Fig. 7.3 (switch open at t=0), the differential equation is", 
                 opts: [
-                    "$L\\frac{di}{dt} + Ri = 0$", 
-                    "$R\\frac{di}{dt} + Li = 0$", 
-                    "$C\\frac{dv}{dt} + \\frac{v}{R} = 0$", 
-                    "$RC\\frac{dv}{dt} + v = 0$"
+                    "<i>L</i>(<i>di</i>/<i>dt</i>) + <i>Ri</i> = 0", 
+                    "<i>L</i>(<sup><i>di</i></sup>&frasl;<sub><i>dt</i></sub>) + <i>Ri</i> = 0", 
+                    "<i>C</i>(<sup><i>dv</i></sup>&frasl;<sub><i>dt</i></sub>) + <sup><i>v</i></sup>&frasl;<sub><i>R</i></sub> = 0", 
+                    "<i>RC</i>(<sup><i>dv</i></sup>&frasl;<sub><i>dt</i></sub>) + <i>v</i> = 0"
                 ], 
                 ans: "A", 
                 exp: "KVL around the loop for t ≥ 0: inductor voltage $v_{L} = L\\frac{di}{dt}$ + resistor voltage $v_{R} = Ri = 0$, yielding $L\\frac{di}{dt} + Ri = 0$." 
@@ -209,10 +209,10 @@
                 id: 4, 
                 q: "The solution for inductor current in natural response (I₀ initial) is", 
                 opts: [
-                    "$i(t) = I_{0}e^{Rt/L}$", 
-                    "$i(t) = I_{0}e^{- Rt/L}$", 
-                    "$i(t) = I_{0}e^{t/\\tau}$", 
-                    "$i(t) = I_{0}(1 - e^{- t/\\tau})$"
+                    "<i>i</i>(<i>t</i>) = <i>I</i><sub>0</sub><i>e</i><sup><i>Rt</i>/<i>L</i></sup>", 
+                    "<i>i</i>(<i>t</i>) = <i>I</i><sub>0</sub><i>e</i><sup>-<i>Rt</i>/<i>L</i></sup>", 
+                    "<i>i</i>(<i>t</i>) = <i>I</i><sub>0</sub><i>e</i><sup><i>t</i>/&tau;</sup>", 
+                    "<i>i</i>(<i>t</i>) = <i>I</i><sub>0</sub>(1 - <i>e</i><sup>-<i>t</i>/&tau;</sup>)"
                 ], 
                 ans: "B", 
                 exp: "Solving $L\\frac{di}{dt} + Ri = 0$ by separation of variables and integration gives $i(t) = I_{0}e^{- (R/L)t} = I_{0}e^{- t/\\tau}$." 
@@ -221,10 +221,10 @@
                 id: 5, 
                 q: "The time constant τ for an RL circuit is", 
                 opts: [
-                    "$RC$", 
-                    "$L/R$", 
-                    "$R/L$", 
-                    "$RL$"
+                    "<i>RC</i>", 
+                    "<i>L</i>/<i>R</i>", 
+                    "<i>R</i>/<i>L</i>", 
+                    "<i>RL</i>"
                 ], 
                 ans: "B", 
                 exp: "The time constant $\\tau = \\frac{L}{R}$ (seconds); from solution, exponent is $- \\frac{R}{L}t$, so $\\tau = \\frac{L}{R}$." 
@@ -257,10 +257,10 @@
                 id: 8, 
                 q: "For RC natural response (V₀ initial), voltage is", 
                 opts: [
-                    "$v(t) = V_{0}e^{t/RC}$", 
-                    "$v(t) = V_{0}e^{- t/RC}$", 
-                    "$i(t) = I_{0}e^{- t/LR}$", 
-                    "$v(t) = V_{0}(1 - e^{- t/RC})$"
+                    "<i>v</i>(<i>t</i>) = <i>V</i><sub>0</sub><i>e</i><sup><i>t</i>/<i>RC</i></sup>", 
+                    "<i>v</i>(<i>t</i>) = <i>V</i><sub>0</sub><i>e</i><sup>-<i>t</i>/<i>RC</i></sup>", 
+                    "<i>i</i>(<i>t</i>) = <i>I</i><sub>0</sub><i>e</i><sup>-<i>t</i>/<i>LR</i></sup>", 
+                    "<i>v</i>(<i>t</i>) = <i>V</i><sub>0</sub>(1 - <i>e</i><sup>-<i>t</i>/<i>RC</i></sup>)"
                 ], 
                 ans: "B", 
                 exp: "KCL: capacitor current $i_{C} = C\\frac{dv}{dt}$ = resistor current $\\frac{v}{R}$, so $RC\\frac{dv}{dt} + v = 0$, solution $v(t) = V_{0}e^{- t/(RC)}$." 
@@ -269,10 +269,10 @@
                 id: 9, 
                 q: "Time constant τ for RC circuit is", 
                 opts: [
-                    "$L/R$", 
-                    "$RC$", 
-                    "$R/L$", 
-                    "$1/RC$"
+                    "<i>L</i>/<i>R</i>", 
+                    "<i>RC</i>", 
+                    "<i>R</i>/<i>L</i>", 
+                    "1/(<i>RC</i>)"
                 ], 
                 ans: "B", 
                 exp: "$\\tau = RC$ for RC circuit, from exponent $- \\frac{t}{RC}$." 

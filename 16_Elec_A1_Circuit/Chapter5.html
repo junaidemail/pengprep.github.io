@@ -1,0 +1,260 @@
+
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chapter 5 – The Operational Amplifier Quiz</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:10px;background:#fafafa;color:#222}
+h1{text-align:center;font-size:1.4rem;margin:10px 0}
+#progress{text-align:center;margin:5px 0;font-size:.9rem;color:#555}
+.page{display:none;animation:fade .25s ease-in}
+.page.active{display:block}
+.question{background:#fff;margin:8px 0;padding:10px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:.95rem}
+.qtext{margin-bottom:6px}
+.options label{display:flex;align-items:center;padding:3px 0;cursor:pointer}
+.options input[type=radio]{transform:scale(1.2);margin-right:8px}
+.navbar{display:flex;gap:8px;margin-top:10px}
+.navbar button{flex:1;padding:10px;border:none;border-radius:6px;background:#0078ff;color:#fff;font-size:.95rem;cursor:pointer}
+.navbar button[disabled]{background:#ccc;cursor:default}
+#result{margin-top:10px;font-weight:bold;text-align:center}
+#explanations{margin-top:10px}
+.exp-item{background:#fff;margin:6px 0;padding:8px;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.06);font-size:.9rem}
+.correct{color:green;font-weight:bold}
+.incorrect{color:#c00;font-weight:bold}
+.inline-exp{margin-top:4px;font-size:.85rem;color:#333;display:block}
+.inline-exp.collapsed{display:none}
+.inline-exp-toggle{margin-top:4px;font-size:.8rem;color:#0078ff;text-decoration:underline;cursor:pointer;display:inline-block}
+@keyframes fade{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:600px){
+ body{padding:8px}
+ .question{padding:9px}
+ .navbar button{padding:9px;font-size:.9rem}
+}
+</style>
+</head>
+<body>
+<h1>Chapter 5 – The Operational Amplifier</h1>
+<div id="progress"></div>
+<form id="quizForm">
+  <div id="pagesContainer"></div>
+  <div class="navbar">
+    <button type="button" id="prevBtn">Back</button>
+    <button type="button" id="nextBtn">Next</button>
+  </div>
+</form>
+<div id="result"></div>
+<div id="explanations"></div>
+<script>
+const data=[
+{id:1,q:"An operational amplifier is a",opts:["Voltage amplifier","Current amplifier","Power amplifier","Transconductance amplifier"],ans:"A",exp:"An op-amp is fundamentally a high-gain differential voltage amplifier."},
+{id:2,q:"For an ideal op-amp, the input impedance is",opts:["Zero","Infinite","1 MΩ","Equal to output impedance"],ans:"B",exp:"Ideal op-amps have infinite input impedance so no current flows into the inputs."},
+{id:3,q:"For an ideal op-amp, the output impedance is",opts:["Infinite","Zero","1 kΩ","100 Ω"],ans:"B",exp:"Ideal op-amps have zero output impedance to drive loads without voltage drop."},
+{id:4,q:"The open-loop voltage gain of an ideal op-amp is",opts:["1","10³","10⁵","Infinite"],ans:"D",exp:"In the ideal model, open-loop gain is infinite; practical values are very large but finite."},
+{id:5,q:"The input currents of an ideal op-amp are",opts:["Equal","Zero","Infinite","Unequal"],ans:"B",exp:"With infinite input resistance, the input currents are zero."},
+{id:6,q:"The voltage difference between the inverting and non-inverting terminals of an ideal op-amp in linear operation is",opts:["0","Infinite","1 V","0.7 V"],ans:"A",exp:"With negative feedback, the inputs are at virtually the same voltage (virtual short)."},
+{id:7,q:"A practical op-amp has open-loop gain of the order of",opts:["10³","10⁵","10¹","10⁷"],ans:"B",exp:"Typical general-purpose op-amps have open-loop gains around 10⁵."},
+{id:8,q:"The ideal op-amp follows the concept of a",opts:["Virtual short","Virtual open","Infinite voltage source","Unity gain buffer"],ans:"A",exp:"The two inputs are at nearly the same potential under negative feedback (virtual short)."},
+{id:9,q:"The symbol “−” terminal in an op-amp indicates",opts:["Ground","Inverting input","Non-inverting input","Output"],ans:"B",exp:"The minus sign denotes the inverting input terminal."},
+{id:10,q:"The symbol “+” terminal in an op-amp indicates",opts:["Ground","Inverting input","Non-inverting input","Output"],ans:"C",exp:"The plus sign denotes the non-inverting input terminal."},
+{id:11,q:"The input offset voltage of a practical op-amp is typically",opts:["Zero","Few µV to mV","1 V","10 V"],ans:"B",exp:"Real op-amps have small offset voltages in the microvolt to millivolt range."},
+{id:12,q:"The common-mode rejection ratio (CMRR) of an ideal op-amp is",opts:["0","1","Infinite","100"],ans:"C",exp:"An ideal op-amp completely rejects common-mode signals, so CMRR is infinite."},
+{id:13,q:"If both inputs of an ideal op-amp are grounded, the output voltage is",opts:["Zero","Infinite","Saturated","Undefined"],ans:"A",exp:"With zero differential input, the ideal op-amp output is zero."},
+{id:14,q:"The voltage gain of an inverting amplifier is given by",opts:["1 + (Rf / Rin)","−(Rf / Rin)","(Rf / Rin)","1 − (Rf / Rin)"],ans:"B",exp:"For an inverting amplifier, Av = −Rf/Rin."},
+{id:15,q:"The voltage gain of a non-inverting amplifier is",opts:["−Rf/Rin","1 + (Rf / Rin)","1 − (Rf / Rin)","Rf / Rin"],ans:"B",exp:"For a non-inverting amplifier, Av = 1 + Rf/Rin."},
+{id:16,q:"In an inverting amplifier, the input signal is applied to",opts:["Non-inverting terminal","Inverting terminal through Rin","Directly to output","Reference node"],ans:"B",exp:"The input is applied via Rin to the inverting input; the non-inverting input is usually grounded."},
+{id:17,q:"In a non-inverting amplifier, the input signal is applied to",opts:["Inverting terminal","Non-inverting terminal","Feedback resistor","Ground"],ans:"B",exp:"The signal is applied directly to the non-inverting input."},
+{id:18,q:"For an ideal inverting amplifier, the input resistance seen by the source is approximately",opts:["Rin","Rf","Rf + Rin","Infinite"],ans:"A",exp:"The source sees approximately Rin as the input resistance."},
+{id:19,q:"A unity gain buffer uses which configuration?",opts:["Non-inverting amplifier with Rf = 0, Rin = ∞","Inverting amplifier","Integrator","Differentiator"],ans:"A",exp:"A voltage follower is a non-inverting amplifier with Rf = 0 and Rin → ∞."},
+{id:20,q:"The output voltage of an inverting summing amplifier equals",opts:["−Rf (V1/R1 + V2/R2 + …)","Rf (V1/R1 + V2/R2)","Sum of inputs","Difference of inputs"],ans:"A",exp:"The inverting summer output is vo = −Rf Σ(Vi/Ri)."},
+{id:21,q:"A difference amplifier provides",opts:["Sum of inputs","Product of inputs","Difference of two input voltages","Average of inputs"],ans:"C",exp:"A difference amplifier outputs a scaled version of V1 − V2."},
+{id:22,q:"For a differential amplifier, the output is ideally proportional to",opts:["(V1 − V2)","(V1 + V2)","V1 / V2","V2 / V1"],ans:"A",exp:"The ideal differential output is Ad(V1 − V2)."},
+{id:23,q:"In a differential amplifier, common-mode signals are",opts:["Amplified","Rejected","Differentiated","Added"],ans:"B",exp:"Common-mode signals are ideally rejected (CMRR → ∞)."},
+{id:24,q:"The input offset current is",opts:["Difference between bias currents","Sum of bias currents","Average of bias currents","Product of bias currents"],ans:"A",exp:"Offset current is the difference between the two input bias currents."},
+{id:25,q:"Input bias current is",opts:["Current entering one input","Average of currents entering both inputs","Difference of input currents","Zero"],ans:"B",exp:"Bias current is defined as the average of the two input currents."},
+{id:26,q:"The slew rate of an op-amp is",opts:["Maximum rate of change of output voltage","Minimum rate of change of output current","Input voltage limit","Gain-bandwidth product"],ans:"A",exp:"Slew rate is the maximum dVo/dt the op-amp can produce."},
+{id:27,q:"The unit of slew rate is",opts:["V/s","V/µs","µV/V","A/s"],ans:"B",exp:"Slew rate is usually specified in V/µs."},
+{id:28,q:"An integrator circuit produces output proportional to",opts:["Derivative of input","Integral of input","Square of input","Constant"],ans:"B",exp:"An op-amp integrator outputs the time integral of the input."},
+{id:29,q:"A differentiator circuit produces output proportional to",opts:["Integral of input","Derivative of input","Input amplitude","Constant"],ans:"B",exp:"An op-amp differentiator outputs the time derivative of the input."},
+{id:30,q:"If a constant DC voltage is applied to an op-amp integrator, output will",opts:["Remain constant","Ramp linearly","Sinusoidal","Zero"],ans:"B",exp:"A constant input to an ideal integrator produces a linear ramp output."},
+{id:31,q:"An op-amp has Rin = 2 MΩ, Rout = 75 Ω, A_OL = 200,000, CMRR = 80 dB. The op-amp is",opts:["Ideal","Practical","Nonlinear","Saturated"],ans:"B",exp:"These are realistic finite values, so it is a practical op-amp."},
+{id:32,q:"The gain-bandwidth product of an op-amp is",opts:["Constant","Variable","Infinite","Zero"],ans:"A",exp:"For a given op-amp, the gain-bandwidth product is approximately constant."},
+{id:33,q:"The output of an op-amp saturates when",opts:["Input differential is small","Input differential is large","Negative feedback present","None"],ans:"B",exp:"A large differential input drives the output to the supply rails (saturation)."},
+{id:34,q:"Inverting amplifier in closed loop has gain",opts:["Depends only on feedback resistors","Depends on op-amp gain","Infinite","Zero"],ans:"A",exp:"Closed-loop gain is set by resistor ratio, assuming high open-loop gain."},
+{id:35,q:"In an ideal op-amp, common-mode gain = ?",opts:["0","1","∞","100"],ans:"A",exp:"Ideal op-amps have zero common-mode gain."},
+{id:36,q:"In a real op-amp, increasing temperature generally",opts:["Increases offset voltage","Decreases offset voltage","No effect","Zero drift"],ans:"A",exp:"Offset voltage typically increases with temperature due to device mismatches."},
+{id:37,q:"The frequency at which open-loop gain = unity is called",opts:["Unity-gain bandwidth","Cutoff frequency","3 dB point","Corner frequency"],ans:"A",exp:"The unity-gain bandwidth (or transition frequency) is where A_OL = 1."},
+{id:38,q:"An op-amp integrator has feedback element as",opts:["Resistor","Capacitor","Inductor","Diode"],ans:"B",exp:"The feedback element in an integrator is a capacitor."},
+{id:39,q:"An op-amp differentiator has input element as",opts:["Capacitor","Resistor","Inductor","Transistor"],ans:"A",exp:"The input element in a differentiator is a capacitor in series with the input."},
+{id:40,q:"If feedback in an op-amp circuit is positive, the circuit acts as",opts:["Amplifier","Oscillator","Attenuator","Filter"],ans:"B",exp:"Positive feedback tends to produce oscillation or bistable behavior."},
+{id:41,q:"The open-loop frequency response of an op-amp is",opts:["Constant","Decreasing with frequency","Increasing","Oscillatory"],ans:"B",exp:"Open-loop gain decreases with frequency, typically at −20 dB/decade."},
+{id:42,q:"Finite open-loop gain affects",opts:["Closed-loop gain accuracy","Input impedance","Output swing","None"],ans:"A",exp:"Finite A_OL causes the actual closed-loop gain to deviate slightly from the ideal resistor ratio."},
+{id:43,q:"Input offset voltage can be reduced using",opts:["Offset nulling","Large feedback resistor","Capacitor coupling","None"],ans:"A",exp:"Offset null pins or trim networks are used to null input offset voltage."},
+{id:44,q:"A voltage follower provides",opts:["Voltage gain = 1","Current gain = 1","Both voltage & current gain = 1","Power gain = 0"],ans:"A",exp:"A voltage follower has unity voltage gain but can provide current gain and buffering."},
+{id:45,q:"The main function of negative feedback in op-amp circuits is",opts:["Reduce bandwidth","Increase gain","Stabilize gain and reduce distortion","None"],ans:"C",exp:"Negative feedback stabilizes gain, reduces distortion, and improves bandwidth and linearity."},
+{id:46,q:"In an inverting amplifier with Rf = Rin, the gain is",opts:["+1","−1","0","∞"],ans:"B",exp:"Av = −Rf/Rin = −1."},
+{id:47,q:"The voltage at the inverting terminal of an ideal op-amp with negative feedback is",opts:["Equal to non-inverting terminal voltage","Zero","Equal to input","Undefined"],ans:"A",exp:"Due to virtual short, v− ≈ v+ under negative feedback."},
+{id:48,q:"An op-amp comparator operates in",opts:["Linear region","Saturation region","Active region","Cutoff"],ans:"B",exp:"Comparators drive the op-amp into saturation to produce logic-level outputs."},
+{id:49,q:"The maximum output swing of an op-amp depends on",opts:["Supply voltage","Input voltage","Load","All"],ans:"D",exp:"Output swing is limited by supply rails and load conditions."},
+{id:50,q:"If Rf = 100 kΩ, Rin = 10 kΩ in an inverting amplifier, voltage gain = ?",opts:["−1","−10","−100","−0.1"],ans:"B",exp:"Av = −Rf/Rin = −100k/10k = −10."},
+{id:51,q:"For a non-inverting amplifier with Rf = 90 kΩ, Rin = 10 kΩ, voltage gain = ?",opts:["9","10","11","1"],ans:"C",exp:"Av = 1 + Rf/Rin = 1 + 90k/10k = 11."},
+{id:52,q:"The integrator output leads the input by",opts:["90°","180°","0°","−90°"],ans:"D",exp:"An ideal integrator introduces −90° phase shift (output lags input by 90°)."},
+{id:53,q:"The differentiator output leads the input by",opts:["90°","180°","0°","−90°"],ans:"A",exp:"An ideal differentiator introduces +90° phase shift (output leads input by 90°)."},
+{id:54,q:"The slew rate limits",opts:["Maximum frequency for large signals","Minimum frequency","Gain","None"],ans:"A",exp:"Slew rate limits the maximum frequency at which large-amplitude signals can be reproduced without distortion."},
+{id:55,q:"If an op-amp has SR = 0.5 V/µs, maximum output amplitude at 100 kHz = ?",opts:["0.5 V","0.8 V","0.795 V","0.25 V"],ans:"C",exp:"Vm = SR/(2πf) = 0.5/(2π·10⁵) ≈ 0.795 V."},
+{id:56,q:"The input offset current for a practical op-amp is typically",opts:["1 µA","10 µA","100 µA","1 A"],ans:"A",exp:"Typical offset currents are around 1 µA for many general-purpose op-amps."},
+{id:57,q:"Which parameter defines the ability to reject common-mode signals?",opts:["Slew rate","CMRR","PSRR","Input offset"],ans:"B",exp:"Common-Mode Rejection Ratio (CMRR) measures rejection of common-mode signals."},
+{id:58,q:"Power supply rejection ratio (PSRR) quantifies",opts:["Output change due to supply variation","Input change","Common-mode voltage","Offset drift"],ans:"A",exp:"PSRR measures how much the output changes for a given change in supply voltage."},
+{id:59,q:"The ideal value of PSRR is",opts:["0","∞","1","−1"],ans:"B",exp:"Ideally, PSRR is infinite so supply variations do not affect the output."},
+{id:60,q:"The differential input resistance of an op-amp is",opts:["High","Low","Equal to feedback resistor","Zero"],ans:"A",exp:"Op-amps are designed with very high differential input resistance."},
+{id:61,q:"The typical open-loop bandwidth of an op-amp is",opts:["10 Hz","100 Hz","1 kHz","10 kHz"],ans:"A",exp:"Many general-purpose op-amps have open-loop bandwidths around 10 Hz."},
+{id:62,q:"The closed-loop bandwidth of an op-amp is",opts:["Larger than open-loop","Smaller","Same","Zero"],ans:"A",exp:"Negative feedback increases bandwidth while reducing gain."},
+{id:63,q:"An op-amp acting as a comparator outputs",opts:["A saturated high or low voltage","Linear voltage","Zero","Fixed mid-level"],ans:"A",exp:"Comparators saturate high or low depending on input polarity."},
+{id:64,q:"The op-amp acts as an amplifier only when",opts:["Negative feedback applied","Positive feedback applied","Open loop","Differential mode suppressed"],ans:"A",exp:"Linear amplification requires negative feedback."},
+{id:65,q:"An inverting amplifier in which Rf = 2 Rin will have gain",opts:["−2","−0.5","+2","+0.5"],ans:"A",exp:"Av = −Rf/Rin = −2."},
+{id:66,q:"The unity-gain frequency of an op-amp equals",opts:["fT = Ao × fB","fB / Ao","Ao / fB","None"],ans:"A",exp:"Unity-gain frequency fT is the gain-bandwidth product Ao·fB."},
+{id:67,q:"Slew rate distortion is caused by",opts:["Output voltage changing faster than op-amp can respond","Large input current","Saturation","Feedback resistor value"],ans:"A",exp:"If the required dVo/dt exceeds SR, slew-rate distortion occurs."},
+{id:68,q:"The finite output impedance of a real op-amp causes",opts:["Reduced voltage gain at load","Increased bandwidth","Zero current output","No effect"],ans:"A",exp:"Finite Rout causes a voltage drop under load, reducing effective gain."},
+{id:69,q:"The op-amp symbol typically includes",opts:["Two inputs, one output","Two outputs","One input, two outputs","None"],ans:"A",exp:"The standard symbol has two inputs (inverting and non-inverting) and one output."},
+{id:70,q:"An ideal op-amp amplifier has which properties?",opts:["Infinite A, infinite Rin, zero Rout","Zero A, zero Rin, infinite Rout","Finite A, finite Rin, finite Rout","None"],ans:"A",exp:"Ideal op-amp: infinite gain, infinite input resistance, zero output resistance."}
+];
+
+const perPage=10,totalQ=data.length,totalPages=Math.ceil(totalQ/perPage);
+let currentPage=1;
+const LS_KEY="chapter5_quiz_answers";
+const pagesContainer=document.getElementById("pagesContainer");
+const progressEl=document.getElementById("progress");
+const resultEl=document.getElementById("result");
+const explanationsEl=document.getElementById("explanations");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+
+function loadSaved(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);
+    if(!raw)return{};
+    const obj=JSON.parse(raw);
+    return obj&&typeof obj==="object"?obj:{};
+  }catch(e){return{}}
+}
+let answers=loadSaved();
+function saveAnswers(){try{localStorage.setItem(LS_KEY,JSON.stringify(answers));}catch(e){}}
+
+function createPage(pageNum){
+  const start=(pageNum-1)*perPage;
+  const end=Math.min(start+perPage,totalQ);
+  const page=document.createElement("div");
+  page.className="page";
+  page.dataset.page=pageNum;
+  for(let i=start;i<end;i++){
+    const q=data[i];
+    const qDiv=document.createElement("div");
+    qDiv.className="question";
+    const qText=document.createElement("div");
+    qText.className="qtext";
+    qText.textContent="Q"+q.id+". "+q.q;
+    qDiv.appendChild(qText);
+    const optsDiv=document.createElement("div");
+    optsDiv.className="options";
+    ["A","B","C","D"].forEach((letter,idx)=>{
+      const lbl=document.createElement("label");
+      const inp=document.createElement("input");
+      inp.type="radio";
+      inp.name="q"+q.id;
+      inp.value=letter;
+      if(answers[q.id]===letter)inp.checked=true;
+      inp.addEventListener("change",()=>{answers[q.id]=letter;saveAnswers();});
+      const span=document.createElement("span");
+      span.textContent=letter+". "+q.opts[idx];
+      lbl.appendChild(inp);
+      lbl.appendChild(span);
+      optsDiv.appendChild(lbl);
+    });
+    qDiv.appendChild(optsDiv);
+    page.appendChild(qDiv);
+  }
+  return page;
+}
+
+function renderPages(){
+  pagesContainer.innerHTML="";
+  for(let p=1;p<=totalPages;p++){
+    const pg=createPage(p);
+    if(p===currentPage)pg.classList.add("active");
+    pagesContainer.appendChild(pg);
+  }
+  updateProgress();
+  updateNavButtons();
+}
+
+function showPage(p){
+  currentPage=p;
+  document.querySelectorAll(".page").forEach(pg=>{
+    pg.classList.toggle("active",Number(pg.dataset.page)===currentPage);
+  });
+  updateProgress();
+  updateNavButtons();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function updateProgress(){
+  const start=(currentPage-1)*perPage+1;
+  const end=Math.min(currentPage*perPage,totalQ);
+  progressEl.textContent="Page "+currentPage+" of "+totalPages+"  (Questions "+start+"–"+end+" of "+totalQ+")";
+}
+
+function updateNavButtons(){
+  prevBtn.disabled=currentPage===1;
+  nextBtn.textContent=currentPage===totalPages?"Submit":"Next";
+}
+
+function gradeQuiz(){
+  let correct=0;
+  const details=[];
+  data.forEach(q=>{
+    const userAns=answers[q.id]||null;
+    const isCorrect=userAns===q.ans;
+    if(isCorrect)correct++;
+    details.push({q,ans:userAns,isCorrect});
+  });
+  const scorePct=Math.round(100*correct/totalQ);
+  resultEl.textContent="You scored "+correct+" / "+totalQ+" ("+scorePct+"%).";
+  buildExplanations(details);
+}
+
+function buildExplanations(details){
+  explanationsEl.innerHTML="";
+  details.forEach(d=>{
+    const wrap=document.createElement("div");
+    wrap.className="exp-item";
+    const title=document.createElement("div");
+    title.innerHTML="<strong>Q"+d.q.id+":</strong> "+d.q.q;
+    wrap.appendChild(title);
+    const ansLine=document.createElement("div");
+    const ua=d.ans?d.ans:"(no answer)";
+    ansLine.innerHTML="<span class='"+(d.isCorrect?"correct":"incorrect")+"'>Your answer: "+ua+"</span> &nbsp; | &nbsp; Correct: <strong>"+d.q.ans+"</strong>";
+    wrap.appendChild(ansLine);
+    const toggle=document.createElement("span");
+    toggle.className="inline-exp-toggle";
+    toggle.textContent="Hide Explanation";
+    const expDiv=document.createElement("div");
+    expDiv.className="inline-exp";
+    expDiv.textContent=d.q.exp;
+    toggle.addEventListener("click",()=>{
+      const collapsed=expDiv.classList.toggle("collapsed");
+      toggle.textContent=collapsed?"Show Explanation":"Hide Explanation";
+    });
+    wrap.appendChild(toggle);
+    wrap.appendChild(expDiv);
+    explanationsEl.appendChild(wrap);
+  });
+}
+
+prevBtn.addEventListener("click",()=>{if(currentPage>1)showPage(currentPage-1);});
+nextBtn.addEventListener("click",()=>{
+  if(currentPage<totalPages){showPage(currentPage+1);}
+  else{gradeQuiz();window.scrollTo({top:resultEl.offsetTop,behavior:"smooth"});}
+});
+
+renderPages();
+</script>
+</body></html>
+

@@ -1,0 +1,269 @@
+
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chapter 4 – Techniques of Circuit Analysis Quiz</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:10px;background:#fafafa;color:#222}
+h1{text-align:center;font-size:1.4rem;margin:10px 0}
+#progress{text-align:center;margin:5px 0;font-size:.9rem;color:#555}
+.page{display:none;animation:fade .25s ease-in}
+.page.active{display:block}
+.question{background:#fff;margin:8px 0;padding:10px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:.95rem}
+.qtext{margin-bottom:6px}
+.options label{display:flex;align-items:center;padding:3px 0;cursor:pointer}
+.options input[type=radio]{transform:scale(1.2);margin-right:8px}
+.navbar{display:flex;gap:8px;margin-top:10px}
+.navbar button{flex:1;padding:10px;border:none;border-radius:6px;background:#0078ff;color:#fff;font-size:.95rem;cursor:pointer}
+.navbar button[disabled]{background:#ccc;cursor:default}
+#result{margin-top:10px;font-weight:bold;text-align:center}
+#explanations{margin-top:10px}
+.exp-item{background:#fff;margin:6px 0;padding:8px;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.06);font-size:.9rem}
+.correct{color:green;font-weight:bold}
+.incorrect{color:#c00;font-weight:bold}
+.inline-exp{margin-top:4px;font-size:.85rem;color:#333;display:block}
+.inline-exp.collapsed{display:none}
+.inline-exp-toggle{margin-top:4px;font-size:.8rem;color:#0078ff;text-decoration:underline;cursor:pointer;display:inline-block}
+@keyframes fade{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:600px){
+ body{padding:8px}
+ .question{padding:9px}
+ .navbar button{padding:9px;font-size:.9rem}
+}
+</style>
+</head>
+<body>
+<h1>Chapter 4 – Techniques of Circuit Analysis</h1>
+<div id="progress"></div>
+<form id="quizForm">
+  <div id="pagesContainer"></div>
+  <div class="navbar">
+    <button type="button" id="prevBtn">Back</button>
+    <button type="button" id="nextBtn">Next</button>
+  </div>
+</form>
+<div id="result"></div>
+<div id="explanations"></div>
+<script>
+const data=[{id:1,q:"The node-voltage method is based directly on",opts:["Ohm’s law","KCL","KVL","Thevenin’s theorem"],ans:"B",exp:"Nodal analysis applies KCL at each node and uses Ohm’s law to express currents."},
+{id:2,q:"In nodal analysis, the reference node is also called",opts:["Neutral","Datum","Ground","All of the above"],ans:"D",exp:"Reference node is equivalently called ground, neutral, or datum."},
+{id:3,q:"How many node-voltage equations are required for a circuit with five nodes?",opts:["5","4","6","3"],ans:"B",exp:"For n nodes, only n−1 node-voltage equations are independent; one node is reference."},
+{id:4,q:"A supernode occurs when",opts:["Two nodes are connected by a voltage source","Two nodes connected by a current source","A node is reference","The circuit is planar"],ans:"A",exp:"A voltage source directly between two non-reference nodes forms a supernode."},
+{id:5,q:"Mesh-current analysis is based on",opts:["KCL","KVL","Ohm’s law","Superposition"],ans:"B",exp:"Mesh analysis writes KVL around each mesh to solve for mesh currents."},
+{id:6,q:"A supermesh is used when",opts:["A voltage source lies on a common branch of two meshes","A current source lies between meshes","A dependent source exists","None"],ans:"B",exp:"A current source shared by two meshes creates a supermesh; the branch is excluded from KVL and a constraint equation is added."},
+{id:7,q:"In a planar circuit with n nodes and b branches, the number of independent loops =",opts:["b − n + 1","n − b + 1","b + n − 1","n + 1"],ans:"A",exp:"From graph theory, independent loops = b − n + 1."},
+{id:8,q:"In nodal analysis, a current source connected between two non-reference nodes creates a",opts:["Supermesh","Supernode","Superbranch","Loop"],ans:"B",exp:"Any source between two non-reference nodes forms a supernode in nodal analysis."},
+{id:9,q:"The mesh-current method cannot be directly applied to",opts:["Planar circuits","Non-planar circuits","Circuits with resistors only","Series circuits"],ans:"B",exp:"Mesh analysis requires a planar circuit; non-planar circuits break the mesh definition."},
+{id:10,q:"Thevenin’s theorem reduces a network to",opts:["A single current source in parallel with resistance","A single voltage source in series with resistance","Two voltage sources","A dependent source"],ans:"B",exp:"Thevenin equivalent is Vth in series with Rth."},
+{id:11,q:"Norton’s theorem replaces any linear network by",opts:["Voltage source in series with R","Current source in parallel with R","Ideal resistor","Open circuit"],ans:"B",exp:"Norton equivalent is In in parallel with RN (equal to Rth)." },
+{id:12,q:"Thevenin and Norton equivalents are related by",opts:["V = I Rth","I = V / Rth","Both A and B","None"],ans:"C",exp:"Vth = In Rth and In = Vth / Rth."},
+{id:13,q:"In superposition theorem, all independent sources except one are",opts:["Shorted (voltage) and opened (current)","Opened (voltage) and shorted (current)","Reversed","Removed and replaced by 1 Ω"],ans:"A",exp:"Deactivate voltage sources by shorting them and current sources by opening them."},
+{id:14,q:"The maximum power transfer occurs when",opts:["Load R = Source R","Load R = ½ Source R","Load R → ∞","Load R → 0"],ans:"A",exp:"For DC, maximum power transfer occurs when RL = RS."},
+{id:15,q:"For AC circuits with complex impedance, maximum power transfer occurs when",opts:["ZL = ZS","ZL = ZS*","|ZL| = |ZS|","Angle of ZL = Angle of ZS"],ans:"B",exp:"Conjugate matching: ZL = ZS* gives maximum power."},
+{id:16,q:"When a current source is transformed to an equivalent voltage source, the equivalent voltage =",opts:["I × R","I / R","V / R","R / I"],ans:"A",exp:"Source transformation: V = I·R."},
+{id:17,q:"The Thevenin resistance is found by",opts:["Shorting voltage sources and opening current sources","Opening voltage sources and shorting current sources","Leaving sources as is","Reversing sources"],ans:"A",exp:"Deactivate independent sources: short ideal voltages, open ideal currents, then find equivalent resistance."},
+{id:18,q:"The voltage at an isolated node with no current flow is",opts:["Zero","Equal to reference","Undefined","Infinite"],ans:"C",exp:"A floating node has undefined potential because it is not referenced to the circuit."},
+{id:19,q:"If a circuit has three nodes, how many independent KCL equations are needed?",opts:["1","2","3","4"],ans:"B",exp:"For m nodes, only m−1 KCL equations are independent; one is redundant."},
+{id:20,q:"In nodal analysis, the number of independent variables equals",opts:["Number of nodes","Nodes − 1","Branches","Loops"],ans:"B",exp:"Node voltages are defined for all non-reference nodes: n−1 variables."},
+{id:21,q:"Mesh analysis is not convenient when the circuit contains",opts:["Many current sources","Many voltage sources","Equal impedances","Only resistors"],ans:"A",exp:"Many current sources create many supermeshes, making mesh analysis cumbersome."},
+{id:22,q:"When combining two independent current sources in parallel, the resultant current =",opts:["Sum of currents","Difference","Average","Zero"],ans:"A",exp:"Parallel current sources add algebraically."},
+{id:23,q:"Source transformation between voltage and current sources is valid only for",opts:["Linear elements","Nonlinear","AC only","Dependent sources only"],ans:"A",exp:"Linearity is required for equivalence of transformed sources."},
+{id:24,q:"If Thevenin resistance = 0, the circuit acts as",opts:["Ideal current source","Ideal voltage source","Short circuit","Open circuit"],ans:"B",exp:"Zero internal resistance corresponds to an ideal voltage source."},
+{id:25,q:"If Norton current = 0, the circuit acts as",opts:["Ideal current source","Ideal voltage source","Open circuit","Short circuit"],ans:"C",exp:"Zero Norton current means no current can be delivered → open circuit."},
+{id:26,q:"In a superposition problem, when a voltage source is deactivated, replace it by",opts:["Short circuit","Open circuit","1 Ω","Dependent source"],ans:"A",exp:"An ideal voltage source with zero value is a short circuit."},
+{id:27,q:"In superposition, a current source is deactivated by",opts:["Open circuit","Short circuit","Removing resistance","Reverse polarity"],ans:"A",exp:"An ideal current source with zero value is an open circuit."},
+{id:28,q:"If mesh current I₁ = 2 A clockwise and I₂ = 1 A anticlockwise in a common branch, net branch current =",opts:["1 A CW","3 A CW","1 A CCW","3 A CCW"],ans:"A",exp:"Branch current is I₁ − I₂ = 1 A in the direction of I₁ (clockwise)."},
+{id:29,q:"A voltage source of 10 V with internal resistance 2 Ω delivers maximum power to a load of",opts:["2 Ω","4 Ω","1 Ω","8 Ω"],ans:"A",exp:"Maximum power transfer when RL = RS = 2 Ω."},
+{id:30,q:"In Thevenin equivalent, the open-circuit voltage equals",opts:["Short-circuit current × Rth","Thevenin voltage","Load current × Rth","Zero"],ans:"B",exp:"The open-circuit terminal voltage is Vth."},
+{id:31,q:"A 1 A current source in parallel with 5 Ω resistor is transformed to an equivalent voltage source of",opts:["0.2 V","5 V","0.5 V","10 V"],ans:"B",exp:"V = I·R = 1×5 = 5 V."},
+{id:32,q:"Two voltage sources of 10 V and 15 V with internal resistances 2 Ω and 3 Ω are connected in series aiding. The equivalent source =",opts:["25 V, 5 Ω","25 V, 1.2 Ω","12 V, 5 Ω","5 V, 25 Ω"],ans:"A",exp:"Series aiding: voltages add (25 V) and resistances add (5 Ω)."},
+{id:33,q:"If current entering a node is 3 A and leaving are 1 A and x A, find x.",opts:["3 A","2 A","4 A","1 A"],ans:"B",exp:"KCL: 3 = 1 + x ⇒ x = 2 A."},
+{id:34,q:"For a 2-mesh network, the number of mesh currents required =",opts:["1","2","3","0"],ans:"B",exp:"Each mesh has one mesh current; 2 meshes → 2 currents."},
+{id:35,q:"The reference direction for mesh currents is usually",opts:["Clockwise","Counter-clockwise","Both","Random"],ans:"A",exp:"Clockwise is a common consistent convention."},
+{id:36,q:"In mesh analysis, the sum of voltages around a mesh equals",opts:["0","Sum of currents","Applied voltage","Power"],ans:"A",exp:"KVL: algebraic sum of voltages around a closed loop is zero."},
+{id:37,q:"A supermesh excludes the current source but retains the",opts:["Constraint equation","Voltage drop","Dependent source","Resistance"],ans:"A",exp:"A constraint equation relates the mesh currents across the current source."},
+{id:38,q:"In nodal analysis, if a voltage source is connected between the reference and another node, the voltage of that node =",opts:["Equal to source voltage","Half","Zero","Undefined"],ans:"A",exp:"The node voltage equals the source voltage relative to reference."},
+{id:39,q:"Which method is best when the circuit contains many voltage sources and few current sources?",opts:["Nodal","Mesh","Superposition","Source transformation"],ans:"B",exp:"Mesh analysis naturally incorporates voltage sources in KVL equations."},
+{id:40,q:"The Thevenin and Norton resistances are",opts:["Reciprocals","Equal","Inverse proportional","Different"],ans:"B",exp:"Rth = RN; they are the same resistance."},
+{id:41,q:"To find Thevenin voltage, we compute the open-circuit",opts:["Current","Voltage","Power","Resistance"],ans:"B",exp:"Vth is the open-circuit terminal voltage."},
+{id:42,q:"A network having 4 independent loops and 3 nodes contains how many branches?",opts:["6","7","8","5"],ans:"A",exp:"Loops = b − n + 1 ⇒ 4 = b − 3 + 1 ⇒ b = 6."},
+{id:43,q:"In mesh equations, self resistance terms appear as",opts:["Sum of all resistances in mesh","Sum of reciprocals","Product","None"],ans:"A",exp:"Diagonal terms are the sum of resistances in that mesh."},
+{id:44,q:"In nodal equations, self conductance terms =",opts:["Sum of all branch conductances connected to that node","Product","Difference","Zero"],ans:"A",exp:"Diagonal conductance is sum of conductances connected to the node."},
+{id:45,q:"The number of independent equations needed to solve a network equals",opts:["Number of unknowns","Nodes","Loops","Branches"],ans:"A",exp:"You need as many independent equations as unknowns."},
+{id:46,q:"Which of the following is a reciprocity relation?",opts:["V/I = constant","P = VI","R₁₂ = R₂₁","I₁/I₂ = V₂/V₁"],ans:"C",exp:"Reciprocity implies R12 = R21 in a reciprocal network."},
+{id:47,q:"For mutually coupled meshes, inductance terms appear as",opts:["±jωM","jωL","R","None"],ans:"A",exp:"Mutual inductance appears as ±jωM in AC mesh equations."},
+{id:48,q:"Which theorem is valid for linear bilateral networks only?",opts:["Superposition","Thevenin","Norton","All"],ans:"D",exp:"Superposition, Thevenin, and Norton all require linear bilateral networks."},
+{id:49,q:"The dependent sources are not turned off in superposition because",opts:["They depend on circuit variables","They are linear","They store energy","They are ideal"],ans:"A",exp:"Dependent sources remain because their values depend on other circuit variables."},
+{id:50,q:"A supernode is formed by",opts:["Combining nodes connected by a voltage source","Removing current sources","Opening resistors","Shorting voltage sources"],ans:"A",exp:"Nodes connected by a voltage source are combined into a supernode."},
+{id:51,q:"In Thevenin equivalent, short-circuit current equals",opts:["Vth / Rth","Vth × Rth","Rth / Vth","Vth² / Rth"],ans:"A",exp:"Isc = Vth / Rth."},
+{id:52,q:"A dependent source controlled by another current is called",opts:["CCVS","CCCS","VCVS","VCCS"],ans:"B",exp:"Current-controlled current source (CCCS)."},
+{id:53,q:"A dependent source controlled by a voltage is called",opts:["VCCS or VCVS","CCVS","CCCS","Independent source"],ans:"A",exp:"Voltage-controlled sources are VCCS or VCVS."},
+{id:54,q:"If a 3 A source in parallel with 4 Ω is transformed to a voltage source, the voltage =",opts:["12 V","7 V","1.33 V","0.75 V"],ans:"A",exp:"V = I·R = 3×4 = 12 V."},
+{id:55,q:"In mesh analysis, the resistance common to two meshes appears in the equations with what sign?",opts:["Negative","Positive","Zero","Either"],ans:"A",exp:"Mutual terms are negative in the off-diagonal entries."},
+{id:56,q:"The sum of currents entering a junction equals sum leaving. This is an expression of",opts:["Energy conservation","Charge conservation","Power balance","Magnetic coupling"],ans:"B",exp:"KCL expresses conservation of charge."},
+{id:57,q:"Which method produces fewer equations when voltage sources dominate?",opts:["Mesh","Nodal","Superposition","Thevenin"],ans:"A",exp:"Mesh analysis is efficient with many voltage sources."},
+{id:58,q:"Which method produces fewer equations when current sources dominate?",opts:["Mesh","Nodal","Superposition","Norton"],ans:"B",exp:"Nodal analysis is efficient with many current sources."},
+{id:59,q:"In Thevenin equivalent seen by the load, Rth is measured at",opts:["Load terminals","Source terminals","Any node","Reference"],ans:"A",exp:"Rth is seen looking into the load terminals with sources deactivated."},
+{id:60,q:"If a dependent source exists, Thevenin resistance is found by",opts:["Applying test source and measuring response","Shorting dependent source","Opening dependent source","Ignoring it"],ans:"A",exp:"Use a test source at the terminals and compute V/I to get Rth."},
+{id:61,q:"The linear system of equations for nodal analysis can be written in matrix form as",opts:["[G][V] = [I]","[R][I] = [V]","[I] = [G][V]","Both A and C"],ans:"D",exp:"[G][V]=[I] and [I]=[G][V] are equivalent statements."},
+{id:62,q:"The coefficient matrix in mesh analysis is primarily a matrix of",opts:["Resistances","Conductances","Voltages","Powers"],ans:"A",exp:"Mesh equations use resistances as coefficients."},
+{id:63,q:"Which of the following is not a linear network theorem?",opts:["Thevenin","Superposition","Maximum Power Transfer","Reciprocity"],ans:"D",exp:"Reciprocity is a property, not a standard network theorem like the others."},
+{id:64,q:"In Thevenin equivalent, replacing load with short circuit gives",opts:["Norton current","Open-circuit voltage","Rth","None"],ans:"A",exp:"Short-circuiting the load yields the Norton current."},
+{id:65,q:"The source transformation for Norton ↔ Thevenin uses the relations",opts:["Vth = In Rth","In = Vth / Rth","Both A and B","None"],ans:"C",exp:"Both relations connect Thevenin and Norton forms."},
+{id:66,q:"The unit of conductance used in nodal equations is",opts:["Siemens","Mho","Ω⁻¹","All"],ans:"D",exp:"Siemens, mho, and Ω⁻¹ are equivalent units of conductance."},
+{id:67,q:"If there are n meshes, number of KVL equations =",opts:["n","n−1","n+1","None"],ans:"A",exp:"One independent KVL equation per mesh."},
+{id:68,q:"If there are m nodes, number of independent KCL equations =",opts:["m","m−1","m+1","0"],ans:"B",exp:"Only m−1 KCL equations are independent."},
+{id:69,q:"In mesh analysis, voltage sources are handled by",opts:["Including them directly in KVL","Transforming to current sources","Ignoring them","None"],ans:"A",exp:"Voltage sources appear directly in the KVL equations."},
+{id:70,q:"In nodal analysis, current sources are handled by",opts:["Including directly in KCL","Converting to voltage sources","Ignoring","Removing"],ans:"A",exp:"Current sources enter directly into KCL equations as current injections."}];
+
+const perPage=10,totalQ=data.length,totalPages=Math.ceil(totalQ/perPage);
+let currentPage=1;
+const LS_KEY="chapter4_quiz_answers";
+const pagesContainer=document.getElementById("pagesContainer");
+const progressEl=document.getElementById("progress");
+const resultEl=document.getElementById("result");
+const explanationsEl=document.getElementById("explanations");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+
+function loadSaved(){
+  try{
+    const raw=localStorage.getItem(LS_KEY);
+    if(!raw)return{};
+    const obj=JSON.parse(raw);
+    return obj&&typeof obj==="object"?obj:{};
+  }catch(e){return{}}
+}
+let answers=loadSaved();
+
+function saveAnswers(){try{localStorage.setItem(LS_KEY,JSON.stringify(answers));}catch(e){}}
+
+function createPage(pageNum){
+  const start=(pageNum-1)*perPage;
+  const end=Math.min(start+perPage,totalQ);
+  const page=document.createElement("div");
+  page.className="page";
+  page.dataset.page=pageNum;
+  for(let i=start;i<end;i++){
+    const q=data[i];
+    const qDiv=document.createElement("div");
+    qDiv.className="question";
+    const qText=document.createElement("div");
+    qText.className="qtext";
+    qText.textContent="Q"+q.id+". "+q.q;
+    qDiv.appendChild(qText);
+    const optsDiv=document.createElement("div");
+    optsDiv.className="options";
+    ["A","B","C","D"].forEach((letter,idx)=>{
+      const lbl=document.createElement("label");
+      const inp=document.createElement("input");
+      inp.type="radio";
+      inp.name="q"+q.id;
+      inp.value=letter;
+      if(answers[q.id]===letter)inp.checked=true;
+      inp.addEventListener("change",()=>{answers[q.id]=letter;saveAnswers();});
+      const span=document.createElement("span");
+      span.textContent=letter+". "+q.opts[idx];
+      lbl.appendChild(inp);
+      lbl.appendChild(span);
+      optsDiv.appendChild(lbl);
+    });
+    qDiv.appendChild(optsDiv);
+    page.appendChild(qDiv);
+  }
+  return page;
+}
+
+function renderPages(){
+  pagesContainer.innerHTML="";
+  for(let p=1;p<=totalPages;p++){
+    const pg=createPage(p);
+    if(p===currentPage)pg.classList.add("active");
+    pagesContainer.appendChild(pg);
+  }
+  updateProgress();
+  updateNavButtons();
+}
+
+function showPage(p){
+  currentPage=p;
+  document.querySelectorAll(".page").forEach(pg=>{
+    pg.classList.toggle("active",Number(pg.dataset.page)===currentPage);
+  });
+  updateProgress();
+  updateNavButtons();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function updateProgress(){
+  const start=(currentPage-1)*perPage+1;
+  const end=Math.min(currentPage*perPage,totalQ);
+  progressEl.textContent="Page "+currentPage+" of "+totalPages+"  (Questions "+start+"–"+end+" of "+totalQ+")";
+}
+
+function updateNavButtons(){
+  prevBtn.disabled=currentPage===1;
+  if(currentPage===totalPages){
+    nextBtn.textContent="Submit";
+  }else{
+    nextBtn.textContent="Next";
+  }
+}
+
+function gradeQuiz(){
+  let correct=0;
+  const details=[];
+  data.forEach(q=>{
+    const userAns=answers[q.id]||null;
+    const isCorrect=userAns===q.ans;
+    if(isCorrect)correct++;
+    details.push({q,ans:userAns,isCorrect});
+  });
+  const scorePct=Math.round(100*correct/totalQ);
+  resultEl.textContent="You scored "+correct+" / "+totalQ+" ("+scorePct+"%).";
+  buildExplanations(details);
+}
+
+function buildExplanations(details){
+  explanationsEl.innerHTML="";
+  details.forEach(d=>{
+    const wrap=document.createElement("div");
+    wrap.className="exp-item";
+    const title=document.createElement("div");
+    title.innerHTML="<strong>Q"+d.q.id+":</strong> "+d.q.q;
+    wrap.appendChild(title);
+    const ansLine=document.createElement("div");
+    const ua=d.ans?d.ans:"(no answer)";
+    ansLine.innerHTML="<span class='"+(d.isCorrect?"correct":"incorrect")+"'>Your answer: "+ua+"</span> &nbsp; | &nbsp; Correct: <strong>"+d.q.ans+"</strong>";
+    wrap.appendChild(ansLine);
+    const toggle=document.createElement("span");
+    toggle.className="inline-exp-toggle";
+    toggle.textContent="Hide Explanation";
+    const expDiv=document.createElement("div");
+    expDiv.className="inline-exp";
+    expDiv.textContent=d.q.exp;
+    toggle.addEventListener("click",()=>{
+      const collapsed=expDiv.classList.toggle("collapsed");
+      toggle.textContent=collapsed?"Show Explanation":"Hide Explanation";
+    });
+    wrap.appendChild(toggle);
+    wrap.appendChild(expDiv);
+    explanationsEl.appendChild(wrap);
+  });
+}
+
+prevBtn.addEventListener("click",()=>{
+  if(currentPage>1)showPage(currentPage-1);
+});
+nextBtn.addEventListener("click",()=>{
+  if(currentPage<totalPages){
+    showPage(currentPage+1);
+  }else{
+    gradeQuiz();
+    window.scrollTo({top:resultEl.offsetTop,behavior:"smooth"});
+  }
+});
+
+renderPages();
+</script>
+</body></html>
+```

@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8 – Natural and Step Responses of RLC Circuits Quiz</title>
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: #fafafa;
+            color: #222;
+            line-height: 1.5;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+        #progress {
+            text-align: center;
+            margin: 5px 0;
+            font-size: .9rem;
+            color: #555;
+        }
+        .page {
+            display: none;
+            animation: fade .25s ease-in;
+        }
+        .page.active {
+            display: block;
+        }
+        .question {
+            background: #fff;
+            margin: 12px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08);
+            font-size: .95rem;
+        }
+        .qtext {
+            margin-bottom: 12px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .options {
+            margin-left: 5px;
+        }
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 6px 0;
+            cursor: pointer;
+        }
+        .option-label {
+            font-weight: bold;
+            margin-right: 8px;
+            min-width: 20px;
+        }
+        .option-text {
+            flex: 1;
+        }
+        .options input[type=radio] {
+            transform: scale(1.2);
+            margin-right: 8px;
+            margin-top: 3px;
+        }
+        .navbar {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .navbar button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #0078ff;
+            color: #fff;
+            font-size: .95rem;
+            cursor: pointer;
+        }
+        .navbar button[disabled] {
+            background: #ccc;
+            cursor: default;
+        }
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.06);
+        }
+        #explanations {
+            margin-top: 15px;
+        }
+        .exp-item {
+            background: #fff;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.06);
+            font-size: .9rem;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: #c00;
+            font-weight: bold;
+        }
+        .inline-exp {
+            margin-top: 8px;
+            font-size: .85rem;
+            color: #333;
+            display: block;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border-left: 3px solid #0078ff;
+        }
+        .inline-exp.collapsed {
+            display: none;
+        }
+        .inline-exp-toggle {
+            margin-top: 8px;
+            font-size: .8rem;
+            color: #0078ff;
+            text-decoration: underline;
+            cursor: pointer;
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f0f8ff;
+            border-radius: 4px;
+        }
+        @keyframes fade {
+            from { opacity: 0; transform: translateX(8px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @media (max-width: 600px) {
+            body { padding: 8px; }
+            .question { padding: 12px; }
+            .navbar button { padding: 9px; font-size: .9rem; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Chapter 8 – Natural and Step Responses of RLC Circuits</h1>
+    <div id="progress"></div>
+    <form id="quizForm">
+        <div id="pagesContainer"></div>
+        <div class="navbar">
+            <button type="button" id="prevBtn">Back</button>
+            <button type="button" id="nextBtn">Next</button>
+        </div>
+    </form>
+    <div id="result"></div>
+    <div id="explanations"></div>
+
+    <!-- KaTeX JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <script>
+        const data = [
+            { 
+                id: 1, 
+                q: "A second-order circuit is characterized by", 
+                opts: [
+                    "First-order differential equation", 
+                    "Second-order differential equation", 
+                    "No derivatives", 
+                    "Third-order"
+                ], 
+                ans: "B", 
+                exp: "Second-order circuits have second-order differential equations from two independent energy storage elements (inductors and/or capacitors)." 
+            },
+            { 
+                id: 2, 
+                q: "Second-order circuits contain resistors + equivalent of", 
+                opts: [
+                    "One storage element", 
+                    "Two storage elements", 
+                    "Three inductors", 
+                    "No capacitors"
+                ], 
+                ans: "B", 
+                exp: "Second-order circuits require two independent energy storage elements, which can be any combination of inductors and capacitors." 
+            },
+            { 
+                id: 3, 
+                q: "Typical second-order circuits include", 
+                opts: [
+                    "Series/parallel RLC", 
+                    "Single RC/RL only", 
+                    "Op amp with two capacitors", 
+                    "A and C"
+                ], 
+                ans: "D", 
+                exp: "Both series/parallel RLC circuits and op-amp circuits with two capacitors exhibit second-order behavior." 
+            },
+            { 
+                id: 4, 
+                q: "For parallel RLC natural response, KCL gives", 
+                opts: [
+                    "$\\frac{v}{R} + C\\frac{dv}{dt} + \\frac{1}{L}\\int v\\,dt = 0$", 
+                    "$L\\frac{di}{dt} + Ri = 0$", 
+                    "Second-order DE after differentiation", 
+                    "A"
+                ], 
+                ans: "D", 
+                exp: "Applying KCL to a parallel RLC circuit yields the equation in option A, which is a second-order differential equation after differentiation." 
+            },
+            { 
+                id: 5, 
+                q: "Parallel RLC characteristic equation:", 
+                opts: [
+                    "$s^{2} + 2\\alpha s + \\omega_{0}^{2} = 0$", 
+                    "$s + RC = 0$", 
+                    "$s^{2} + RCs + 1/LC = 0$", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "The characteristic equation for parallel RLC circuits is typically written in this standard form where α is the Neper frequency and ω₀ is the resonant frequency." 
+            },
+            { 
+                id: 6, 
+                q: "Neper frequency α (parallel):", 
+                opts: [
+                    "$\\frac{1}{2RC}$", 
+                    "$\\frac{R}{2L}$", 
+                    "$\\sqrt{\\frac{1}{LC}}$", 
+                    "$\\frac{1}{RC}$"
+                ], 
+                ans: "A", 
+                exp: "For parallel RLC circuits, the Neper frequency (damping coefficient) is α = 1/(2RC)." 
+            },
+            { 
+                id: 7, 
+                q: "Resonant radian frequency ω₀ (parallel):", 
+                opts: [
+                    "$\\frac{1}{2RC}$", 
+                    "$\\sqrt{\\frac{1}{LC}}$", 
+                    "$\\frac{R}{L}$", 
+                    "$\\sqrt{\\alpha^{2} - \\omega_{d}^{2}}$"
+                ], 
+                ans: "B", 
+                exp: "The resonant frequency ω₀ depends only on L and C: ω₀ = 1/√(LC), and is the same for both series and parallel RLC configurations." 
+            },
+            { 
+                id: 8, 
+                q: "Roots real/distinct (ω₀ < α):", 
+                opts: [
+                    "Overdamped", 
+                    "Underdamped", 
+                    "Critically damped", 
+                    "No damping"
+                ], 
+                ans: "A", 
+                exp: "When ω₀ < α, the characteristic equation has two distinct real roots, resulting in overdamped response without oscillations." 
+            },
+            { 
+                id: 9, 
+                q: "Roots complex (ω₀ > α):", 
+                opts: [
+                    "Overdamped", 
+                    "Underdamped", 
+                    "Critically damped", 
+                    "Steady-state"
+                ], 
+                ans: "B", 
+                exp: "When ω₀ > α, the characteristic equation has complex conjugate roots, resulting in underdamped oscillatory response." 
+            },
+            { 
+                id: 10, 
+                q: "Roots real/equal (ω₀ = α):", 
+                opts: [
+                    "Overdamped", 
+                    "Underdamped", 
+                    "Critically damped", 
+                    "Oscillatory"
+                ], 
+                ans: "C", 
+                exp: "When ω₀ = α, the characteristic equation has two equal real roots, resulting in critically damped response (fastest without oscillation)." 
+            },
+            { 
+                id: 11, 
+                q: "Overdamped parallel v(t):", 
+                opts: [
+                    "$Ae^{s_{1}t} + Be^{s_{2}t}$", 
+                    "$e^{-\\alpha t}(A\\cos\\omega_{d}t + B\\sin\\omega_{d}t)$", 
+                    "$(A + Bt)e^{-\\alpha t}$", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Overdamped response consists of two decaying exponential terms with real, negative exponents: v(t) = A₁e^(s₁t) + A₂e^(s₂t)." 
+            },
+            { 
+                id: 12, 
+                q: "Underdamped: damped frequency ω_d =", 
+                opts: [
+                    "$\\sqrt{\\omega_{0}^{2} - \\alpha^{2}}$", 
+                    "$\\alpha$", 
+                    "$\\omega_{0}$", 
+                    "$2\\alpha$"
+                ], 
+                ans: "A", 
+                exp: "The damped natural frequency ω_d is the frequency of oscillation in underdamped response, reduced from ω₀ by damping: ω_d = √(ω₀² - α²)." 
+            },
+            { 
+                id: 13, 
+                q: "Critically damped parallel v(t):", 
+                opts: [
+                    "$Ae^{st} + Be^{st}$", 
+                    "$(A + Bt)e^{-\\alpha t}$", 
+                    "Oscillatory", 
+                    "B"
+                ], 
+                ans: "B", 
+                exp: "Critically damped response includes a linear term multiplied by a decaying exponential: v(t) = (D₁ + D₂t)e^{-αt}." 
+            },
+            { 
+                id: 14, 
+                q: "To find constants A, B: use", 
+                opts: [
+                    "v(0), dv/dt(0)", 
+                    "Only v(∞)", 
+                    "Energy only", 
+                    "Laplace"
+                ], 
+                ans: "A", 
+                exp: "Initial conditions for voltage and its derivative (v(0) and dv/dt(0)) are needed to determine the constants in the response equation." 
+            },
+            { 
+                id: 15, 
+                q: "dv(0)/dt = i_C(0)/C, i_C(0) from", 
+                opts: [
+                    "KCL at t=0⁺", 
+                    "KVL", 
+                    "Steady-state", 
+                    "A"
+                ], 
+                ans: "D", 
+                exp: "The initial capacitor current from KCL at t=0⁺ determines the initial derivative of voltage across the capacitor." 
+            },
+            { 
+                id: 16, 
+                q: "Series RLC natural: KVL gives", 
+                opts: [
+                    "$Ri + L\\frac{di}{dt} + \\frac{1}{C}\\int i\\,dt = 0$", 
+                    "Parallel equation", 
+                    "First-order", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Applying KVL to a series RLC circuit yields an integro-differential equation that becomes second-order after differentiation." 
+            },
+            { 
+                id: 17, 
+                q: "Neper α (series):", 
+                opts: [
+                    "$R/(2L)$", 
+                    "$1/(2RC)$", 
+                    "Same as parallel", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "For series RLC circuits, the Neper frequency is α = R/(2L)." 
+            },
+            { 
+                id: 18, 
+                q: "ω₀ same for series/parallel:", 
+                opts: [
+                    "True", 
+                    "False", 
+                    "Only overdamped", 
+                    "Depends on R"
+                ], 
+                ans: "A", 
+                exp: "The resonant frequency ω₀ = 1/√(LC) depends only on L and C, not on the circuit configuration (series or parallel)." 
+            },
+            { 
+                id: 19, 
+                q: "Series i(t) forms mirror", 
+                opts: [
+                    "Parallel v(t)", 
+                    "RC only", 
+                    "RL only", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Due to duality, the current response in series RLC has the same mathematical form as voltage response in parallel RLC." 
+            },
+            { 
+                id: 20, 
+                q: "Step response: complete =", 
+                opts: [
+                    "Natural only", 
+                    "Natural + steady-state", 
+                    "Forced only", 
+                    "B"
+                ], 
+                ans: "D", 
+                exp: "Complete step response includes both the transient natural response and the steady-state forced response." 
+            },
+            { 
+                id: 21, 
+                q: "x_ss = final value from", 
+                opts: [
+                    "DC steady-state (storage open/short)", 
+                    "Initial", 
+                    "Transient", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "The steady-state value x_ss is found from DC steady-state analysis: capacitors open, inductors short." 
+            },
+            { 
+                id: 22, 
+                q: "Overdamped step: x(t) = x_∞ +", 
+                opts: [
+                    "$A e^{s_1 t} + B e^{s_2 t}$", 
+                    "$e^{-α t} \\cos$", 
+                    "$(A + B t) e^{-α t}$", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Overdamped step response has the same form as natural response plus the final steady-state value: x(t) = x_∞ + A₁e^(s₁t) + A₂e^(s₂t)." 
+            },
+            { 
+                id: 23, 
+                q: "Underdamped step parallel i_L:", 
+                opts: [
+                    "$I_s + e^{-α t} (A \\cos ω_d t + B \\sin ω_d t)$", 
+                    "$V_s (1 - e^{...})$", 
+                    "Matches natural form", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Inductor current in parallel RLC step response has the underdamped form plus the source current value." 
+            },
+            { 
+                id: 24, 
+                q: "Critically damped step:", 
+                opts: [
+                    "$x_∞ + (A + B t) e^{-α t}$", 
+                    "Oscillates", 
+                    "Pure exponential", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Critically damped step response includes the steady-state value plus the critically damped natural response form." 
+            },
+            { 
+                id: 25, 
+                q: "Ex. 8.6: overdamped step i_L final", 
+                opts: [
+                    "$I_s = 24 \\text{ mA}$", 
+                    "0", 
+                    "Initial", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In Example 8.6, the inductor current eventually equals the source current I_s = 24 mA in steady state." 
+            },
+            { 
+                id: 26, 
+                q: "Cascade integrators: op amp + 2C =", 
+                opts: [
+                    "First-order", 
+                    "Second-order DE", 
+                    "DC only", 
+                    "B"
+                ], 
+                ans: "B", 
+                exp: "Cascading two integrators creates a system described by a second-order differential equation." 
+            },
+            { 
+                id: 27, 
+                q: "Two integrators: d²v_o/dt² ∝", 
+                opts: [
+                    "$v_s$", 
+                    "$dv_s/dt$", 
+                    "$\\int v_s\\,dt$", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "For two cascaded integrators, the second derivative of output is proportional to the input: d²v_o/dt² ∝ v_s." 
+            },
+            { 
+                id: 28, 
+                q: "PSpice transient:", 
+                opts: [
+                    "Time-domain simulation", 
+                    "s-domain only", 
+                    "Steady-state", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "PSpice transient analysis simulates circuit behavior in the time domain." 
+            },
+            { 
+                id: 29, 
+                q: "Dual of R:", 
+                opts: [
+                    "$G = 1/R$", 
+                    "L", 
+                    "C", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In circuit duality, resistance and conductance are duals of each other: R ↔ G = 1/R." 
+            },
+            { 
+                id: 30, 
+                q: "Series/parallel RLC: mesh/nodal eqs. dual", 
+                opts: [
+                    "True", 
+                    "False", 
+                    "", 
+                    ""
+                ], 
+                ans: "A", 
+                exp: "Series and parallel RLC circuits are duals, with mesh equations for series corresponding to nodal equations for parallel." 
+            },
+            { 
+                id: 31, 
+                q: "Ignition: rapid i change in primary induces", 
+                opts: [
+                    "High V in secondary via M", 
+                    "DC spark", 
+                    "Steady current", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Rapid current change in ignition coil primary induces high voltage in secondary via mutual inductance M." 
+            },
+            { 
+                id: 32, 
+                q: "Smoothing: RLC filters", 
+                opts: [
+                    "Ripple in DC", 
+                    "AC only", 
+                    "Step only", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "RLC filters smooth out ripple in rectified DC power supplies." 
+            },
+            { 
+                id: 33, 
+                q: "Overdamped:", 
+                opts: [
+                    "Sluggish, no overshoot", 
+                    "Rings", 
+                    "Fastest non-osc.", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Overdamped response approaches steady state without oscillation but relatively slowly." 
+            },
+            { 
+                id: 34, 
+                q: "Underdamped: fastest to 90% with", 
+                opts: [
+                    "Overshoot/ringing", 
+                    "No overshoot", 
+                    "Slowest", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Underdamped response reaches 90% of final value fastest but with oscillation and overshoot." 
+            },
+            { 
+                id: 35, 
+                q: "Critically damped:", 
+                opts: [
+                    "Borderline, fastest no overshoot", 
+                    "Oscillates", 
+                    "Overdamped limit", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Critically damped response reaches steady state fastest without any overshoot." 
+            },
+            { 
+                id: 36, 
+                q: "Ex. 8.2: branch i_R(0) =", 
+                opts: [
+                    "$V_0 / R$", 
+                    "$I_{L0}$", 
+                    "$-i_{C0}$", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In Example 8.2, initial resistor current is simply initial voltage divided by resistance: i_R(0) = V_0/R." 
+            },
+            { 
+                id: 37, 
+                q: "Ex. 8.4: underdamped plot shows", 
+                opts: [
+                    "Exponential decay envelope", 
+                    "Constant amplitude", 
+                    "Linear", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Underdamped oscillations decay within an exponential envelope e^{-αt}." 
+            },
+            { 
+                id: 38, 
+                q: "Parallel step i_L: final =", 
+                opts: [
+                    "Source current I_s", 
+                    "0", 
+                    "Initial", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In parallel RLC step response, inductor current eventually equals source current: i_L(∞) = I_s." 
+            },
+            { 
+                id: 39, 
+                q: "Series step v_C: final =", 
+                opts: [
+                    "Source voltage V_s", 
+                    "0", 
+                    "Depends on R", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In series RLC step response, capacitor voltage eventually equals source voltage: v_C(∞) = V_s." 
+            },
+            { 
+                id: 40, 
+                q: "Ex. 8.9: fastest to 90%", 
+                opts: [
+                    "Underdamped", 
+                    "Overdamped", 
+                    "Critical", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In Example 8.9, underdamped response reaches 90% fastest at 74μs despite overshoot." 
+            },
+            { 
+                id: 41, 
+                q: "Ex. 8.10: initial stored energy affects", 
+                opts: [
+                    "Coefficients A,B only", 
+                    "Roots", 
+                    "$\\omega_0$", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Initial stored energy affects only the coefficients in the response equation, not the roots or ω₀." 
+            },
+            { 
+                id: 42, 
+                q: "Cascade Ex. 8.13: v_o ∝", 
+                opts: [
+                    "$t^2$ for step input", 
+                    "$t$", 
+                    "Constant", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Two cascaded integrators produce output proportional to t² for step input: double integration of constant yields t²." 
+            },
+            { 
+                id: 43, 
+                q: "Feedback R in integrator prevents", 
+                opts: [
+                    "Saturation", 
+                    "Infinite ramp", 
+                    "Oscillation", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Feedback resistor prevents op-amp saturation by providing DC feedback path and preventing infinite ramp-up." 
+            },
+            { 
+                id: 44, 
+                q: "Photoflash: C charges to threshold, discharges via", 
+                opts: [
+                    "Lamp R", 
+                    "Constant I", 
+                    "L", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Photoflash circuits charge capacitor via resistor until threshold voltage, then discharge through lamp resistance." 
+            },
+            { 
+                id: 45, 
+                q: "Frog kick: RL discharge through body", 
+                opts: [
+                    "R", 
+                    "C charge", 
+                    "Step I", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Frog leg twitch experiment involves RL discharge through biological resistance R." 
+            },
+            { 
+                id: 46, 
+                q: "Ex. 8.1: v(0⁻)=", 
+                opts: [
+                    "DC steady-state", 
+                    "0 always", 
+                    "Impulse", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In Example 8.1, initial voltage is determined from DC steady-state conditions before switching." 
+            },
+            { 
+                id: 47, 
+                q: "Continuity: v_C(0⁺)=v_C(0⁻),", 
+                opts: [
+                    "i_L(0⁺)=i_L(0⁻)", 
+                    "i_R jumps", 
+                    "v_R jumps", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Both capacitor voltage and inductor current cannot change instantaneously (continuity conditions)." 
+            },
+            { 
+                id: 48, 
+                q: "dv/dt(0⁺)=i_C(0⁺)/C from", 
+                opts: [
+                    "KCL branches at 0⁺", 
+                    "Steady only", 
+                    "Final", 
+                    "A"
+                ], 
+                exp: "A", 
+                exp: "Initial derivative of capacitor voltage is found from KCL at the instant after switching: i_C(0⁺) from KCL gives dv/dt(0⁺) = i_C(0⁺)/C." 
+            },
+            { 
+                id: 49, 
+                q: "Series α vs parallel α:", 
+                opts: [
+                    "Different formulas", 
+                    "Same", 
+                    "ω_0 only same", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Neper frequency α has different formulas for series (α = R/2L) and parallel (α = 1/2RC) RLC circuits." 
+            },
+            { 
+                id: 50, 
+                q: "Underdamped: ringing due to", 
+                opts: [
+                    "Energy exchange L ↔ C", 
+                    "R only", 
+                    "DC source", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Underdamped ringing results from energy oscillating between inductor (magnetic) and capacitor (electric)." 
+            },
+            { 
+                id: 51, 
+                q: "Lossless LC: R =", 
+                opts: [
+                    "∞, sustained oscillation at ω_0", 
+                    "0", 
+                    "Critical", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "With infinite resistance (no damping), LC circuit oscillates indefinitely at ω_0. With R = 0 (short), it's also lossless but α=0." 
+            },
+            { 
+                id: 52, 
+                q: "Ex. 8.11: series underdamped i(t) initial", 
+                opts: [
+                    "0 A", 
+                    "$V_0 / R$", 
+                    "Infinite", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In Example 8.11, initial current is zero when switch closes: i(0) = 0." 
+            },
+            { 
+                id: 53, 
+                q: "Ex. 8.12: di/dt(0⁺) =", 
+                opts: [
+                    "$V_s / L$", 
+                    "0", 
+                    "$I_s / C$", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "With zero initial current, initial derivative is determined by source voltage divided by inductance: di/dt(0⁺) = V_s/L." 
+            },
+            { 
+                id: 54, 
+                q: "Cascade: double integration →", 
+                opts: [
+                    "Second-order", 
+                    "First-order", 
+                    "Zero-order", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Cascading two integrators creates a second-order system (double integration)." 
+            },
+            { 
+                id: 55, 
+                q: "Table 8.3: natural response summary", 
+                opts: [
+                    "Over/under/critical forms", 
+                    "Step only", 
+                    "Laplace", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Table 8.3 provides summary of response forms for different damping conditions (overdamped, underdamped, critically damped)." 
+            },
+            { 
+                id: 56, 
+                q: "Ex. 8.2: i_C(0) =", 
+                opts: [
+                    "$-(i_R(0) + i_L(0))$", 
+                    "0", 
+                    "$i_{L0}$", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "From KCL at capacitor node, capacitor current equals negative sum of other branch currents: i_C(0) = -(i_R(0) + i_L(0))." 
+            },
+            { 
+                id: 57, 
+                q: "Critically damped:", 
+                opts: [
+                    "Fastest no overshoot", 
+                    "Rings", 
+                    "Slowest", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Critically damped provides fastest approach to steady state without oscillation." 
+            },
+            { 
+                id: 58, 
+                q: "Design: fastest settle no exceed final →", 
+                opts: [
+                    "Critical", 
+                    "Over", 
+                    "Under", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "For fastest settling without exceeding final value, critical damping is optimal." 
+            },
+            { 
+                id: 59, 
+                q: "Ignition: autotransformer primary i change →", 
+                opts: [
+                    "Secondary high V spark", 
+                    "DC", 
+                    "Low V", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Autotransformer in ignition system produces high voltage spark in secondary when primary current changes rapidly." 
+            },
+            { 
+                id: 60, 
+                q: "Smoothing: RLC reduces", 
+                opts: [
+                    "Ripple in rectified DC", 
+                    "Increases ripple", 
+                    "Blocks DC", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "RLC circuits filter out ripple in DC power supplies." 
+            },
+            { 
+                id: 61, 
+                q: "Overdamped roots:", 
+                opts: [
+                    "Real distinct negative", 
+                    "Complex", 
+                    "Positive", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Overdamped characteristic equation has two real, distinct, negative roots." 
+            },
+            { 
+                id: 62, 
+                q: "Underdamped: envelope", 
+                opts: [
+                    "$e^{-α t}$", 
+                    "Constant", 
+                    "Linear t", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Underdamped oscillations decay within an exponential envelope e^{-αt}." 
+            },
+            { 
+                id: 63, 
+                q: "Ex. 8.4: B1 from", 
+                opts: [
+                    "v(0)", 
+                    "dv/dt(0)", 
+                    "Both", 
+                    "C"
+                ], 
+                ans: "D", 
+                exp: "In Example 8.4, coefficient B1 is determined from initial voltage condition v(0)." 
+            },
+            { 
+                id: 64, 
+                q: "Series step v_C forms:", 
+                opts: [
+                    "Mirror parallel i_L", 
+                    "Different", 
+                    "First-order", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Due to duality, series capacitor voltage response mirrors parallel inductor current response." 
+            },
+            { 
+                id: 65, 
+                q: "Ex. 8.9 plot: under fastest to 90%", 
+                opts: [
+                    "Yes, overshoots", 
+                    "No, slowest", 
+                    "Equal", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In Example 8.9 plot, underdamped reaches 90% fastest even with overshoot." 
+            },
+            { 
+                id: 66, 
+                q: "Initial stored energy:", 
+                opts: [
+                    "Affects coefficients only", 
+                    "Changes roots", 
+                    "ω_0", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Initial stored energy only affects the coefficients (A, B) in the response, not the characteristic roots or ω₀." 
+            },
+            { 
+                id: 67, 
+                q: "Op amp cascade saturates due to", 
+                opts: [
+                    "Ramp growth", 
+                    "Step", 
+                    "Impulse", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Unchecked integrator ramp can drive op-amp to saturation limits due to continuous integration." 
+            },
+            { 
+                id: 68, 
+                q: "Feedback R in integrator:", 
+                opts: [
+                    "Resets/leakage prevents infinite", 
+                    "Increases gain", 
+                    "Differentiates", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Feedback resistor provides DC path to prevent integrator output from ramping indefinitely (adds reset/leakage)." 
+            },
+            { 
+                id: 69, 
+                q: "Ex. 8.1: overdamped roots from", 
+                opts: [
+                    "α > ω_0", 
+                    "α < ω_0", 
+                    "Equal", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "In Example 8.1, overdamped condition occurs when Neper frequency exceeds resonant frequency: α > ω_0." 
+            },
+            { 
+                id: 70, 
+                q: "Critically damped practical:", 
+                opts: [
+                    "Exact α=ω_0 hard, use near-over", 
+                    "Always exact", 
+                    "Unstable", 
+                    "A"
+                ], 
+                ans: "A", 
+                exp: "Achieving exact critical damping is difficult in practice; near-overdamped is often used instead for practical designs." 
+            }
+        ];
+
+        const perPage = 10;
+        const totalQ = data.length;
+        const totalPages = Math.ceil(totalQ / perPage);
+        let currentPage = 1;
+        const LS_KEY = "chapter8_quiz_answers";
+        const pagesContainer = document.getElementById("pagesContainer");
+        const progressEl = document.getElementById("progress");
+        const resultEl = document.getElementById("result");
+        const explanationsEl = document.getElementById("explanations");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        function loadSaved() {
+            try {
+                const raw = localStorage.getItem(LS_KEY);
+                if (!raw) return {};
+                const obj = JSON.parse(raw);
+                return obj && typeof obj === "object" ? obj : {};
+            } catch (e) { return {}; }
+        }
+        let answers = loadSaved();
+        function saveAnswers() {
+            try {
+                localStorage.setItem(LS_KEY, JSON.stringify(answers));
+            } catch (e) {}
+        }
+
+        function createPage(pageNum) {
+            const start = (pageNum - 1) * perPage;
+            const end = Math.min(start + perPage, totalQ);
+            const page = document.createElement("div");
+            page.className = "page";
+            page.dataset.page = pageNum;
+            
+            for (let i = start; i < end; i++) {
+                const q = data[i];
+                const qDiv = document.createElement("div");
+                qDiv.className = "question";
+                
+                // Question text
+                const qText = document.createElement("div");
+                qText.className = "qtext";
+                qText.innerHTML = `<strong>Q${q.id}.</strong> ${q.q}`;
+                qDiv.appendChild(qText);
+                
+                // Options container
+                const optsDiv = document.createElement("div");
+                optsDiv.className = "options";
+                
+                ["A", "B", "C", "D"].forEach((letter, idx) => {
+                    const optionDiv = document.createElement("div");
+                    optionDiv.className = "option-item";
+                    
+                    const inp = document.createElement("input");
+                    inp.type = "radio";
+                    inp.name = "q" + q.id;
+                    inp.value = letter;
+                    inp.id = `q${q.id}_${letter}`;
+                    if (answers[q.id] === letter) inp.checked = true;
+                    inp.addEventListener("change", () => {
+                        answers[q.id] = letter;
+                        saveAnswers();
+                    });
+                    
+                    const label = document.createElement("label");
+                    label.htmlFor = `q${q.id}_${letter}`;
+                    label.style.display = "flex";
+                    label.style.alignItems = "flex-start";
+                    label.style.cursor = "pointer";
+                    label.style.width = "100%";
+                    
+                    const letterSpan = document.createElement("span");
+                    letterSpan.className = "option-label";
+                    letterSpan.textContent = letter + ".";
+                    letterSpan.style.marginRight = "8px";
+                    letterSpan.style.fontWeight = "bold";
+                    
+                    const textSpan = document.createElement("span");
+                    textSpan.className = "option-text";
+                    textSpan.innerHTML = q.opts[idx];
+                    
+                    label.appendChild(inp);
+                    label.appendChild(letterSpan);
+                    label.appendChild(textSpan);
+                    optionDiv.appendChild(label);
+                    optsDiv.appendChild(optionDiv);
+                });
+                
+                qDiv.appendChild(optsDiv);
+                page.appendChild(qDiv);
+            }
+            return page;
+        }
+
+        function renderPages() {
+            pagesContainer.innerHTML = "";
+            for (let p = 1; p <= totalPages; p++) {
+                const pg = createPage(p);
+                if (p === currentPage) pg.classList.add("active");
+                pagesContainer.appendChild(pg);
+            }
+            updateProgress();
+            updateNavButtons();
+            // Render math after pages are created
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function showPage(p) {
+            currentPage = p;
+            document.querySelectorAll(".page").forEach(pg => {
+                pg.classList.toggle("active", Number(pg.dataset.page) === currentPage);
+            });
+            updateProgress();
+            updateNavButtons();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            // Re-render math for the new page
+            setTimeout(() => {
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(document.body, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }, 100);
+        }
+
+        function updateProgress() {
+            const start = (currentPage - 1) * perPage + 1;
+            const end = Math.min(currentPage * perPage, totalQ);
+            progressEl.textContent = "Page " + currentPage + " of " + totalPages + "  (Questions " + start + "–" + end + " of " + totalQ + ")";
+        }
+
+        function updateNavButtons() {
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.textContent = currentPage === totalPages ? "Submit" : "Next";
+        }
+
+        function gradeQuiz() {
+            let correct = 0;
+            const details = [];
+            data.forEach(q => {
+                const userAns = answers[q.id] || null;
+                const isCorrect = userAns === q.ans;
+                if (isCorrect) correct++;
+                details.push({ q, ans: userAns, isCorrect });
+            });
+            const scorePct = Math.round(100 * correct / totalQ);
+            resultEl.textContent = "You scored " + correct + " / " + totalQ + " (" + scorePct + "%).";
+            buildExplanations(details);
+        }
+
+        function buildExplanations(details) {
+            explanationsEl.innerHTML = "";
+            details.forEach(d => {
+                const wrap = document.createElement("div");
+                wrap.className = "exp-item";
+                const title = document.createElement("div");
+                title.innerHTML = "<strong>Q" + d.q.id + ":</strong> " + d.q.q;
+                wrap.appendChild(title);
+                const ansLine = document.createElement("div");
+                const ua = d.ans ? d.ans : "(no answer)";
+                ansLine.innerHTML = "<span class='" + (d.isCorrect ? "correct" : "incorrect") + "'>Your answer: " + ua + "</span> &nbsp; | &nbsp; Correct: <strong>" + d.q.ans + "</strong>";
+                wrap.appendChild(ansLine);
+                const toggle = document.createElement("span");
+                toggle.className = "inline-exp-toggle";
+                toggle.textContent = "Hide Explanation";
+                const expDiv = document.createElement("div");
+                expDiv.className = "inline-exp";
+                expDiv.innerHTML = d.q.exp;
+                toggle.addEventListener("click", () => {
+                    const collapsed = expDiv.classList.toggle("collapsed");
+                    toggle.textContent = collapsed ? "Show Explanation" : "Hide Explanation";
+                });
+                wrap.appendChild(toggle);
+                wrap.appendChild(expDiv);
+                explanationsEl.appendChild(wrap);
+            });
+            // Render math in explanations
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(explanationsEl, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        prevBtn.addEventListener("click", () => { if (currentPage > 1) showPage(currentPage - 1); });
+        nextBtn.addEventListener("click", () => {
+            if (currentPage < totalPages) {
+                showPage(currentPage + 1);
+            } else {
+                gradeQuiz();
+                window.scrollTo({ top: resultEl.offsetTop, behavior: "smooth" });
+            }
+        });
+
+        renderPages();
+    </script>
+</body>
+</html>

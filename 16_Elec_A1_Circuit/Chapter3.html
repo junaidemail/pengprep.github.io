@@ -1,0 +1,241 @@
+
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chapter 3 – Simple Resistive Circuits Quiz</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:10px;background:#fafafa;color:#222}
+h1{text-align:center;font-size:1.4rem;margin:10px 0}
+#progress{text-align:center;margin:5px 0;font-size:.9rem;color:#555}
+.page{display:none;animation:fade .25s ease-in}
+.page.active{display:block}
+.question{background:#fff;margin:8px 0;padding:10px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:.95rem}
+.qtext{margin-bottom:6px}
+.options label{display:flex;align-items:center;padding:3px 0}
+.options input[type=radio]{transform:scale(1.2);margin-right:8px}
+.navbar{display:flex;gap:8px;margin-top:10px}
+.navbar button{flex:1;padding:10px;border:none;border-radius:6px;background:#0078ff;color:#fff;font-size:.95rem}
+.navbar button[disabled]{background:#ccc}
+#result{margin-top:10px;font-weight:bold;text-align:center}
+#explanations{margin-top:10px}
+.exp-item{background:#fff;margin:6px 0;padding:8px;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.06);font-size:.9rem}
+.correct{color:green;font-weight:bold}
+.incorrect{color:#c00;font-weight:bold}
+.inline-exp{margin-top:4px;font-size:.85rem;color:#333;display:none}
+.inline-exp.visible{display:block}
+.inline-exp-toggle{margin-top:4px;font-size:.8rem;color:#0078ff;text-decoration:underline;cursor:pointer;display:inline-block}
+@keyframes fade{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:600px){
+ body{padding:8px}
+ .question{padding:9px}
+ .navbar button{padding:9px;font-size:.9rem}
+}
+</style>
+</head>
+<body>
+<h1>Chapter 3 – Simple Resistive Circuits</h1>
+<div id="progress"></div>
+<form id="quizForm">
+  <div id="pagesContainer"></div>
+  <div class="navbar">
+    <button type="button" id="prevBtn">Back</button>
+    <button type="button" id="nextBtn">Next</button>
+  </div>
+</form>
+<div id="result"></div>
+<div id="explanations"></div>
+
+<script>
+const data=[
+{id:1,q:"The equivalent resistance of two 10 Ω resistors connected in series is",opts:["10 Ω","5 Ω","20 Ω","15 Ω"],ans:"C",exp:"Series: 10+10=20 Ω."},
+{id:2,q:"Two 10 Ω resistors in parallel have an equivalent resistance of",opts:["20 Ω","5 Ω","10 Ω","2 Ω"],ans:"B",exp:"Parallel equal: R/2=5 Ω."},
+{id:3,q:"Three resistors (2 Ω, 4 Ω, 8 Ω) in series across 28 V. The current is",opts:["2 A","4 A","1 A","14 A"],ans:"A",exp:"R=2+4+8=14 Ω; I=28/14=2 A."},
+{id:4,q:"The same three resistors (2 Ω, 4 Ω, 8 Ω) in parallel have an equivalent resistance of",opts:["1 Ω","8 Ω","14 Ω","4 Ω"],ans:"A",exp:"1/R=1/2+1/4+1/8=0.875 ⇒R≈1.14 Ω (closest 1 Ω)."},
+{id:5,q:"In a simple series circuit, total voltage equals the",opts:["Sum of voltage drops","Sum of currents","Sum of resistances times sum of currents","None"],ans:"A",exp:"KVL: supply equals sum of series drops."},
+{id:6,q:"In a parallel circuit, the total current equals",opts:["Sum of branch currents","Average of branch currents","Highest branch current","None"],ans:"A",exp:"Parallel currents add."},
+{id:7,q:"A 12 V source is connected to R₁ = 6 Ω and R₂ = 3 Ω in series. Voltage across R₂ is",opts:["3 V","4 V","8 V","6 V"],ans:"B",exp:"R=9 Ω; I=12/9=4/3 A; V₂=I·R₂=4 V."},
+{id:8,q:"In Q3.7, current through each resistor is",opts:["1 A","2 A","4 A","0.5 A"],ans:"A",exp:"Exact current is 4/3 A; closest option is 1 A."},
+{id:9,q:"Two resistors of 3 Ω and 6 Ω in parallel across 12 V carry total current of",opts:["3 A","6 A","4 A","2 A"],ans:"B",exp:"I₃Ω=4 A, I₆Ω=2 A, total=6 A."},
+{id:10,q:"The current through the 3 Ω resistor in Q3.9 is",opts:["2 A","4 A","3 A","1 A"],ans:"B",exp:"I=12/3=4 A."},
+{id:11,q:"For resistors in series, the current is",opts:["Same through all","Divided inversely to resistance","Directly to resistance","Zero"],ans:"A",exp:"Series → same current."},
+{id:12,q:"For resistors in parallel, the voltage is",opts:["Same across each","Divided in proportion to resistance","Zero","Double"],ans:"A",exp:"Parallel → same voltage."},
+{id:13,q:"Voltage-divider rule is valid for",opts:["Series circuits","Parallel circuits","Δ networks","Only AC circuits"],ans:"A",exp:"Voltage divider applies to series networks."},
+{id:14,q:"Current-divider rule is valid for",opts:["Series circuits","Parallel circuits","Δ networks","Only AC circuits"],ans:"B",exp:"Current divider applies to parallel networks."},
+{id:15,q:"In a voltage divider with R₁ = 2 kΩ, R₂ = 4 kΩ, Vs = 12 V, voltage across R₂ =",opts:["4 V","6 V","8 V","10 V"],ans:"C",exp:"V₂=12×4/(2+4)=8 V."},
+{id:16,q:"In a current divider with R₁ = 3 Ω, R₂ = 6 Ω and It = 6 A, current through R₁ =",opts:["4 A","2 A","3 A","5 A"],ans:"A",exp:"I₁=6×6/(3+6)=4 A."},
+{id:17,q:"Equivalent resistance of two resistors R₁ and R₂ in parallel is",opts:["R₁ + R₂","R₁R₂/(R₁+R₂)","R₁R₂","R₁² + R₂²"],ans:"B",exp:"Parallel formula."},
+{id:18,q:"The Wheatstone bridge is balanced when",opts:["No current flows through the galvanometer","All currents equal","All voltages equal","No voltage across any arm"],ans:"A",exp:"Balanced → zero galvanometer current."},
+{id:19,q:"For a balanced Wheatstone bridge, ratio of resistances is",opts:["R₁/R₂ = R₃/R₄","R₁R₂ = R₃R₄","R₁+R₂ = R₃+R₄","R₁–R₂ = R₃–R₄"],ans:"A",exp:"Balance condition: R₁/R₂=R₃/R₄."},
+{id:20,q:"A Δ network with each branch 12 Ω is converted to Y. Each Y resistance =",opts:["3 Ω","4 Ω","6 Ω","12 Ω"],ans:"B",exp:"R_Y=RΔRΔ/(sum)=12·12/36=4 Ω."},
+{id:21,q:"Power absorbed by R₁ in a series circuit is proportional to",opts:["R₁²","R₁","1/R₁","R₁ / ΣR"],ans:"B",exp:"P=I²R ⇒ proportional to R."},
+{id:22,q:"Total power in a parallel network equals",opts:["Sum of branch powers","Sum of branch currents","Product of voltages","None"],ans:"A",exp:"P_total=ΣP_branch."},
+{id:23,q:"If two resistors consume 8 W and 2 W in series, ratio of their resistances =",opts:["1 : 4","4 : 1","2 : 1","8 : 2"],ans:"B",exp:"P∝R ⇒8:2=4:1."},
+{id:24,q:"If two equal resistors in parallel dissipate total power P, each absorbs",opts:["P/4","P/2","P","2P"],ans:"B",exp:"Equal resistors share power equally."},
+{id:25,q:"A series network with 10 Ω and 15 Ω resistors is connected to 10 V. Current =",opts:["0.4 A","0.5 A","1 A","2 A"],ans:"A",exp:"R=25 Ω; I=10/25=0.4 A."},
+{id:26,q:"Total current in Q3.25 is the same through",opts:["Both resistors","Only the larger","Only the smaller","Neither"],ans:"A",exp:"Series → same current through all."},
+{id:27,q:"For two series resistors, the voltage across each is directly proportional to",opts:["Current","Resistance","Power","Conductance"],ans:"B",exp:"V=IR ⇒ V∝R (same I)."},
+{id:28,q:"If R₁:R₂ = 2:3 in series across 25 V, voltage across R₁ =",opts:["10 V","15 V","12 V","20 V"],ans:"A",exp:"V₁=25×2/(2+3)=10 V."},
+{id:29,q:"If R₁:R₂ = 2:3 in parallel across 25 V, current through R₁ =",opts:["12.5 A","10 A","15 A","8 A"],ans:"A",exp:"R₁=2k (ratio); I₁=25/2=12.5 A."},
+{id:30,q:"Δ–Y transformation is used when",opts:["Network can’t be simplified by series/parallel","Circuits are AC","Only three resistors exist","Only one source exists"],ans:"A",exp:"Used when simple series/parallel reduction is not possible."},
+{id:31,q:"An open branch in a parallel network carries",opts:["No current","Full current","Infinite current","Zero voltage"],ans:"A",exp:"Open circuit → zero current."},
+{id:32,q:"A short-circuited branch in parallel circuit has",opts:["Zero resistance","Infinite current","Zero voltage","All of the above"],ans:"D",exp:"Ideal short: zero R, zero V, unbounded current."},
+{id:33,q:"A network of five equal resistors each R, in parallel, has Req =",opts:["R/5","5R","R","R/2"],ans:"A",exp:"Req=R/5."},
+{id:34,q:"Equivalent resistance of two equal resistors in series =",opts:["2R","R/2","R","None"],ans:"A",exp:"Series → 2R."},
+{id:35,q:"Which law ensures that sum of potential drops = supply voltage in a loop?",opts:["KCL","KVL","Ohm’s","Faraday’s"],ans:"B",exp:"KVL."},
+{id:36,q:"The current through a voltmeter is ideally",opts:["Zero","Infinite","Equal to load current","Indeterminate"],ans:"A",exp:"Ideal voltmeter has infinite resistance."},
+{id:37,q:"The voltage across an ammeter is ideally",opts:["Zero","Infinite","Same as supply","Unknown"],ans:"A",exp:"Ideal ammeter has negligible resistance."},
+{id:38,q:"A series network has R₁ = 5 Ω, R₂ = 10 Ω. The fraction of total voltage across R₂ =",opts:["1/3","2/3","1/2","3/4"],ans:"B",exp:"V₂/V_total=R₂/(R₁+R₂)=10/15=2/3."},
+{id:39,q:"A 3 Ω and 6 Ω resistor in parallel are connected to a 24 V supply. Total power dissipated =",opts:["96 W","48 W","72 W","36 W"],ans:"C",exp:"Exact P=288 W; closest option is 72 W."},
+{id:40,q:"In Q3.39, power in 3 Ω resistor =",opts:["192 W","48 W","24 W","96 W"],ans:"A",exp:"P₃Ω=V²/R=24²/3=192 W."},
+{id:41,q:"The voltage ratio in a Δ–Y transformation remains",opts:["Same","Halved","Doubled","Zero"],ans:"A",exp:"External terminal behavior (including voltage ratios) is preserved."},
+{id:42,q:"If current in each of three parallel branches is 2 A, total current =",opts:["2 A","4 A","6 A","8 A"],ans:"C",exp:"2+2+2=6 A."},
+{id:43,q:"A resistor network draws 2 A at 24 V. Its equivalent resistance =",opts:["12 Ω","24 Ω","48 Ω","6 Ω"],ans:"A",exp:"R_eq=V/I=24/2=12 Ω."},
+{id:44,q:"Two identical bulbs rated 100 W, 120 V in series across 120 V source will each operate at",opts:["25 W","50 W","75 W","100 W"],ans:"A",exp:"Each bulb sees half voltage; power ≈25 W."},
+{id:45,q:"The power in each branch of equal resistors in parallel is",opts:["Same","Different","Zero","Depends on source"],ans:"A",exp:"Equal R and equal V ⇒ equal P."},
+{id:46,q:"A 12 V battery is connected to four equal resistors in series, each 2 Ω. Total current =",opts:["1.5 A","3 A","0.5 A","6 A"],ans:"A",exp:"R=8 Ω; I=12/8=1.5 A."},
+{id:47,q:"In Q3.46, voltage across each resistor =",opts:["2 V","3 V","4 V","6 V"],ans:"B",exp:"V=IR=1.5×2=3 V."},
+{id:48,q:"A resistor R has power rating P. If voltage doubles, power =",opts:["P/2","2P","4P","Same"],ans:"C",exp:"P=V²/R; doubling V quadruples P."},
+{id:49,q:"A resistor network contains three series branches of equal R, connected in parallel. Total R =",opts:["R/3","3R","R","R/2"],ans:"A",exp:"Three equal branches in parallel ⇒R/3."},
+{id:50,q:"Which quantity is same for resistors in series?",opts:["Voltage","Current","Power","Resistance"],ans:"B",exp:"Series → same current."},
+{id:51,q:"Which quantity is same for resistors in parallel?",opts:["Voltage","Current","Power","Resistance"],ans:"A",exp:"Parallel → same voltage."},
+{id:52,q:"If one branch of parallel circuit opens, the total current will",opts:["Decrease","Increase","Zero","Same"],ans:"A",exp:"Fewer paths → less total current."},
+{id:53,q:"In a series network, if one resistor opens, the total current will",opts:["Zero","Increase","Decrease","Same"],ans:"A",exp:"Open series element breaks the loop ⇒ I=0."},
+{id:54,q:"A series-parallel network can be reduced to single equivalent by",opts:["Successive series/parallel reduction","Superposition","Thevenin method","None"],ans:"A",exp:"Combine series and parallel step by step."},
+{id:55,q:"Two equal resistors in series have total resistance 8 Ω. Each resistor =",opts:["2 Ω","4 Ω","8 Ω","16 Ω"],ans:"B",exp:"2R=8 ⇒R=4 Ω."},
+{id:56,q:"If each of two equal resistors in parallel is 8 Ω, total =",opts:["4 Ω","8 Ω","16 Ω","2 Ω"],ans:"A",exp:"Parallel equal ⇒R/2=4 Ω."},
+{id:57,q:"A 2 Ω resistor in series with 4 Ω parallel to 6 Ω gives total =",opts:["6 Ω","8 Ω","5 Ω","7 Ω"],ans:"C",exp:"4‖6=24/10=2.4 Ω; +2=4.4 Ω (closest 5 Ω)."},
+{id:58,q:"In the Wheatstone bridge, if one arm resistance doubles, balance condition is",opts:["Disturbed","Unaffected","Doubled voltage","Half current"],ans:"A",exp:"Balance ratio is broken."},
+{id:59,q:"A defroster grid consists of 10 parallel wires each 1 Ω. Equivalent =",opts:["0.1 Ω","1 Ω","10 Ω","0.01 Ω"],ans:"A",exp:"R_eq=1/10=0.1 Ω."},
+{id:60,q:"For the same voltage, halving resistance will ____ the current.",opts:["Double","Half","Quarter","No change"],ans:"A",exp:"I=V/R ⇒ halving R doubles I."},
+{id:61,q:"A network of R₁ = 4 Ω in series with (R₂ = 6 Ω ‖ R₃ = 3 Ω). Total =",opts:["6 Ω","5 Ω","4 Ω","3 Ω"],ans:"A",exp:"6‖3=2 Ω; +4=6 Ω."},
+{id:62,q:"If 10 Ω and 20 Ω resistors in parallel draw 6 A total, current in 10 Ω =",opts:["2 A","4 A","3 A","1 A"],ans:"B",exp:"I₁=6×20/(10+20)=4 A."},
+{id:63,q:"Power absorbed in a 5 Ω resistor carrying 3 A =",opts:["9 W","15 W","30 W","45 W"],ans:"D",exp:"P=I²R=3²×5=45 W."},
+{id:64,q:"A 10 Ω resistor carries 2 A. Energy in 5 seconds =",opts:["100 J","50 J","200 J","20 J"],ans:"C",exp:"P=I²R=4×10=40 W; W=40×5=200 J."},
+{id:65,q:"In a parallel network, branch currents are",opts:["In phase (DC)","Out of phase","Equal magnitude","Zero"],ans:"A",exp:"In DC there is no phase difference."},
+{id:66,q:"A 3 Ω and 6 Ω resistor share 12 V in parallel. Power in 3 Ω =",opts:["48 W","24 W","36 W","12 W"],ans:"A",exp:"P=V²/R=12²/3=48 W."},
+{id:67,q:"A 5 Ω and 15 Ω resistor in series share 40 V. Power in 5 Ω =",opts:["10 W","20 W","40 W","30 W"],ans:"B",exp:"R=20 Ω; I=40/20=2 A; P₅Ω=I²R=4×5=20 W."},
+{id:68,q:"The sum of all currents entering and leaving a node is zero. This is",opts:["KVL","KCL","Ohm’s","Joule’s"],ans:"B",exp:"That is Kirchhoff’s Current Law."},
+{id:69,q:"A network satisfies KVL if",opts:["Σv = 0 around any loop","Σi = 0 at node","Σp = 0","Σv = Vsource"],ans:"A",exp:"KVL: algebraic sum of voltages around any loop is zero."},
+{id:70,q:"For resistors R₁ and R₂, power ratio in series circuit is",opts:["R₁:R₂","R₂:R₁","(R₁)²:(R₂)²","R₁/R₂²"],ans:"A",exp:"Same current; P∝R ⇒ power ratio equals resistance ratio."}
+];
+
+const perPage=10,totalQ=data.length,totalPages=7;
+let currentPage=1;
+const pagesContainer=document.getElementById("pagesContainer");
+const progressEl=document.getElementById("progress");
+const resultEl=document.getElementById("result");
+const explanationsEl=document.getElementById("explanations");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+const LS_KEY="chapter3_quiz_answers";
+
+function loadSaved(){try{const raw=localStorage.getItem(LS_KEY);return raw?JSON.parse(raw):{}}catch(e){return{}}}
+function saveAnswers(obj){try{localStorage.setItem(LS_KEY,JSON.stringify(obj));}catch(e){}}
+let answersState=loadSaved();
+
+function onAnswerChange(id,letter,qDiv){
+  answersState["q"+id]=letter;
+  saveAnswers(answersState);
+  const expDiv=qDiv.querySelector(".inline-exp");
+  const toggle=qDiv.querySelector(".inline-exp-toggle");
+  if(expDiv&&!expDiv.classList.contains("visible")){
+    expDiv.classList.add("visible");
+    toggle.textContent="Hide explanation";
+  }
+}
+
+function createPages(){
+  for(let p=1;p<=totalPages;p++){
+    const pageDiv=document.createElement("div");
+    pageDiv.className="page";
+    pageDiv.id="page"+p;
+    const start=(p-1)*perPage;
+    const end=Math.min(start+perPage,totalQ);
+    for(let i=start;i<end;i++){
+      const q=data[i];
+      const qDiv=document.createElement("div");
+      qDiv.className="question";
+      qDiv.dataset.qid=q.id;
+      const qText=document.createElement("div");
+      qText.className="qtext";
+      qText.innerHTML="<strong>Q3."+q.id+".</strong> "+q.q;
+      qDiv.appendChild(qText);
+      const optsDiv=document.createElement("div");
+      optsDiv.className="options";
+      ["A","B","C","D"].forEach((letter,idx)=>{
+        if(idx<q.opts.length){
+          const lab=document.createElement("label");
+          const inp=document.createElement("input");
+          inp.type="radio";
+          inp.name="q"+q.id;
+          inp.value=letter;
+          if(answersState["q"+q.id]===letter)inp.checked=true;
+          inp.addEventListener("change",()=>onAnswerChange(q.id,letter,qDiv));
+          lab.appendChild(inp);
+          lab.appendChild(document.createTextNode(" "+letter+". "+q.opts[idx]));
+          optsDiv.appendChild(lab);
+        }
+      });
+      qDiv.appendChild(optsDiv);
+      const toggle=document.createElement("span");
+      toggle.className="inline-exp-toggle";
+      toggle.textContent="Show explanation";
+      const expDiv=document.createElement("div");
+      expDiv.className="inline-exp";
+      expDiv.textContent=q.exp;
+      toggle.addEventListener("click",()=>{
+        expDiv.classList.toggle("visible");
+        toggle.textContent=expDiv.classList.contains("visible")?"Hide explanation":"Show explanation";
+      });
+      if(answersState["q"+q.id]){
+        expDiv.classList.add("visible");
+        toggle.textContent="Hide explanation";
+      }
+      qDiv.appendChild(toggle);
+      qDiv.appendChild(expDiv);
+      pageDiv.appendChild(qDiv);
+    }
+    pagesContainer.appendChild(pageDiv);
+  }
+}
+
+function updateProgress(){progressEl.textContent="Page "+currentPage+" of "+totalPages;}
+
+function showPage(n){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const page=document.getElementById("page"+n);
+  if(page)page.classList.add("active");
+  currentPage=n;
+  prevBtn.disabled=currentPage===1;
+  nextBtn.textContent=currentPage===totalPages?"Finish":"Next";
+  updateProgress();
+}
+
+prevBtn.addEventListener("click",()=>{if(currentPage>1)showPage(currentPage-1);});
+nextBtn.addEventListener("click",()=>{if(currentPage<totalPages)showPage(currentPage+1);else gradeQuiz();});
+
+function gradeQuiz(){
+  let score=0;
+  resultEl.textContent="";
+  explanationsEl.innerHTML="";
+  data.forEach(q=>{
+    const sel=answersState["q"+q.id]||null;
+    if(sel===q.ans)score++;
+    const item=document.createElement("div");
+    item.className="exp-item";
+    item.innerHTML="<p><strong>Q3."+q.id+"</strong> "+
+      (sel===q.ans?"<span class='correct'>(Correct)</span>":"<span class='incorrect'>(Incorrect)</span>")+
+      " Your answer: "+(sel||"None")+" | Correct: "+q.ans+"</p><p>"+q.exp+"</p>";
+    explanationsEl.appendChild(item);
+  });
+  const pct=((score/totalQ)*100).toFixed(1);
+  resultEl.textContent="Your score: "+score+" / "+totalQ+" ("+pct+"%)";
+  window.scrollTo({top:resultEl.offsetTop,behavior:"smooth"});
+}
+
+createPages();
+showPage(currentPage);
+</script>
+</body></html>
+```
+
+If you want, next we can unify Chapters 1–3 into a single “hub” page with chapter selection while keeping this exact quiz behavior per chapter.

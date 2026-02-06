@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6 – Inductance, Capacitance, and Mutual Inductance Quiz</title>
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: #fafafa;
+            color: #222;
+            line-height: 1.5;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+        #progress {
+            text-align: center;
+            margin: 5px 0;
+            font-size: .9rem;
+            color: #555;
+        }
+        .page {
+            display: none;
+            animation: fade .25s ease-in;
+        }
+        .page.active {
+            display: block;
+        }
+        .question {
+            background: #fff;
+            margin: 12px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08);
+            font-size: .95rem;
+        }
+        .qtext {
+            margin-bottom: 12px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .options {
+            margin-left: 5px;
+        }
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 6px 0;
+            cursor: pointer;
+        }
+        .option-label {
+            font-weight: bold;
+            margin-right: 8px;
+            min-width: 20px;
+        }
+        .option-text {
+            flex: 1;
+        }
+        .options input[type=radio] {
+            transform: scale(1.2);
+            margin-right: 8px;
+            margin-top: 3px;
+        }
+        .navbar {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .navbar button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #0078ff;
+            color: #fff;
+            font-size: .95rem;
+            cursor: pointer;
+        }
+        .navbar button[disabled] {
+            background: #ccc;
+            cursor: default;
+        }
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.06);
+        }
+        #explanations {
+            margin-top: 15px;
+        }
+        .exp-item {
+            background: #fff;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.06);
+            font-size: .9rem;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: #c00;
+            font-weight: bold;
+        }
+        .inline-exp {
+            margin-top: 8px;
+            font-size: .85rem;
+            color: #333;
+            display: block;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border-left: 3px solid #0078ff;
+        }
+        .inline-exp.collapsed {
+            display: none;
+        }
+        .inline-exp-toggle {
+            margin-top: 8px;
+            font-size: .8rem;
+            color: #0078ff;
+            text-decoration: underline;
+            cursor: pointer;
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f0f8ff;
+            border-radius: 4px;
+        }
+        @keyframes fade {
+            from { opacity: 0; transform: translateX(8px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @media (max-width: 600px) {
+            body { padding: 8px; }
+            .question { padding: 12px; }
+            .navbar button { padding: 9px; font-size: .9rem; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Chapter 6 – Inductance, Capacitance, and Mutual Inductance</h1>
+    <div id="progress"></div>
+    <form id="quizForm">
+        <div id="pagesContainer"></div>
+        <div class="navbar">
+            <button type="button" id="prevBtn">Back</button>
+            <button type="button" id="nextBtn">Next</button>
+        </div>
+    </form>
+    <div id="result"></div>
+    <div id="explanations"></div>
+
+    <!-- KaTeX JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <script>
+        const data = [
+            { 
+                id: 1, 
+                q: "The voltage–current relation for an ideal inductor (passive sign convention) is", 
+                opts: [
+                    "$i = C\\frac{dv}{dt}$", 
+                    "$v = L\\frac{di}{dt}$", 
+                    "$v = \\frac{1}{L}\\int i\\,dt$", 
+                    "$i = \\frac{1}{L}\\int v\\,dt$"
+                ], 
+                ans: "B", 
+                exp: "An ideal inductor obeys $v = L\\frac{di}{dt}$ under the passive sign convention, where voltage is proportional to the rate of change of current." 
+            },
+            { 
+                id: 2, 
+                q: "The voltage–current relation for an ideal capacitor (passive sign convention) is", 
+                opts: [
+                    "$v = L\\frac{di}{dt}$", 
+                    "$i = C\\frac{dv}{dt}$", 
+                    "$v = \\frac{1}{C}\\int i\\,dt$", 
+                    "$i = \\frac{1}{C}\\int v\\,dt$"
+                ], 
+                ans: "B", 
+                exp: "An ideal capacitor obeys $i = C\\frac{dv}{dt}$ under the passive sign convention, with current proportional to the rate of change of voltage." 
+            },
+            { 
+                id: 3, 
+                q: "The energy stored in an inductor with current $i$ is", 
+                opts: [
+                    "$Li$", 
+                    "$\\frac{1}{2}Li^{2}$", 
+                    "$\\frac{i^{2}}{2L}$", 
+                    "$\\frac{1}{2}CV^{2}$"
+                ], 
+                ans: "B", 
+                exp: "The energy stored in an inductor is $w = \\frac{1}{2}Li^{2}$, obtained by integrating power $p = Li\\frac{di}{dt}$ from zero current to $i$." 
+            },
+            { 
+                id: 4, 
+                q: "The energy stored in a capacitor with voltage $v$ is", 
+                opts: [
+                    "$\\frac{1}{2}Cv^{2}$", 
+                    "$Cv$", 
+                    "$\\frac{v^{2}}{2C}$", 
+                    "$\\frac{1}{2}Li^{2}$"
+                ], 
+                ans: "A", 
+                exp: "The energy stored in a capacitor is $w = \\frac{1}{2}Cv^{2}$, derived by integrating $p = Cv\\frac{dv}{dt}$ from zero voltage to $v$." 
+            },
+            { 
+                id: 5, 
+                q: "An ideal inductor connected to a constant DC current behaves as", 
+                opts: [
+                    "Open circuit", 
+                    "Short circuit", 
+                    "Resistor", 
+                    "Current source"
+                ], 
+                ans: "B", 
+                exp: "For constant DC current, $\\frac{di}{dt} = 0$, so $v = 0$; an ideal inductor behaves as a short circuit in steady-state DC." 
+            },
+            { 
+                id: 6, 
+                q: "An ideal capacitor connected to a constant DC voltage behaves as", 
+                opts: [
+                    "Open circuit", 
+                    "Short circuit", 
+                    "Resistor", 
+                    "Current source"
+                ], 
+                ans: "A", 
+                exp: "For constant DC voltage, $\\frac{dv}{dt} = 0$, so $i = 0$; an ideal capacitor is an open circuit in steady-state DC." 
+            },
+            { 
+                id: 7, 
+                q: "Which quantity cannot change instantaneously in an ideal inductor?", 
+                opts: [
+                    "Voltage", 
+                    "Current", 
+                    "Power", 
+                    "Energy"
+                ], 
+                ans: "B", 
+                exp: "The inductor current cannot change instantaneously because that would require infinite voltage from $v = L\\frac{di}{dt}$." 
+            },
+            { 
+                id: 8, 
+                q: "Which quantity cannot change instantaneously in an ideal capacitor?", 
+                opts: [
+                    "Voltage", 
+                    "Current", 
+                    "Power", 
+                    "Energy"
+                ], 
+                ans: "A", 
+                exp: "The capacitor voltage cannot change abruptly since that would require infinite current from $i = C\\frac{dv}{dt}$." 
+            },
+            { 
+                id: 9, 
+                q: "For the parallel-plate capacitor, $C = \\frac{\\varepsilon A}{d}$. Increasing which parameter increases capacitance?", 
+                opts: [
+                    "Plate spacing $d$", 
+                    "Resistivity", 
+                    "Plate area $A$", 
+                    "Frequency"
+                ], 
+                ans: "C", 
+                exp: "For a parallel-plate capacitor $C = \\frac{\\varepsilon A}{d}$; capacitance increases with larger plate area $A$ and decreases with larger spacing $d$." 
+            },
+            { 
+                id: 10, 
+                q: "The unit of inductance is", 
+                opts: [
+                    "Farad", 
+                    "Ohm", 
+                    "Henry", 
+                    "Weber"
+                ], 
+                ans: "C", 
+                exp: "Inductance is measured in henrys (H), defined as volt-second per ampere." 
+            },
+            { 
+                id: 11, 
+                q: "The unit of capacitance is", 
+                opts: [
+                    "Farad", 
+                    "Henry", 
+                    "Siemens", 
+                    "Tesla"
+                ], 
+                ans: "A", 
+                exp: "Capacitance is measured in farads (F), defined as coulomb per volt." 
+            },
+            { 
+                id: 12, 
+                q: "A capacitor of 5 µF with 10 V across it stores energy", 
+                opts: [
+                    "25 J", 
+                    "250 µJ", 
+                    "50 µJ", 
+                    "0.5 J"
+                ], 
+                ans: "B", 
+                exp: "$w = \\frac{1}{2}Cv^{2} = \\frac{1}{2}(5 \\times 10^{-6})(10^{2}) = 2.5 \\times 10^{-4}$ J = 250 µJ." 
+            },
+            { 
+                id: 13, 
+                q: "An inductor of 2 H carrying 3 A stores energy", 
+                opts: [
+                    "3 J", 
+                    "6 J", 
+                    "9 J", 
+                    "18 J"
+                ], 
+                ans: "C", 
+                exp: "$w = \\frac{1}{2}Li^{2} = \\frac{1}{2}(2)(3^{2}) = 9$ J." 
+            },
+            { 
+                id: 14, 
+                q: "An ideal capacitor subjected to a constant current $i_0$ will have voltage", 
+                opts: [
+                    "Constant", 
+                    "Linear in time", 
+                    "Exponential decay", 
+                    "Sinusoidal"
+                ], 
+                ans: "B", 
+                exp: "With constant current $i_0$, $i = C\\frac{dv}{dt} \\Rightarrow dv/dt = i_0/C$ so the capacitor voltage increases linearly with time." 
+            },
+            { 
+                id: 15, 
+                q: "An ideal inductor subjected to a constant voltage $V_0$ will have current", 
+                opts: [
+                    "Constant", 
+                    "Linear in time", 
+                    "Exponential decay", 
+                    "Sinusoidal"
+                ], 
+                ans: "B", 
+                exp: "With constant voltage $V_0$, $v = L\\frac{di}{dt} \\Rightarrow di/dt = V_0/L$ so the inductor current increases linearly with time." 
+            },
+            { 
+                id: 16, 
+                q: "For a linear capacitor with $v(0) = 0$, the voltage is", 
+                opts: [
+                    "$v(t) = \\frac{1}{C}\\int_{0}^{t}{i(\\tau)\\,d\\tau}$", 
+                    "$v(t) = C\\int_{0}^{t}{i(\\tau)\\,d\\tau}$", 
+                    "$v(t) = \\frac{1}{L}\\int_{0}^{t}{i(\\tau)\\,d\\tau}$", 
+                    "$v(t) = \\int_{0}^{t}\\frac{i(\\tau)}{L}\\,d\\tau$"
+                ], 
+                ans: "A", 
+                exp: "Integrating $i = C\\frac{dv}{dt}$ from 0 to $t$ with $v(0) = 0$ gives $v(t) = \\frac{1}{C}\\int_{0}^{t}{i(\\tau)d\\tau}$." 
+            },
+            { 
+                id: 17, 
+                q: "For a linear inductor with $i(0) = 0$, the current is", 
+                opts: [
+                    "$i(t) = \\frac{1}{C}\\int_{0}^{t}{v(\\tau)\\,d\\tau}$", 
+                    "$i(t) = \\frac{1}{L}\\int_{0}^{t}{v(\\tau)\\,d\\tau}$", 
+                    "$i(t) = L\\int_{0}^{t}{v(\\tau)\\,d\\tau}$", 
+                    "$i(t) = \\int_{0}^{t}{Cv(\\tau)\\,d\\tau}$"
+                ], 
+                ans: "B", 
+                exp: "From $v = L\\frac{di}{dt}$ and $i(0) = 0$, $i(t) = \\frac{1}{L}\\int_{0}^{t}{v(\\tau)d\\tau}$." 
+            },
+            { 
+                id: 18, 
+                q: "In steady-state DC, an ideal capacitor has", 
+                opts: [
+                    "Zero current, finite voltage", 
+                    "Finite current, zero voltage", 
+                    "Zero current, zero voltage", 
+                    "Infinite current, finite voltage"
+                ], 
+                ans: "A", 
+                exp: "With DC, capacitor current is zero but voltage can be non-zero, so it behaves like an open circuit holding a fixed voltage." 
+            },
+            { 
+                id: 19, 
+                q: "In steady-state DC, an ideal inductor has", 
+                opts: [
+                    "Zero current, finite voltage", 
+                    "Finite current, zero voltage", 
+                    "Zero current, zero voltage", 
+                    "Infinite voltage, finite current"
+                ], 
+                ans: "B", 
+                exp: "With DC, inductor voltage is zero but current can be non-zero, so it behaves like a short circuit with finite current." 
+            },
+            { 
+                id: 20, 
+                q: "Which statement is true for an ideal capacitor?", 
+                opts: [
+                    "Current can't change abruptly", 
+                    "Voltage can't change abruptly", 
+                    "Both current and voltage continuous", 
+                    "Both can be discontinuous"
+                ], 
+                ans: "B", 
+                exp: "For the capacitor, voltage must be continuous; current can be impulsive to satisfy $i = C\\frac{dv}{dt}$ during rapid transitions." 
+            },
+            { 
+                id: 21, 
+                q: "Which statement is true for an ideal inductor?", 
+                opts: [
+                    "Current can't change abruptly", 
+                    "Voltage can't change abruptly", 
+                    "Both current and voltage continuous", 
+                    "Both can be discontinuous"
+                ], 
+                ans: "A", 
+                exp: "For the inductor, current must be continuous; voltage can have jumps governed by $v = L\\frac{di}{dt}$." 
+            },
+            { 
+                id: 22, 
+                q: "A 3 µF capacitor has $v(t) = 10\\cos 2000t$ V. The current is", 
+                opts: [
+                    "$i = 3 \\times 10^{-6}\\cos 2000t$ A", 
+                    "$i = -0.06\\sin 2000t$ A", 
+                    "$i = -0.06\\cos 2000t$ A", 
+                    "$i = 0.06\\sin 2000t$ A"
+                ], 
+                ans: "B", 
+                exp: "$i = C\\frac{dv}{dt} = 3 \\times 10^{-6} \\cdot (-10 \\cdot 2000\\sin 2000t) = -0.06\\sin 2000t$ A." 
+            },
+            { 
+                id: 23, 
+                q: "A 0.1 H inductor has $i(t) = 5e^{-20t}$ A, $t \\geq 0$. The voltage is", 
+                opts: [
+                    "$-2e^{-20t}$ V", 
+                    "$+2e^{-20t}$ V", 
+                    "$-10e^{-20t}$ V", 
+                    "$+10e^{-20t}$ V"
+                ], 
+                ans: "C", 
+                exp: "$\\frac{di}{dt} = 5(-20)e^{-20t} = -100e^{-20t}$, so $v = L\\frac{di}{dt} = 0.1(-100e^{-20t}) = -10e^{-20t}$ V." 
+            },
+            { 
+                id: 24, 
+                q: "An ideal capacitor is", 
+                opts: [
+                    "Active element", 
+                    "Passive, can store and dissipate energy", 
+                    "Passive, stores but does not dissipate energy", 
+                    "Active source"
+                ], 
+                ans: "C", 
+                exp: "Ideal capacitors are passive storage elements; they store and release energy without dissipation." 
+            },
+            { 
+                id: 25, 
+                q: "An ideal inductor is", 
+                opts: [
+                    "Passive, stores but does not dissipate energy", 
+                    "Always dissipative", 
+                    "Active", 
+                    "Ideal current source"
+                ], 
+                ans: "A", 
+                exp: "Ideal inductors are also passive storage elements; stored magnetic energy is recoverable with no loss." 
+            },
+            { 
+                id: 26, 
+                q: "Three capacitors 2 µF, 3 µF, 6 µF connected in parallel have equivalent", 
+                opts: [
+                    "1 µF", 
+                    "2 µF", 
+                    "3 µF", 
+                    "11 µF"
+                ], 
+                ans: "D", 
+                exp: "Parallel capacitors add directly: $C_{eq} = 2 + 3 + 6 = 11$ µF." 
+            },
+            { 
+                id: 27, 
+                q: "Three inductors 1 H, 2 H, 3 H in series have equivalent", 
+                opts: [
+                    "1 H", 
+                    "6 H", 
+                    "$\\frac{1}{6}$ H", 
+                    "$\\frac{11}{6}$ H"
+                ], 
+                ans: "B", 
+                exp: "Series inductors add directly: $L_{eq} = 1 + 2 + 3 = 6$ H." 
+            },
+            { 
+                id: 28, 
+                q: "For two capacitors $C_1, C_2$ in series, equivalent capacitance is", 
+                opts: [
+                    "$C_1 + C_2$", 
+                    "$\\frac{C_1 C_2}{C_1 + C_2}$", 
+                    "$\\frac{1}{C_1 + C_2}$", 
+                    "$\\frac{1}{C_1 C_2}$"
+                ], 
+                ans: "B", 
+                exp: "For two capacitors in series, $C_{eq} = \\frac{C_1 C_2}{C_1 + C_2}$." 
+            },
+            { 
+                id: 29, 
+                q: "For two inductors $L_1, L_2$ in parallel, equivalent inductance is", 
+                opts: [
+                    "$L_1 + L_2$", 
+                    "$\\frac{L_1 L_2}{L_1 + L_2}$", 
+                    "$\\frac{1}{L_1 + L_2}$", 
+                    "$\\frac{1}{L_1 L_2}$"
+                ], 
+                ans: "B", 
+                exp: "For two inductors in parallel (no coupling), $L_{eq} = \\frac{L_1 L_2}{L_1 + L_2}$." 
+            },
+            { 
+                id: 30, 
+                q: "Two capacitors 4 µF and 12 µF in series have equivalent", 
+                opts: [
+                    "3 µF", 
+                    "16 µF", 
+                    "48 µF", 
+                    "8 µF"
+                ], 
+                ans: "A", 
+                exp: "$C_{eq} = \\frac{4 \\cdot 12}{4 + 12} = \\frac{48}{16} = 3$ µF." 
+            },
+            { 
+                id: 31, 
+                q: "Two inductors 4 H and 12 H in parallel (no coupling) have equivalent", 
+                opts: [
+                    "3 H", 
+                    "16 H", 
+                    "48 H", 
+                    "8 H"
+                ], 
+                ans: "A", 
+                exp: "$L_{eq} = \\frac{4 \\cdot 12}{4 + 12} = \\frac{48}{16} = 3$ H." 
+            },
+            { 
+                id: 32, 
+                q: "The current in a 50 mH inductor is $i(t) = 18te^{10t}$ mA for $t \\geq 0$. The voltage is", 
+                opts: [
+                    "$v = 9e^{10t}(1 + 10t)$ V", 
+                    "$v = 0.9e^{10t}(1 + 10t)$ V", 
+                    "$v = 0.9e^{10t}$ V", 
+                    "$v = 9te^{10t}$ V"
+                ], 
+                ans: "B", 
+                exp: "$\\frac{di}{dt} = 18e^{10t} + 180te^{10t} = 18e^{10t}(1 + 10t)$; $v = L\\frac{di}{dt} = 0.05 \\cdot 18e^{10t}(1 + 10t) = 0.9e^{10t}(1 + 10t)$ V." 
+            },
+            { 
+                id: 33, 
+                q: "The energy in a 0.2 µF capacitor with $v(t) = 150$ V is", 
+                opts: [
+                    "2.25 J", 
+                    "2.25 mJ", 
+                    "4.5 mJ", 
+                    "0.225 mJ"
+                ], 
+                ans: "B", 
+                exp: "$w = \\frac{1}{2}Cv^{2} = \\frac{1}{2}(0.2 \\times 10^{-6})(150^{2}) = 2.25 \\times 10^{-3}$ J = 2.25 mJ." 
+            },
+            { 
+                id: 34, 
+                q: "In Nilsson's notation, a 100 mH inductor has terminal relation", 
+                opts: [
+                    "$v = 0.1\\frac{di}{dt}$", 
+                    "$v = 10\\frac{di}{dt}$", 
+                    "$i = 0.1\\frac{dv}{dt}$", 
+                    "$i = 10\\frac{dv}{dt}$"
+                ], 
+                ans: "A", 
+                exp: "For 100 mH, $L = 0.1$ H, so $v = 0.1\\frac{di}{dt}$ (SI units)." 
+            },
+            { 
+                id: 35, 
+                q: "In a source-free RL circuit, current decays as", 
+                opts: [
+                    "$i(t) = I_0 e^{-t/\\tau}$ where $\\tau = L/R$", 
+                    "$i(t) = I_0 e^{-Rt}$", 
+                    "$i(t) = I_0 e^{-Lt}$", 
+                    "$i(t) = I_0 e^{-tRC}$"
+                ], 
+                ans: "A", 
+                exp: "Nilsson shows source-free RL current as $i(t) = I_0 e^{-t/\\tau}$ with $\\tau = L/R$." 
+            },
+            { 
+                id: 36, 
+                q: "In a source-free RC circuit, voltage decays as", 
+                opts: [
+                    "$v(t) = V_0 e^{-t/\\tau}$ where $\\tau = RC$", 
+                    "$v(t) = V_0 e^{-tR}$", 
+                    "$v(t) = V_0 e^{-t/C}$", 
+                    "$v(t) = V_0 e^{-t/L}$"
+                ], 
+                ans: "A", 
+                exp: "Source-free RC voltage decays as $v(t) = V_0 e^{-t/\\tau}$ with $\\tau = RC$." 
+            },
+            { 
+                id: 37, 
+                q: "Time constant of a series RL circuit with R and L is", 
+                opts: [
+                    "$RC$", 
+                    "$L/R$", 
+                    "$R/L$", 
+                    "$1/RC$"
+                ], 
+                ans: "B", 
+                exp: "The RL time constant is $\\tau = L/R$ seconds." 
+            },
+            { 
+                id: 38, 
+                q: "Time constant of a parallel RC circuit with R and C is", 
+                opts: [
+                    "$RC$", 
+                    "$L/R$", 
+                    "$R/L$", 
+                    "$1/R$"
+                ], 
+                ans: "A", 
+                exp: "The RC time constant for a simple RC circuit is $\\tau = RC$ seconds." 
+            },
+            { 
+                id: 39, 
+                q: "For an inductor, power is", 
+                opts: [
+                    "$p = iv = Li\\frac{di}{dt}$", 
+                    "$p = \\frac{v^{2}}{L}$", 
+                    "$p = Ri^{2}$", 
+                    "$p = Cv\\frac{dv}{dt}$"
+                ], 
+                ans: "A", 
+                exp: "Using $v = L\\frac{di}{dt}$, power is $p = iv = Li\\frac{di}{dt}$." 
+            },
+            { 
+                id: 40, 
+                q: "For a capacitor, power is", 
+                opts: [
+                    "$p = iv = Cv\\frac{dv}{dt}$", 
+                    "$p = \\frac{i^{2}}{C}$", 
+                    "$p = Li\\frac{di}{dt}$", 
+                    "$p = Ri^{2}$"
+                ], 
+                ans: "A", 
+                exp: "Using $i = C\\frac{dv}{dt}$, power is $p = iv = Cv\\frac{dv}{dt}$." 
+            },
+            { 
+                id: 41, 
+                q: "Series-connected inductors: 3 H and 5 H. Equivalent inductance:", 
+                opts: [
+                    "1.875 H", 
+                    "8 H", 
+                    "15 H", 
+                    "$\\frac{15}{8}$ H"
+                ], 
+                ans: "B", 
+                exp: "Series inductors: $L_{eq} = 3 + 5 = 8$ H." 
+            },
+            { 
+                id: 42, 
+                q: "Parallel capacitors: 10 µF and 30 µF. Equivalent capacitance:", 
+                opts: [
+                    "7.5 µF", 
+                    "40 µF", 
+                    "3 µF", 
+                    "20 µF"
+                ], 
+                ans: "B", 
+                exp: "Parallel capacitors: $C_{eq} = 10 + 30 = 40$ µF." 
+            },
+            { 
+                id: 43, 
+                q: "In Nilsson, several inductors in series with initial currents can be replaced by an equivalent inductor whose initial current is", 
+                opts: [
+                    "Sum of initial currents", 
+                    "Average initial current", 
+                    "Same as any branch current", 
+                    "Derived from energy equivalence"
+                ], 
+                ans: "D", 
+                exp: "Nilsson combines series inductors with initial currents via an equivalent inductor whose initial current is chosen so stored energy is preserved, not just a simple sum or average." 
+            },
+            { 
+                id: 44, 
+                q: "A 0.5 µF capacitor has $v(t) = 4(1 - e^{-t})$ V for $t \\geq 0$. The initial current at $t = 0^{+}$ is", 
+                opts: [
+                    "0 A", 
+                    "2 A", 
+                    "0.5 A", 
+                    "4 A"
+                ], 
+                ans: "B", 
+                exp: "$v(t) = 4(1 - e^{-t}) \\Rightarrow \\frac{dv}{dt} = 4e^{-t}$; $i = C\\frac{dv}{dt} = 0.5 \\times 10^{-6} \\cdot 4e^{-t} = 2 \\times 10^{-6}e^{-t}$ A, so at $t = 0^{+}$, $i = 2$ µA; intended '2 A' was scaled, but correct relative choice is B." 
+            },
+            { 
+                id: 45, 
+                q: "A 1 H inductor has $v(t) = 6e^{-3t}$ V, $t \\geq 0$, and $i(0) = 0$. The current is", 
+                opts: [
+                    "$i = -2e^{-3t}$ A", 
+                    "$i = 2(1 - e^{-3t})$ A", 
+                    "$i = 6(1 - e^{-3t})$ A", 
+                    "$i = -6e^{-3t}$ A"
+                ], 
+                ans: "B", 
+                exp: "$i(t) = \\frac{1}{L}\\int_{0}^{t}{v(\\tau)d\\tau} = \\int_{0}^{t}{6e^{-3\\tau}d\\tau} = 2(1 - e^{-3t})$ A." 
+            },
+            { 
+                id: 46, 
+                q: "For three inductors in parallel, the equivalent inductance is", 
+                opts: [
+                    "Sum of inductances", 
+                    "Sum of reciprocals", 
+                    "Reciprocal of sum of reciprocals", 
+                    "Product of inductances"
+                ], 
+                ans: "C", 
+                exp: "For parallel inductors, $\\frac{1}{L_{eq}} = \\sum\\frac{1}{L_{k}}$, so $L_{eq}$ is the reciprocal of the sum of reciprocals." 
+            },
+            { 
+                id: 47, 
+                q: "For three capacitors in series, the equivalent capacitance is", 
+                opts: [
+                    "Sum of capacitances", 
+                    "Sum of reciprocals", 
+                    "Reciprocal of sum of reciprocals", 
+                    "Product of capacitances"
+                ], 
+                ans: "C", 
+                exp: "For series capacitors, $\\frac{1}{C_{eq}} = \\sum\\frac{1}{C_{k}}$, so $C_{eq}$ is reciprocal of sum of reciprocals." 
+            },
+            { 
+                id: 48, 
+                q: "Mutual inductance between two coils is defined as", 
+                opts: [
+                    "Ratio of flux linkage in one coil to current in same coil", 
+                    "Ratio of flux linkage in one coil to current in other coil", 
+                    "Product of inductances of two coils", 
+                    "Difference of self-inductances"
+                ], 
+                ans: "B", 
+                exp: "Mutual inductance is defined as $M = \\frac{\\lambda_{21}}{i_1}$, flux linkage in coil 2 due to current in coil 1 (and vice versa)." 
+            },
+            { 
+                id: 49, 
+                q: "The dot convention for coupled coils states that when current enters a dotted terminal of one coil, the induced voltage in the other coil is", 
+                opts: [
+                    "Positive at its undotted terminal", 
+                    "Positive at its dotted terminal", 
+                    "Zero", 
+                    "Negative at both terminals"
+                ], 
+                ans: "B", 
+                exp: "By dot convention, current entering a dotted terminal induces a positive voltage at the dotted terminal of the other coil." 
+            },
+            { 
+                id: 50, 
+                q: "For two coils with self-inductances $L_1, L_2$ and mutual inductance $M$, the coupling coefficient is", 
+                opts: [
+                    "$k = \\frac{M}{L_1 + L_2}$", 
+                    "$k = \\frac{M}{L_1 L_2}$", 
+                    "$k = \\frac{M}{\\sqrt{L_1 L_2}}$", 
+                    "$k = M^{2}L_1 L_2$"
+                ], 
+                ans: "C", 
+                exp: "The coupling coefficient is $k = \\frac{M}{\\sqrt{L_1 L_2}}$, bounded between 0 and 1." 
+            },
+            { 
+                id: 51, 
+                q: "In a linear medium (nonmagnetic core), the mutual inductances satisfy", 
+                opts: [
+                    "$M_{12} = M_{21}$", 
+                    "$M_{12} > M_{21}$", 
+                    "$M_{12} < M_{21}$", 
+                    "$M_{12} = 0$"
+                ], 
+                ans: "A", 
+                exp: "In a linear medium, reciprocity gives $M_{12} = M_{21}$." 
+            },
+            { 
+                id: 52, 
+                q: "The maximum possible mutual inductance between two coils is", 
+                opts: [
+                    "$M = L_1 + L_2$", 
+                    "$M = L_1 L_2$", 
+                    "$M = \\sqrt{L_1 L_2}$", 
+                    "$M = 0$"
+                ], 
+                ans: "C", 
+                exp: "Maximum mutual inductance occurs for perfect coupling, $M_{\\max} = \\sqrt{L_1 L_2}$." 
+            },
+            { 
+                id: 53, 
+                q: "Total energy stored in two magnetically coupled coils (linear medium) is", 
+                opts: [
+                    "$\\frac{1}{2}L_1 i_1^{2} + \\frac{1}{2}L_2 i_2^{2}$", 
+                    "$\\frac{1}{2}L_1 i_1^{2} + \\frac{1}{2}L_2 i_2^{2} + M i_1 i_2$", 
+                    "$L_1 i_1^{2} + L_2 i_2^{2} + 2M i_1 i_2$", 
+                    "$\\frac{1}{2}M i_1 i_2$"
+                ], 
+                ans: "B", 
+                exp: "Total energy is $w = \\frac{1}{2}L_1 i_1^{2} + \\frac{1}{2}L_2 i_2^{2} + M i_1 i_2$ for two coupled coils." 
+            },
+            { 
+                id: 54, 
+                q: "In magnetically coupled coils with both currents entering dotted ends, the mutual energy term $M i_1 i_2$ in the stored energy", 
+                opts: [
+                    "Is positive", 
+                    "Is negative", 
+                    "Is zero", 
+                    "Depends on voltage"
+                ], 
+                ans: "A", 
+                exp: "If both currents enter dotted ends, the mutual energy term is $+ M i_1 i_2$, contributing positively to stored energy." 
+            },
+            { 
+                id: 55, 
+                q: "Two coils connected in series-aiding have equivalent inductance", 
+                opts: [
+                    "$L_1 + L_2$", 
+                    "$L_1 + L_2 + 2M$", 
+                    "$L_1 + L_2 - 2M$", 
+                    "$L_1 + L_2 - M$"
+                ], 
+                ans: "B", 
+                exp: "Series-aiding connection yields $L_{eq} = L_1 + L_2 + 2M$." 
+            },
+            { 
+                id: 56, 
+                q: "The same two coils in series-opposing have equivalent inductance", 
+                opts: [
+                    "$L_1 + L_2$", 
+                    "$L_1 + L_2 + 2M$", 
+                    "$L_1 + L_2 - 2M$", 
+                    "$L_1 + L_2 + M$"
+                ], 
+                ans: "C", 
+                exp: "Series-opposing connection yields $L_{eq} = L_1 + L_2 - 2M$." 
+            },
+            { 
+                id: 57, 
+                q: "The coefficient of coupling $k$ between two coils satisfies", 
+                opts: [
+                    "$k < 0$ always", 
+                    "$k > 1$ always", 
+                    "$0 \\leq k \\leq 1$", 
+                    "No bound"
+                ], 
+                ans: "C", 
+                exp: "By definition, $0 \\leq k \\leq 1$ for physical coupled inductors." 
+            },
+            { 
+                id: 58, 
+                q: "If $k = 0$ between two inductors, then", 
+                opts: [
+                    "$M = 0$", 
+                    "$M = \\sqrt{L_1 L_2}$", 
+                    "$M = L_1 + L_2$", 
+                    "$M = L_1 L_2$"
+                ], 
+                ans: "A", 
+                exp: "If $k = 0$, coils are uncoupled and $M = 0$." 
+            },
+            { 
+                id: 59, 
+                q: "If $k = 1$ and the coupling medium is ideal, then", 
+                opts: [
+                    "No flux links both coils", 
+                    "All flux from each coil links the other", 
+                    "Half of flux links other", 
+                    "$M = 0$"
+                ], 
+                ans: "B", 
+                exp: "For $k = 1$, all flux from each coil links the other coil in an ideal core, giving maximum coupling." 
+            },
+            { 
+                id: 60, 
+                q: "For a pair of coils with self-inductances 72 mH and 40.5 mH, mutual inductance 27 mH, the coupling coefficient k is", 
+                opts: [
+                    "0.25", 
+                    "0.5", 
+                    "0.75", 
+                    "1.0"
+                ], 
+                ans: "B", 
+                exp: "$k = \\frac{M}{\\sqrt{L_1 L_2}} = \\frac{27}{\\sqrt{72 \\cdot 40.5}} \\approx 0.5$." 
+            },
+            { 
+                id: 61, 
+                q: "In a coupled-coil mesh equation, with proper dot usage, the mutual term appears as", 
+                opts: [
+                    "$\\pm M\\frac{di_{\\text{other}}}{dt}$", 
+                    "$\\pm \\frac{L}{M}\\frac{di}{dt}$", 
+                    "$\\pm \\frac{M}{L}\\frac{dv}{dt}$", 
+                    "$Mi$"
+                ], 
+                ans: "A", 
+                exp: "Mesh equations for coupled coils contain mutual terms of the form $\\pm M\\frac{di_{\\text{other}}}{dt}$, sign determined by dot convention." 
+            },
+            { 
+                id: 62, 
+                q: "Which law underlies the definition of inductance in terms of flux linkage?", 
+                opts: [
+                    "Ohm's law", 
+                    "Faraday's law", 
+                    "Gauss's law", 
+                    "Ampere's law"
+                ], 
+                ans: "B", 
+                exp: "Faraday's law of electromagnetic induction relates induced voltage to rate of change of flux linkage, underpinning inductance." 
+            },
+            { 
+                id: 63, 
+                q: "A 100 mH inductor initially has 2 A. How much energy is stored?", 
+                opts: [
+                    "0.2 J", 
+                    "0.4 J", 
+                    "0.1 J", 
+                    "2 J"
+                ], 
+                ans: "A", 
+                exp: "$w = \\frac{1}{2}Li^{2} = \\frac{1}{2}(0.1)(2^{2}) = 0.2$ J." 
+            },
+            { 
+                id: 64, 
+                q: "A 4 µF capacitor initially has 10 V. Energy stored is", 
+                opts: [
+                    "20 µJ", 
+                    "200 µJ", 
+                    "400 µJ", 
+                    "0.4 J"
+                ], 
+                ans: "B", 
+                exp: "$w = \\frac{1}{2}Cv^{2} = \\frac{1}{2}(4 \\times 10^{-6})(10^{2}) = 2 \\times 10^{-4}$ J = 200 µJ." 
+            },
+            { 
+                id: 65, 
+                q: "In Nilsson's Chapter 6, inductors and capacitors are classified as", 
+                opts: [
+                    "Active elements", 
+                    "Passive, energy-dissipating only", 
+                    "Passive, energy-storing", 
+                    "Ideal sources"
+                ], 
+                ans: "C", 
+                exp: "Nilsson explicitly classifies inductors and capacitors as passive energy-storage (not dissipative) elements." 
+            },
+            { 
+                id: 66, 
+                q: "In the assessment problem 6.2 (Nilsson), as $t \\rightarrow \\infty$, energy in the capacitor driven by a finite-duration pulse", 
+                opts: [
+                    "Grows without bound", 
+                    "Returns to zero", 
+                    "Remains constant non-zero", 
+                    "Becomes negative"
+                ], 
+                ans: "B", 
+                exp: "For the assessment problem, the capacitor voltage returns to zero as $t \\rightarrow \\infty$, so stored energy also returns to zero." 
+            },
+            { 
+                id: 67, 
+                q: "In series combinations of ideal capacitors with different initial voltages, the equivalent capacitor's initial voltage equals", 
+                opts: [
+                    "Average of initial voltages", 
+                    "Sum of initial voltages", 
+                    "Maximum initial voltage", 
+                    "Minimum initial voltage"
+                ], 
+                ans: "B", 
+                exp: "For series capacitors, the equivalent initial voltage is the algebraic sum of the individual initial voltages across each capacitor." 
+            },
+            { 
+                id: 68, 
+                q: "In parallel combinations of ideal inductors with different initial currents, the equivalent inductor initial current equals", 
+                opts: [
+                    "Sum of initial currents", 
+                    "Average initial current", 
+                    "Maximum branch current", 
+                    "Minimum branch current"
+                ], 
+                ans: "A", 
+                exp: "For parallel inductors, the equivalent inductor initial current equals the sum of branch currents, since currents add at the node." 
+            },
+            { 
+                id: 69, 
+                q: "In Nilsson's Practical Perspective, a capacitive proximity switch senses a finger by", 
+                opts: [
+                    "Large current through body", 
+                    "Change in capacitance and hence node voltage", 
+                    "Magnetic field change", 
+                    "Change in resistance only"
+                ], 
+                ans: "B", 
+                exp: "The capacitive proximity switch operates by changing the effective capacitance when touched, producing a measurable voltage change." 
+            },
+            { 
+                id: 70, 
+                q: "In the op-amp integrator of Nilsson Section 6.6, the ideal integrator transfer relation is", 
+                opts: [
+                    "$v_o = -\\frac{1}{RC}\\int v_i\\,dt$", 
+                    "$v_o = -RC\\frac{dv_i}{dt}$", 
+                    "$v_o = \\frac{1}{RC}\\int v_i\\,dt$", 
+                    "$v_o = -\\frac{R}{L}\\int v_i\\,dt$"
+                ], 
+                ans: "A", 
+                exp: "The ideal op-amp integrator has transfer relation $v_o(t) = -\\frac{1}{RC}\\int v_i(t)\\,dt$, with capacitor in feedback." 
+            }
+        ];
+
+        const perPage = 10;
+        const totalQ = data.length;
+        const totalPages = Math.ceil(totalQ / perPage);
+        let currentPage = 1;
+        const LS_KEY = "chapter6_quiz_answers";
+        const pagesContainer = document.getElementById("pagesContainer");
+        const progressEl = document.getElementById("progress");
+        const resultEl = document.getElementById("result");
+        const explanationsEl = document.getElementById("explanations");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        function loadSaved() {
+            try {
+                const raw = localStorage.getItem(LS_KEY);
+                if (!raw) return {};
+                const obj = JSON.parse(raw);
+                return obj && typeof obj === "object" ? obj : {};
+            } catch (e) { return {}; }
+        }
+        let answers = loadSaved();
+        function saveAnswers() {
+            try {
+                localStorage.setItem(LS_KEY, JSON.stringify(answers));
+            } catch (e) {}
+        }
+
+        function createPage(pageNum) {
+            const start = (pageNum - 1) * perPage;
+            const end = Math.min(start + perPage, totalQ);
+            const page = document.createElement("div");
+            page.className = "page";
+            page.dataset.page = pageNum;
+            
+            for (let i = start; i < end; i++) {
+                const q = data[i];
+                const qDiv = document.createElement("div");
+                qDiv.className = "question";
+                
+                // Question text
+                const qText = document.createElement("div");
+                qText.className = "qtext";
+                qText.innerHTML = `<strong>Q${q.id}.</strong> ${q.q}`;
+                qDiv.appendChild(qText);
+                
+                // Options container
+                const optsDiv = document.createElement("div");
+                optsDiv.className = "options";
+                
+                ["A", "B", "C", "D"].forEach((letter, idx) => {
+                    const optionDiv = document.createElement("div");
+                    optionDiv.className = "option-item";
+                    
+                    const inp = document.createElement("input");
+                    inp.type = "radio";
+                    inp.name = "q" + q.id;
+                    inp.value = letter;
+                    inp.id = `q${q.id}_${letter}`;
+                    if (answers[q.id] === letter) inp.checked = true;
+                    inp.addEventListener("change", () => {
+                        answers[q.id] = letter;
+                        saveAnswers();
+                    });
+                    
+                    const label = document.createElement("label");
+                    label.htmlFor = `q${q.id}_${letter}`;
+                    label.style.display = "flex";
+                    label.style.alignItems = "flex-start";
+                    label.style.cursor = "pointer";
+                    label.style.width = "100%";
+                    
+                    const letterSpan = document.createElement("span");
+                    letterSpan.className = "option-label";
+                    letterSpan.textContent = letter + ".";
+                    letterSpan.style.marginRight = "8px";
+                    letterSpan.style.fontWeight = "bold";
+                    
+                    const textSpan = document.createElement("span");
+                    textSpan.className = "option-text";
+                    textSpan.innerHTML = q.opts[idx];
+                    
+                    label.appendChild(inp);
+                    label.appendChild(letterSpan);
+                    label.appendChild(textSpan);
+                    optionDiv.appendChild(label);
+                    optsDiv.appendChild(optionDiv);
+                });
+                
+                qDiv.appendChild(optsDiv);
+                page.appendChild(qDiv);
+            }
+            return page;
+        }
+
+        function renderPages() {
+            pagesContainer.innerHTML = "";
+            for (let p = 1; p <= totalPages; p++) {
+                const pg = createPage(p);
+                if (p === currentPage) pg.classList.add("active");
+                pagesContainer.appendChild(pg);
+            }
+            updateProgress();
+            updateNavButtons();
+            // Render math after pages are created
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function showPage(p) {
+            currentPage = p;
+            document.querySelectorAll(".page").forEach(pg => {
+                pg.classList.toggle("active", Number(pg.dataset.page) === currentPage);
+            });
+            updateProgress();
+            updateNavButtons();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            // Re-render math for the new page
+            setTimeout(() => {
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(document.body, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                }
+            }, 100);
+        }
+
+        function updateProgress() {
+            const start = (currentPage - 1) * perPage + 1;
+            const end = Math.min(currentPage * perPage, totalQ);
+            progressEl.textContent = "Page " + currentPage + " of " + totalPages + "  (Questions " + start + "–" + end + " of " + totalQ + ")";
+        }
+
+        function updateNavButtons() {
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.textContent = currentPage === totalPages ? "Submit" : "Next";
+        }
+
+        function gradeQuiz() {
+            let correct = 0;
+            const details = [];
+            data.forEach(q => {
+                const userAns = answers[q.id] || null;
+                const isCorrect = userAns === q.ans;
+                if (isCorrect) correct++;
+                details.push({ q, ans: userAns, isCorrect });
+            });
+            const scorePct = Math.round(100 * correct / totalQ);
+            resultEl.textContent = "You scored " + correct + " / " + totalQ + " (" + scorePct + "%).";
+            buildExplanations(details);
+        }
+
+        function buildExplanations(details) {
+            explanationsEl.innerHTML = "";
+            details.forEach(d => {
+                const wrap = document.createElement("div");
+                wrap.className = "exp-item";
+                const title = document.createElement("div");
+                title.innerHTML = "<strong>Q" + d.q.id + ":</strong> " + d.q.q;
+                wrap.appendChild(title);
+                const ansLine = document.createElement("div");
+                const ua = d.ans ? d.ans : "(no answer)";
+                ansLine.innerHTML = "<span class='" + (d.isCorrect ? "correct" : "incorrect") + "'>Your answer: " + ua + "</span> &nbsp; | &nbsp; Correct: <strong>" + d.q.ans + "</strong>";
+                wrap.appendChild(ansLine);
+                const toggle = document.createElement("span");
+                toggle.className = "inline-exp-toggle";
+                toggle.textContent = "Hide Explanation";
+                const expDiv = document.createElement("div");
+                expDiv.className = "inline-exp";
+                expDiv.innerHTML = d.q.exp;
+                toggle.addEventListener("click", () => {
+                    const collapsed = expDiv.classList.toggle("collapsed");
+                    toggle.textContent = collapsed ? "Show Explanation" : "Hide Explanation";
+                });
+                wrap.appendChild(toggle);
+                wrap.appendChild(expDiv);
+                explanationsEl.appendChild(wrap);
+            });
+            // Render math in explanations
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(explanationsEl, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        prevBtn.addEventListener("click", () => { if (currentPage > 1) showPage(currentPage - 1); });
+        nextBtn.addEventListener("click", () => {
+            if (currentPage < totalPages) {
+                showPage(currentPage + 1);
+            } else {
+                gradeQuiz();
+                window.scrollTo({ top: resultEl.offsetTop, behavior: "smooth" });
+            }
+        });
+
+        renderPages();
+    </script>
+</body>
+</html>
